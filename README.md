@@ -58,9 +58,18 @@ design_patterns/
 ├── Adapter/
 │   ├── AdapterDemo.java        # Object adapter (SquarePeg → RoundHole)
 │   └── README.md
-└── Facade/
-    ├── FacadeDemo.java         # Home theater subsystem
-    └── README.md
+├── Facade/
+│   ├── FacadeDemo.java         # Home theater subsystem
+│   └── README.md
+└── testExamProblems/           # Test exam problems with pattern solutions
+    ├── Problem1/              # Abstract Factory - Enterprise Reporting
+    ├── Problem2/              # Singleton - Logging System
+    ├── Problem3/              # Abstract Factory - Notifications
+    ├── Problem4/              # Adapter - ML Data Format
+    ├── Problem5/              # Proxy - University Network
+    ├── Problem6/              # Builder - Computer Configurations
+    ├── Problem7/              # Decorator - Ice-Cream Toppings
+    └── Problem8/              # Prototype - Game Enemies
 ```
 
 ## How to Use
@@ -89,11 +98,34 @@ Each demo includes a `main` method that demonstrates the pattern in action, show
 
 ## Key Features
 
-- **Multiple Implementations**: Each pattern includes various implementation approaches (e.g., Singleton has 5+ variants)
+- **Multiple Implementations**: Each pattern includes various implementation approaches
 - **Real-World Examples**: Practical scenarios like college internet proxy, Starbucks drinks, home theater systems
 - **Comprehensive Documentation**: Each pattern has detailed README explaining concepts, use cases, pros/cons
 - **Code Comparisons**: Side-by-side examples showing code with and without the pattern
 - **Pattern Relationships**: Discussions on similarities and differences between related patterns
+- **Test Exam Problems**: 8 real-world problems with pattern solutions for practice and exam preparation
+
+## Test Exam Problems
+
+The **[testExamProblems](testExamProblems/)** directory contains 8 real-world problems with design pattern solutions. Each problem includes:
+
+- **Problem Statement**: Real-world scenario requiring a design pattern
+- **Solution Explanation**: Why the chosen pattern is the best fit
+- **Runnable Demo**: Complete Java code demonstrating the solution
+- **Pattern Reference**: Links to detailed pattern documentation
+
+### Problems Covered
+
+1. **Problem 1**: Enterprise Reporting System → [Abstract Factory](testExamProblems/Problem1/)
+2. **Problem 2**: Web-Based Logging System → [Singleton](testExamProblems/Problem2/)
+3. **Problem 3**: Notification Service → [Abstract Factory](testExamProblems/Problem3/)
+4. **Problem 4**: ML Data Format Compatibility → [Adapter](testExamProblems/Problem4/)
+5. **Problem 5**: University Network Access Control → [Proxy](testExamProblems/Problem5/)
+6. **Problem 6**: Computer Configuration Builder → [Builder](testExamProblems/Problem6/)
+7. **Problem 7**: Ice-Cream Ordering System → [Decorator](testExamProblems/Problem7/)
+8. **Problem 8**: Game Enemy Character Creation → [Prototype](testExamProblems/Problem8/)
+
+Each problem demonstrates how to identify the right pattern for a given scenario and implement it effectively.
 
 ## Pattern Comparisons
 
@@ -112,12 +144,6 @@ This is an educational repository. Each pattern directory is self-contained with
 
 For contributions, feel free to contact me on omarahmed7703@gmail.com or fork the repo.
 
-## Notes
-
-- All Java files use the **default package** (no package declaration)
-- Examples are designed to be **self-contained** and **runnable**
-- Code includes **extensive inline comments** explaining design decisions
-- Multiple implementation variants are included where applicable
 
 ## Quick Navigation
 

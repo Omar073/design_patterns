@@ -1,18 +1,10 @@
-// Singleton Pattern – Multiple Implementations with notes and pitfalls
+// Singleton Pattern – Single-Threaded Implementations
 // All classes are package-private except the public *Demo class with main()
-// This file demonstrates:
+// This file demonstrates singleton implementations for single-threaded environments:
 // 1) Eager initialization
-// 2) Lazy (synchronized)
-// 3) Double-checked locking (DCL)
-// 4) Initialization-on-demand holder
-// 5) Enum-based singleton (robust against reflection/serialization)
-// Along with a small concurrent access demonstration
+// 2) Lazy initialization (non-synchronized - NOT thread-safe)
 
-import java.io.*;
-import java.lang.reflect.Constructor;
-import java.util.concurrent.CountDownLatch;
-
-// 1) Eager initialization (simple, thread-safe, may waste memory/startup time)
+// 1) Eager initialization (simple, thread-safe by default, may waste memory/startup time)
 class EagerSingleton {
     private static final EagerSingleton INSTANCE = new EagerSingleton();
     private EagerSingleton() {}
@@ -20,98 +12,41 @@ class EagerSingleton {
     public String name() { return "EagerSingleton"; }
 }
 
-// 2) Lazy with synchronized accessor (simple but may suffer contention)
-class LazySynchronizedSingleton {
-    private static LazySynchronizedSingleton instance;
-    private LazySynchronizedSingleton() {}
-    public static synchronized LazySynchronizedSingleton getInstance() {
+// 2) Lazy initialization (non-synchronized - only safe for single-threaded environments)
+class LazySingleton {
+    private static LazySingleton instance;
+    private LazySingleton() {}
+    public static LazySingleton getInstance() {
         if (instance == null) {
-            instance = new LazySynchronizedSingleton();
+            instance = new LazySingleton();
         }
         return instance;
     }
-    public String name() { return "LazySynchronizedSingleton"; }
+    public String name() { return "LazySingleton"; }
 }
 
-// 3) Double-checked locking (DCL) – performant and safe since Java 5 (volatile)
-class DoubleCheckedLockingSingleton {
-    private static volatile DoubleCheckedLockingSingleton instance;
-    private DoubleCheckedLockingSingleton() {}
-    public static DoubleCheckedLockingSingleton getInstance() {
-        if (instance == null) { // first check (no locking)
-            synchronized (DoubleCheckedLockingSingleton.class) {
-                if (instance == null) { // second check (with lock)
-                    instance = new DoubleCheckedLockingSingleton();
-                }
-            }
-        }
-        return instance;
-    }
-    public String name() { return "DoubleCheckedLockingSingleton"; }
-}
-
-// 4) Initialization-on-demand holder – lazy and thread-safe without synchronization cost
-class HolderSingleton {
-    private HolderSingleton() {}
-    private static class Holder { static final HolderSingleton INSTANCE = new HolderSingleton(); }
-    public static HolderSingleton getInstance() { return Holder.INSTANCE; }
-    public String name() { return "HolderSingleton"; }
-}
-
-// 5) Enum singleton – simplest, protects against serialization and reflection attacks
-enum EnumSingleton {
-    INSTANCE;
-    public String name() { return "EnumSingleton"; }
-}
-
-// A tiny reflection/serialization note:
-// - Non-enum singletons can be broken via reflection unless the constructor defends
-//   against multiple instantiation. Enum is safest.
-
+// Demo
 public class SingletonDemo {
-    private static void printInstances() {
-        System.out.println(EagerSingleton.getInstance().name());
-        System.out.println(LazySynchronizedSingleton.getInstance().name());
-        System.out.println(DoubleCheckedLockingSingleton.getInstance().name());
-        System.out.println(HolderSingleton.getInstance().name());
-        System.out.println(EnumSingleton.INSTANCE.name());
-    }
-
-    private static void concurrentAccessDemo() throws InterruptedException {
-        // Demonstrate many threads accessing Holder/DCL to show same identity
-        int threads = 8;
-        CountDownLatch latch = new CountDownLatch(threads);
-        for (int i = 0; i < threads; i++) {
-            new Thread(() -> {
-                HolderSingleton s = HolderSingleton.getInstance();
-                System.out.println("Holder id=" + System.identityHashCode(s));
-                latch.countDown();
-            }).start();
-        }
-        latch.await();
-    }
-
-    private static void reflectionAttackDemo() {
-        try {
-            Constructor<HolderSingleton> ctor = HolderSingleton.class.getDeclaredConstructor();
-            ctor.setAccessible(true);
-            HolderSingleton s1 = HolderSingleton.getInstance();
-            HolderSingleton s2 = ctor.newInstance();
-            System.out.println("Reflection broke singleton? " + (s1 != s2));
-        } catch (Exception e) {
-            System.out.println("Reflection failed (good): " + e.getMessage());
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        System.out.println("== Singleton Implementations ==");
-        printInstances();
-        System.out.println("\n== Concurrent Access Demo (Holder) ==");
-        concurrentAccessDemo();
-        System.out.println("\n== Reflection Attack Note ==");
-        reflectionAttackDemo();
-        System.out.println("\n== Enum is robust against both reflection and serialization ==");
+    public static void main(String[] args) {
+        System.out.println("== Singleton Implementations (Single-Threaded) ==\n");
+        
+        // Demonstrate eager initialization
+        System.out.println("--- Eager Initialization ---");
+        EagerSingleton eager1 = EagerSingleton.getInstance();
+        EagerSingleton eager2 = EagerSingleton.getInstance();
+        System.out.println("Instance 1: " + eager1.name());
+        System.out.println("Instance 2: " + eager2.name());
+        System.out.println("Same instance? " + (eager1 == eager2));
+        
+        // Demonstrate lazy initialization
+        System.out.println("\n--- Lazy Initialization ---");
+        LazySingleton lazy1 = LazySingleton.getInstance();
+        LazySingleton lazy2 = LazySingleton.getInstance();
+        System.out.println("Instance 1: " + lazy1.name());
+        System.out.println("Instance 2: " + lazy2.name());
+        System.out.println("Same instance? " + (lazy1 == lazy2));
+        
+        System.out.println("\n✓ Both implementations ensure a single instance in single-threaded environments");
+        System.out.println("⚠ Note: LazySingleton is NOT thread-safe. Use synchronized version for multi-threaded environments.");
     }
 }
-
-

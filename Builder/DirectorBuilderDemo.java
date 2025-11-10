@@ -2,7 +2,7 @@
 // Classic director (Waiter) building Palestine coffee/tea drinks
 
 // Product
-class PalestineCoffee {
+class PalestineDrink {
     private String size;
     private String drink;
 
@@ -15,20 +15,20 @@ class PalestineCoffee {
     }
 
     public String toString() {
-        return "PalestineCoffee[size=" + size + ", drink=" + drink + "]";
+        return "PalestineDrink[size=" + size + ", drink=" + drink + "]";
     }
 }
 
 // Abstract builder
-abstract class PalestineCoffeeBuilder {
-    protected PalestineCoffee palestineCoffee;
+abstract class PalestineDrinkBuilder {
+    protected PalestineDrink palestineDrink;
 
-    public void createPalestineCoffee() {
-        palestineCoffee = new PalestineCoffee();
+    public void createPalestineDrink() {
+        palestineDrink = new PalestineDrink();
     }
 
-    public PalestineCoffee getPalestineCoffee() {
-        return palestineCoffee;
+    public PalestineDrink getPalestineDrink() {
+        return palestineDrink;
     }
 
     public abstract void buildSize();
@@ -37,40 +37,40 @@ abstract class PalestineCoffeeBuilder {
 }
 
 // Concrete builders
-class PalestineTeaBuilder extends PalestineCoffeeBuilder {
+class PalestineTeaBuilder extends PalestineDrinkBuilder {
     public void buildSize() {
-        palestineCoffee.setSize("large");
+        palestineDrink.setSize("large");
     }
 
     public void buildDrink() {
-        palestineCoffee.setDrink("tea");
+        palestineDrink.setDrink("tea");
     }
 }
 
-class PalestineCoffeeDrinkBuilder extends PalestineCoffeeBuilder {
+class PalestineCoffeeBuilder extends PalestineDrinkBuilder {
     public void buildSize() {
-        palestineCoffee.setSize("medium");
+        palestineDrink.setSize("medium");
     }
 
     public void buildDrink() {
-        palestineCoffee.setDrink("coffee");
+        palestineDrink.setDrink("coffee");
     }
 }
 
 // Director
 class Waiter {
-    private PalestineCoffeeBuilder builder;
+    private PalestineDrinkBuilder builder;
 
-    public void setPalestineCoffeeBuilder(PalestineCoffeeBuilder b) {
+    public void setPalestineDrinkBuilder(PalestineDrinkBuilder b) {
         this.builder = b;
     }
 
-    public PalestineCoffee getDrink() {
-        return builder.getPalestineCoffee();
+    public PalestineDrink getDrink() {
+        return builder.getPalestineDrink();
     }
 
     public void construct() {
-        builder.createPalestineCoffee();
+        builder.createPalestineDrink();
         builder.buildSize();
         builder.buildDrink();
     }
@@ -80,15 +80,14 @@ public class DirectorBuilderDemo {
     public static void main(String[] args) {
         System.out.println("== Director-based Builder ==");
         Waiter waiter = new Waiter();
-        PalestineCoffeeBuilder coffee = new PalestineCoffeeDrinkBuilder();
-        waiter.setPalestineCoffeeBuilder(coffee);
+        PalestineDrinkBuilder coffee = new PalestineCoffeeBuilder();
+        waiter.setPalestineDrinkBuilder(coffee);
         waiter.construct();
         System.out.println(waiter.getDrink());
 
-        PalestineCoffeeBuilder tea = new PalestineTeaBuilder();
-        waiter.setPalestineCoffeeBuilder(tea);
+        PalestineDrinkBuilder tea = new PalestineTeaBuilder();
+        waiter.setPalestineDrinkBuilder(tea);
         waiter.construct();
         System.out.println(waiter.getDrink());
     }
 }
-

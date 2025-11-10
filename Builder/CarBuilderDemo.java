@@ -55,7 +55,7 @@ class Car {
     }
 }
 
-public class FluentBuilderDemo {
+public class CarBuilderDemo {
     public static void main(String[] args) {
         System.out.println("== Fluent Builder ==");
         Car basic = new Car.Builder("V6", 4).build();

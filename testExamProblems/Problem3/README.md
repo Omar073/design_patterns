@@ -4,34 +4,56 @@
 
 A notification service needs to send messages via SMS, Email, or Push notifications. The client should not be concerned with how each message type is created.
 
-## Design Pattern Solution: Abstract Factory
+## Design Pattern Solution: Simple Factory
 
-### Why Abstract Factory?
+### Why Simple Factory (Not Abstract Factory)?
 
-The Abstract Factory pattern is ideal because:
+**Key Analysis:**
+- Creates only **ONE product type**: Notification
+- Each factory method creates a single notification instance
+- No family of related products needed
 
-1. **Family of Related Objects**: Different notification types (SMS, Email, Push) form a family that can be created consistently
-2. **Encapsulation**: Hides the complexity of creating different notification types from the client
-3. **Extensibility**: Easy to add new notification types (WhatsApp, Slack) without changing client code
-4. **Consistency**: Ensures all notifications follow the same creation pattern
+**Abstract Factory is for:**
+- Creating **families of related products** (multiple product types)
+- Example: Button + Checkbox + Menu (all from same OS family)
+- Each factory creates multiple related products
+
+**Simple Factory is for:**
+- Creating **one product type** with different variants
+- Example: Notification (SMS, Email, Push variants)
+- Single factory class with parameterized method
+
+### Why Simple Factory?
+
+The Simple Factory pattern is the best solution because:
+
+1. **Single Product Type**: We only need to create Notification objects (not families of products)
+2. **Simple Creation Logic**: A parameterized method is sufficient to create different notification types
+3. **No Family Relationship**: SMS, Email, and Push are variants of the same product type, not a family
+4. **Appropriate Complexity**: Abstract Factory would be overkill for a single product type
 
 ### Solution Overview
 
-- **Abstract Factory Interface**: `NotificationFactory` with method to create notifications
-- **Concrete Factories**: `SMSNotificationFactory`, `EmailNotificationFactory`, `PushNotificationFactory`
+- **Simple Factory**: `NotificationFactory` with `createNotification(String type)` method
 - **Abstract Product**: `Notification` interface with common methods
 - **Concrete Products**: `SMSNotification`, `EmailNotification`, `PushNotification`
 
-The client works with the abstract `Notification` interface and factory, never knowing the concrete implementation details.
+The client uses the factory to create notifications based on a string parameter, without knowing the concrete implementation.
 
 ### Key Benefits
 
 - Client code is decoupled from notification creation logic
-- Easy to add new notification types
-- Consistent interface for all notification types
+- Simple and easy to understand
+- Easy to add new notification types (just modify the factory method)
 - Centralized creation logic
+
+### When Would Abstract Factory Be Needed?
+
+Abstract Factory would be appropriate if:
+- You needed to create families of related products
+- Example: Notification + DeliveryMethod + EncryptionMethod (all from same provider family)
+- You needed to ensure all products come from the same "family"
 
 ## Reference
 
-For more details on the Abstract Factory pattern, see: [../../AbstractFactory/README.md](../../AbstractFactory/README.md)
-
+For more details on the Simple Factory pattern, see: [../../Factory/README.md](../../Factory/README.md)

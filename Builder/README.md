@@ -23,5 +23,5 @@ CarTelescoping c = new CarTelescoping("V8", 4, "black", true, true);
 - Fluent inner builder; Director-based (classic) for fixed assembly steps.
 
 ### Compare
-- **vs Abstract Factory**: AF creates families; Builder assembles one complex object.
+- **vs Factory**: AF creates families; Builder assembles one complex object.
 - **vs Facade**: Facade simplifies a subsystem; Builder hides construction steps.

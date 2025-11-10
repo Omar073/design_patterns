@@ -21,7 +21,7 @@ This repository contains practical implementations of design patterns from the G
 
 1. **[Singleton](Singleton/)** - Ensures a class has only one instance and provides global access to it
 2. **[Prototype](Prototype/)** - Creates new objects by cloning existing instances
-3. **[Abstract Factory](AbstractFactory/)** - Creates families of related objects without specifying concrete classes
+3. **[Factory](Factory/)** - Creates families of related objects without specifying concrete classes
 4. **[Builder](Builder/)** - Constructs complex objects step by step
 
 ### Structural Patterns
@@ -38,38 +38,49 @@ design_patterns/
 ├── README.md                    # This file
 ├── Comparisons.md              # Cross-pattern comparisons
 ├── Singleton/
-│   ├── SingletonDemo.java     # Multiple singleton implementations
-│   └── README.md               # Singleton pattern documentation
+│   ├── EagerSingletonDemo.java    # Eager initialization singleton
+│   ├── LazySingletonDemo.java      # Lazy initialization singleton
+│   └── README.md                   # Singleton pattern documentation
 ├── Prototype/
-│   ├── PrototypeDemo.java      # Shallow/deep clone + registry examples
+│   ├── PrototypeDirectDemo.java         # Direct cloning example
+│   ├── PrototypeRegistryDemo.java       # Registry-based cloning
+│   ├── PrototypeShallowDeepDemo.java    # Shallow vs deep clone
 │   └── README.md
-├── AbstractFactory/
-│   ├── AbstractFactoryDemo.java # GUI family example (Windows/Mac)
+├── Factory/
+│   ├── SimpleFactoryDemo.java      # Simple Factory - Notification system
+│   ├── ShapeFactoryDemo.java       # Simple Factory - Shape creation
+│   ├── FactoryMethodDemo.java      # Factory Method - Dialog system
+│   ├── AbstractFactoryDemo.java    # Abstract Factory - GUI widgets
 │   └── README.md
 ├── Builder/
-│   ├── BuilderDemo.java        # Fluent builder + Director pattern
+│   ├── FluentBuilderDemo.java           # Fluent builder pattern
+│   ├── DirectorBuilderDemo.java        # Director-based builder
+│   ├── TelescopingConstructorDemo.java # Telescoping constructors (contrast)
 │   └── README.md
 ├── Proxy/
-│   ├── ProxyDemo.java          # Protection, virtual, and logging proxies
+│   ├── ProtectionProxyDemo.java    # Protection proxy - Internet access
+│   ├── VirtualProxyDemo.java       # Virtual proxy - Lazy image loading
+│   ├── LoggingProxyDemo.java       # Logging proxy - Dynamic proxy
 │   └── README.md
 ├── Decorator/
-│   ├── DecoratorDemo.java      # Beverage condiments + Java I/O analogy
+│   ├── DecoratorDemo.java          # Beverage condiments + Java I/O analogy
 │   └── README.md
 ├── Adapter/
-│   ├── AdapterDemo.java        # Object adapter (SquarePeg → RoundHole)
+│   ├── AdapterDemo.java            # Object adapter (SquarePeg → RoundHole)
 │   └── README.md
 ├── Facade/
-│   ├── FacadeDemo.java         # Home theater subsystem
+│   ├── WithFacadeDemo.java         # Home theater with facade
+│   ├── WithoutFacadeDemo.java      # Home theater without facade
 │   └── README.md
-└── testExamProblems/           # Test exam problems with pattern solutions
-    ├── Problem1/              # Abstract Factory - Enterprise Reporting
-    ├── Problem2/              # Singleton - Logging System
-    ├── Problem3/              # Abstract Factory - Notifications
-    ├── Problem4/              # Adapter - ML Data Format
-    ├── Problem5/              # Proxy - University Network
-    ├── Problem6/              # Builder - Computer Configurations
-    ├── Problem7/              # Decorator - Ice-Cream Toppings
-    └── Problem8/              # Prototype - Game Enemies
+└── testExamProblems/               # Test exam problems with pattern solutions
+    ├── Problem1/                  # Factory - Enterprise Reporting
+    ├── Problem2/                  # Singleton - Logging System
+    ├── Problem3/                  # Factory - Notifications
+    ├── Problem4/                  # Adapter - ML Data Format
+    ├── Problem5/                  # Proxy - University Network
+    ├── Problem6/                  # Builder - Computer Configurations
+    ├── Problem7/                  # Decorator - Ice-Cream Toppings
+    └── Problem8/                  # Prototype - Game Enemies
 ```
 
 ## How to Use
@@ -116,9 +127,9 @@ The **[testExamProblems](testExamProblems/)** directory contains 8 real-world pr
 
 ### Problems Covered
 
-1. **Problem 1**: Enterprise Reporting System → [Abstract Factory](testExamProblems/Problem1/)
+1. **Problem 1**: Enterprise Reporting System → [Factory](testExamProblems/Problem1/)
 2. **Problem 2**: Web-Based Logging System → [Singleton](testExamProblems/Problem2/)
-3. **Problem 3**: Notification Service → [Abstract Factory](testExamProblems/Problem3/)
+3. **Problem 3**: Notification Service → [Factory](testExamProblems/Problem3/)
 4. **Problem 4**: ML Data Format Compatibility → [Adapter](testExamProblems/Problem4/)
 5. **Problem 5**: University Network Access Control → [Proxy](testExamProblems/Problem5/)
 6. **Problem 6**: Computer Configuration Builder → [Builder](testExamProblems/Problem6/)
@@ -132,7 +143,7 @@ Each problem demonstrates how to identify the right pattern for a given scenario
 See [Comparisons.md](Comparisons.md) for detailed comparisons between:
 - Facade vs Builder/Factory
 - Facade vs Proxy
-- Abstract Factory vs Builder
+- Factory vs Builder
 - And more...
 
 ## Contributing
@@ -151,7 +162,7 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 |---------|----------|----------|
 | [Singleton](Singleton/) | Single instance guarantee | Creational |
 | [Prototype](Prototype/) | Clone-based object creation | Creational |
-| [Abstract Factory](AbstractFactory/) | Family of related objects | Creational |
+| [Factory](Factory/) | Family of related objects | Creational |
 | [Builder](Builder/) | Step-by-step object construction | Creational |
 | [Proxy](Proxy/) | Access control placeholder | Structural |
 | [Decorator](Decorator/) | Dynamic behavior addition | Structural |

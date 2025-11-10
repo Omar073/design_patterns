@@ -1,9 +1,13 @@
 /**
  * Problem 3: Notification Service
- * Solution: Abstract Factory Pattern
+ * Solution: Simple Factory Pattern
  * 
- * This demo shows how Abstract Factory hides notification creation
+ * This demo shows how Simple Factory hides notification creation
  * complexity from the client, allowing easy extension to new types.
+ * 
+ * Note: This creates only ONE product type (Notification), so Simple Factory
+ * is the appropriate pattern. Abstract Factory is for creating FAMILIES
+ * of related products.
  */
 
 // Abstract product
@@ -47,27 +51,20 @@ class PushNotification implements Notification {
     }
 }
 
-// Abstract Factory
-interface NotificationFactory {
-    Notification createNotification();
-}
-
-// Concrete Factories
-class SMSNotificationFactory implements NotificationFactory {
-    public Notification createNotification() {
-        return new SMSNotification();
-    }
-}
-
-class EmailNotificationFactory implements NotificationFactory {
-    public Notification createNotification() {
-        return new EmailNotification();
-    }
-}
-
-class PushNotificationFactory implements NotificationFactory {
-    public Notification createNotification() {
-        return new PushNotification();
+// Simple Factory - single factory class with parameterized method
+class NotificationFactory {
+    public Notification createNotification(String notificationType) {
+        if (notificationType == null) {
+            return null;
+        }
+        if (notificationType.equalsIgnoreCase("SMS")) {
+            return new SMSNotification();
+        } else if (notificationType.equalsIgnoreCase("EMAIL")) {
+            return new EmailNotification();
+        } else if (notificationType.equalsIgnoreCase("PUSH")) {
+            return new PushNotification();
+        }
+        throw new IllegalArgumentException("Unsupported notification type: " + notificationType);
     }
 }
 
@@ -75,13 +72,13 @@ class PushNotificationFactory implements NotificationFactory {
 class NotificationService {
     private NotificationFactory factory;
     
-    public NotificationService(NotificationFactory factory) {
-        this.factory = factory;
+    public NotificationService() {
+        this.factory = new NotificationFactory();
     }
     
-    public void sendNotification(String recipient, String message) {
+    public void sendNotification(String notificationType, String recipient, String message) {
         // Client doesn't know which concrete notification is created
-        Notification notification = factory.createNotification();
+        Notification notification = factory.createNotification(notificationType);
         System.out.println("Creating " + notification.getType() + " notification...");
         notification.send(recipient, message);
     }
@@ -92,20 +89,19 @@ public class Problem3Demo {
     public static void main(String[] args) {
         System.out.println("=== Problem 3: Notification Service ===\n");
         
+        NotificationService service = new NotificationService();
+        
         // Client can use any notification type without knowing implementation
-        System.out.println("--- Using SMS Factory ---");
-        NotificationService smsService = new NotificationService(new SMSNotificationFactory());
-        smsService.sendNotification("+1234567890", "Your order has been shipped!");
+        System.out.println("--- Using SMS Notification ---");
+        service.sendNotification("SMS", "+1234567890", "Your order has been shipped!");
         
-        System.out.println("\n--- Using Email Factory ---");
-        NotificationService emailService = new NotificationService(new EmailNotificationFactory());
-        emailService.sendNotification("user@example.com", "Your order has been shipped!");
+        System.out.println("\n--- Using Email Notification ---");
+        service.sendNotification("EMAIL", "user@example.com", "Your order has been shipped!");
         
-        System.out.println("\n--- Using Push Factory ---");
-        NotificationService pushService = new NotificationService(new PushNotificationFactory());
-        pushService.sendNotification("device_abc123", "Your order has been shipped!");
+        System.out.println("\n--- Using Push Notification ---");
+        service.sendNotification("PUSH", "device_abc123", "Your order has been shipped!");
         
-        System.out.println("\n✓ Client code works with any notification type!");
+        System.out.println("\n✓ Simple Factory is sufficient - only one product type (Notification)!");
+        System.out.println("✓ Abstract Factory is for creating FAMILIES of related products.");
     }
 }
-

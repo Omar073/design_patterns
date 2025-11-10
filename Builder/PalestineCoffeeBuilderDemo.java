@@ -76,7 +76,7 @@ class Waiter {
     }
 }
 
-public class DirectorBuilderDemo {
+public class PalestineCoffeeBuilderDemo {
     public static void main(String[] args) {
         System.out.println("== Director-based Builder ==");
         Waiter waiter = new Waiter();

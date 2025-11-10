@@ -35,7 +35,7 @@ class CarTelescoping {
     }
 }
 
-public class TelescopingConstructorDemo {
+public class CarTelescopingDemo {
     public static void main(String[] args) {
         System.out.println("== Telescoping Constructors (contrast) ==");
         System.out.println(new CarTelescoping("V6", 4));

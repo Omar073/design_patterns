@@ -1,10 +1,13 @@
 /**
  * Problem 1: Enterprise Reporting System
- * Solution: Abstract Factory Pattern
+ * Solution: Simple Factory Pattern
  * 
- * This demo shows how Abstract Factory solves the problem of creating
- * families of related objects (database connections + report generators)
- * without coupling the client to concrete implementations.
+ * This demo shows how Simple Factory solves the problem of creating
+ * database connections and report generators without coupling the client
+ * to concrete implementations.
+ * 
+ * Note: DatabaseConnection and ReportGenerator are independent products,
+ * so Abstract Factory is not needed. Simple Factory is sufficient.
  */
 
 // Abstract products
@@ -28,6 +31,18 @@ class MySQLConnection implements DatabaseConnection {
     }
 }
 
+// Concrete products for Oracle
+class OracleConnection implements DatabaseConnection {
+    public void connect() {
+        System.out.println("Connecting to Oracle database...");
+    }
+    
+    public void executeQuery(String query) {
+        System.out.println("Executing Oracle query: " + query);
+    }
+}
+
+// Report generators (format-specific, not database-specific)
 class PDFReportGenerator implements ReportGenerator {
     public void generateReport(String data) {
         System.out.println("Generating PDF report with data: " + data);
@@ -40,46 +55,27 @@ class HTMLReportGenerator implements ReportGenerator {
     }
 }
 
-// Concrete products for Oracle
-class OracleConnection implements DatabaseConnection {
-    public void connect() {
-        System.out.println("Connecting to Oracle database...");
-    }
-    
-    public void executeQuery(String query) {
-        System.out.println("Executing Oracle query: " + query);
-    }
-}
-
-// Abstract Factory
-interface ReportFactory {
-    DatabaseConnection createDatabaseConnection();
-    ReportGenerator createReportGenerator(String format);
-}
-
-// Concrete Factory for MySQL
-class MySQLReportFactory implements ReportFactory {
-    public DatabaseConnection createDatabaseConnection() {
-        return new MySQLConnection();
-    }
-    
-    public ReportGenerator createReportGenerator(String format) {
-        if (format.equalsIgnoreCase("PDF")) {
-            return new PDFReportGenerator();
-        } else if (format.equalsIgnoreCase("HTML")) {
-            return new HTMLReportGenerator();
+// Simple Factory for database connections
+class DatabaseConnectionFactory {
+    public DatabaseConnection createConnection(String dbType) {
+        if (dbType == null) {
+            return null;
         }
-        throw new IllegalArgumentException("Unsupported format: " + format);
+        if (dbType.equalsIgnoreCase("MYSQL")) {
+            return new MySQLConnection();
+        } else if (dbType.equalsIgnoreCase("ORACLE")) {
+            return new OracleConnection();
+        }
+        throw new IllegalArgumentException("Unsupported database type: " + dbType);
     }
 }
 
-// Concrete Factory for Oracle
-class OracleReportFactory implements ReportFactory {
-    public DatabaseConnection createDatabaseConnection() {
-        return new OracleConnection();
-    }
-    
+// Simple Factory for report generators
+class ReportGeneratorFactory {
     public ReportGenerator createReportGenerator(String format) {
+        if (format == null) {
+            return null;
+        }
         if (format.equalsIgnoreCase("PDF")) {
             return new PDFReportGenerator();
         } else if (format.equalsIgnoreCase("HTML")) {
@@ -94,10 +90,13 @@ class ReportingClient {
     private DatabaseConnection dbConnection;
     private ReportGenerator reportGenerator;
     
-    public ReportingClient(ReportFactory factory, String reportFormat) {
-        // Client doesn't know about concrete implementations
-        this.dbConnection = factory.createDatabaseConnection();
-        this.reportGenerator = factory.createReportGenerator(reportFormat);
+    public ReportingClient(String dbType, String reportFormat) {
+        // Use simple factories to create products independently
+        DatabaseConnectionFactory dbFactory = new DatabaseConnectionFactory();
+        ReportGeneratorFactory reportFactory = new ReportGeneratorFactory();
+        
+        this.dbConnection = dbFactory.createConnection(dbType);
+        this.reportGenerator = reportFactory.createReportGenerator(reportFormat);
     }
     
     public void generateReport(String query) {
@@ -113,18 +112,22 @@ public class Problem1Demo {
     public static void main(String[] args) {
         System.out.println("=== Problem 1: Enterprise Reporting System ===\n");
         
-        // Use MySQL factory
-        System.out.println("--- Using MySQL Factory ---");
-        ReportFactory mysqlFactory = new MySQLReportFactory();
-        ReportingClient mysqlClient = new ReportingClient(mysqlFactory, "PDF");
-        mysqlClient.generateReport("SELECT * FROM users");
+        // MySQL with PDF report
+        System.out.println("--- MySQL Database with PDF Report ---");
+        ReportingClient mysqlPdfClient = new ReportingClient("MySQL", "PDF");
+        mysqlPdfClient.generateReport("SELECT * FROM users");
         
-        System.out.println("\n--- Using Oracle Factory ---");
-        ReportFactory oracleFactory = new OracleReportFactory();
-        ReportingClient oracleClient = new ReportingClient(oracleFactory, "HTML");
-        oracleClient.generateReport("SELECT * FROM employees");
+        // Oracle with HTML report
+        System.out.println("\n--- Oracle Database with HTML Report ---");
+        ReportingClient oracleHtmlClient = new ReportingClient("Oracle", "HTML");
+        oracleHtmlClient.generateReport("SELECT * FROM employees");
         
-        System.out.println("\n✓ Client code works with any factory without modification!");
+        // MySQL with HTML report (shows independence)
+        System.out.println("\n--- MySQL Database with HTML Report ---");
+        ReportingClient mysqlHtmlClient = new ReportingClient("MySQL", "HTML");
+        mysqlHtmlClient.generateReport("SELECT * FROM products");
+        
+        System.out.println("\n✓ Simple Factory allows independent creation of database and report format!");
+        System.out.println("✓ No need for Abstract Factory since products are independent.");
     }
 }
-

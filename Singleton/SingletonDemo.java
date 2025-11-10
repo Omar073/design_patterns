@@ -15,45 +15,28 @@ import java.util.concurrent.CountDownLatch;
 // 1) Eager initialization (simple, thread-safe, may waste memory/startup time)
 class EagerSingleton {
     private static final EagerSingleton INSTANCE = new EagerSingleton();
-
-    private EagerSingleton() {
-    }
-
-    public static EagerSingleton getInstance() {
-        return INSTANCE;
-    }
-
-    public String name() {
-        return "EagerSingleton";
-    }
+    private EagerSingleton() {}
+    public static EagerSingleton getInstance() { return INSTANCE; }
+    public String name() { return "EagerSingleton"; }
 }
 
 // 2) Lazy with synchronized accessor (simple but may suffer contention)
 class LazySynchronizedSingleton {
     private static LazySynchronizedSingleton instance;
-
-    private LazySynchronizedSingleton() {
-    }
-
+    private LazySynchronizedSingleton() {}
     public static synchronized LazySynchronizedSingleton getInstance() {
         if (instance == null) {
             instance = new LazySynchronizedSingleton();
         }
         return instance;
     }
-
-    public String name() {
-        return "LazySynchronizedSingleton";
-    }
+    public String name() { return "LazySynchronizedSingleton"; }
 }
 
 // 3) Double-checked locking (DCL) – performant and safe since Java 5 (volatile)
 class DoubleCheckedLockingSingleton {
     private static volatile DoubleCheckedLockingSingleton instance;
-
-    private DoubleCheckedLockingSingleton() {
-    }
-
+    private DoubleCheckedLockingSingleton() {}
     public static DoubleCheckedLockingSingleton getInstance() {
         if (instance == null) { // first check (no locking)
             synchronized (DoubleCheckedLockingSingleton.class) {
@@ -64,47 +47,26 @@ class DoubleCheckedLockingSingleton {
         }
         return instance;
     }
-
-    public String name() {
-        return "DoubleCheckedLockingSingleton";
-    }
+    public String name() { return "DoubleCheckedLockingSingleton"; }
 }
 
-// 4) Initialization-on-demand holder – lazy and thread-safe without
-// synchronization cost
+// 4) Initialization-on-demand holder – lazy and thread-safe without synchronization cost
 class HolderSingleton {
-    private HolderSingleton() {
-    }
-
-    private static class Holder {
-        static final HolderSingleton INSTANCE = new HolderSingleton();
-    }
-
-    public static HolderSingleton getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    public String name() {
-        return "HolderSingleton";
-    }
+    private HolderSingleton() {}
+    private static class Holder { static final HolderSingleton INSTANCE = new HolderSingleton(); }
+    public static HolderSingleton getInstance() { return Holder.INSTANCE; }
+    public String name() { return "HolderSingleton"; }
 }
 
-// 5) Enum singleton – simplest, protects against serialization and reflection
-// attacks
+// 5) Enum singleton – simplest, protects against serialization and reflection attacks
 enum EnumSingleton {
     INSTANCE;
-
-    // Cannot override methods like clone() or finalize() in an enum!
-    // Do not attempt to override any method from Enum<EnumSingleton>
-    public String getName() {
-        return "EnumSingleton";
-    }
+    public String name() { return "EnumSingleton"; }
 }
 
 // A tiny reflection/serialization note:
-// - Non-enum singletons can be broken via reflection unless the constructor
-// defends
-// against multiple instantiation. Enum is safest.
+// - Non-enum singletons can be broken via reflection unless the constructor defends
+//   against multiple instantiation. Enum is safest.
 
 public class SingletonDemo {
     private static void printInstances() {
@@ -151,3 +113,5 @@ public class SingletonDemo {
         System.out.println("\n== Enum is robust against both reflection and serialization ==");
     }
 }
+
+

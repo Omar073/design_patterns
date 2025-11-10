@@ -10,27 +10,14 @@ import java.util.Map;
 
 interface Shape extends Cloneable {
     Shape clone();
-
     void draw();
 }
 
 class Point implements Cloneable {
     int x, y;
-
-    Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
-    public String toString() {
-        return "(" + x + "," + y + ")";
-    }
+    Point(int x, int y) { this.x = x; this.y = y; }
+    @Override protected Object clone() throws CloneNotSupportedException { return super.clone(); }
+    @Override public String toString() { return "(" + x + "," + y + ")"; }
 }
 
 class Circle implements Shape {
@@ -69,18 +56,9 @@ class Circle implements Shape {
         }
     }
 
-    public void moveCenter(int dx, int dy) {
-        center.x += dx;
-        center.y += dy;
-    }
-
-    public void setRadius(int r) {
-        this.radius = r;
-    }
-
-    public void setColor(String c) {
-        this.color = c;
-    }
+    public void moveCenter(int dx, int dy) { center.x += dx; center.y += dy; }
+    public void setRadius(int r) { this.radius = r; }
+    public void setColor(String c) { this.color = c; }
 
     @Override
     public void draw() {
@@ -91,14 +69,10 @@ class Circle implements Shape {
 class Rectangle implements Shape {
     private int width, height;
     private String color;
-
     Rectangle(int w, int h, String c) {
-        this.width = w;
-        this.height = h;
-        this.color = c;
+        this.width = w; this.height = h; this.color = c;
         System.out.println("Expensive initialization for Rectangle...");
     }
-
     @Override
     public Shape clone() {
         try {
@@ -107,7 +81,6 @@ class Rectangle implements Shape {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void draw() {
         System.out.println("Rectangle w=" + width + " h=" + height + " color=" + color);
@@ -116,15 +89,10 @@ class Rectangle implements Shape {
 
 class PrototypeRegistry {
     private final Map<String, Shape> prototypes = new HashMap<>();
-
-    public void register(String key, Shape prototype) {
-        prototypes.put(key, prototype);
-    }
-
+    public void register(String key, Shape prototype) { prototypes.put(key, prototype); }
     public Shape getClone(String key) {
         Shape p = prototypes.get(key);
-        if (p == null)
-            throw new IllegalArgumentException("No prototype for key: " + key);
+        if (p == null) throw new IllegalArgumentException("No prototype for key: " + key);
         return p.clone();
     }
 }
@@ -151,8 +119,7 @@ public class PrototypeDemo {
         Circle original = new Circle(5, "black", new Point(5, 5));
         Circle shallow = (Circle) original.clone();
         Circle deep = original.deepClone();
-        System.out.println("same center? shallow="
-                + (original == shallow ? "n/a" : "true? " + (getCenterId(original) == getCenterId(shallow))));
+        System.out.println("same center? shallow=" + (original == shallow ? "n/a" : "true? " + (getCenterId(original) == getCenterId(shallow))));
         System.out.println("same center? deep=" + (getCenterId(original) == getCenterId(deep)));
         shallow.moveCenter(3, 3);
         System.out.print("original after shallow moved: ");
@@ -167,3 +134,5 @@ public class PrototypeDemo {
         return System.identityHashCode(c);
     }
 }
+
+

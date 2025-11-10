@@ -4,11 +4,7 @@
 
 class RoundHole {
     private final double radius;
-
-    RoundHole(double radius) {
-        this.radius = radius;
-    }
-
+    RoundHole(double radius) { this.radius = radius; }
     public boolean fits(RoundPegTarget peg) {
         return peg.getRadius() <= radius;
     }
@@ -21,37 +17,21 @@ interface RoundPegTarget {
 
 class RoundPeg implements RoundPegTarget {
     private final double radius;
-
-    RoundPeg(double radius) {
-        this.radius = radius;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
+    RoundPeg(double radius) { this.radius = radius; }
+    public double getRadius() { return radius; }
 }
 
 // Adaptee with different interface
 class SquarePeg {
     private final double width;
-
-    SquarePeg(double width) {
-        this.width = width;
-    }
-
-    public double getWidth() {
-        return width;
-    }
+    SquarePeg(double width) { this.width = width; }
+    public double getWidth() { return width; }
 }
 
 // Object Adapter – wrap SquarePeg and present RoundPegTarget
 class SquarePegAdapter implements RoundPegTarget {
     private final SquarePeg squarePeg;
-
-    SquarePegAdapter(SquarePeg peg) {
-        this.squarePeg = peg;
-    }
-
+    SquarePegAdapter(SquarePeg peg) { this.squarePeg = peg; }
     public double getRadius() {
         // compute minimal circle radius that fits the square
         return (squarePeg.getWidth() * Math.sqrt(2) / 2.0);
@@ -73,3 +53,5 @@ public class AdapterDemo {
         System.out.println("Big square fits: " + hole.fits(bigAdapter));
     }
 }
+
+

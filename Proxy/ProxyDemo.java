@@ -10,16 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 // 1) Protection proxy
-interface Internet {
-    void connect(String host);
-}
-
+interface Internet { void connect(String host); }
 class RealInternet implements Internet {
-    public void connect(String host) {
-        System.out.println("Connecting to " + host);
-    }
+    public void connect(String host) { System.out.println("Connecting to " + host); }
 }
-
 class ProtectedInternetProxy implements Internet {
     private final Internet real = new RealInternet();
     private static final Set<String> banned = new HashSet<>();
@@ -27,7 +21,6 @@ class ProtectedInternetProxy implements Internet {
         banned.add("bad.com");
         banned.add("games.example");
     }
-
     public void connect(String host) {
         if (banned.contains(host)) {
             System.out.println("Access denied to " + host);
@@ -38,66 +31,37 @@ class ProtectedInternetProxy implements Internet {
 }
 
 // 2) Virtual proxy
-interface Image {
-    void display();
-}
-
+interface Image { void display(); }
 class RealImage implements Image {
     private final String filename;
-
     RealImage(String filename) {
         this.filename = filename;
         loadFromDisk();
     }
-
     private void loadFromDisk() {
         System.out.println("Loading heavy image from disk: " + filename);
     }
-
-    public void display() {
-        System.out.println("Displaying " + filename);
-    }
+    public void display() { System.out.println("Displaying " + filename); }
 }
-
 class ProxyImage implements Image {
     private final String filename;
     private RealImage real; // lazy
-
-    ProxyImage(String filename) {
-        this.filename = filename;
-    }
-
+    ProxyImage(String filename) { this.filename = filename; }
     public void display() {
-        if (real == null)
-            real = new RealImage(filename);
+        if (real == null) real = new RealImage(filename);
         real.display();
     }
 }
 
 // 3) Logging proxy via JDK dynamic proxies (requires interfaces)
-interface Service {
-    void doWork();
-
-    String say(String name);
-}
-
+interface Service { void doWork(); String say(String name); }
 class RealService implements Service {
-    public void doWork() {
-        System.out.println("Doing work...");
-    }
-
-    public String say(String name) {
-        return "Hello, " + name;
-    }
+    public void doWork() { System.out.println("Doing work..."); }
+    public String say(String name) { return "Hello, " + name; }
 }
-
 class LoggingHandler implements InvocationHandler {
     private final Object target;
-
-    LoggingHandler(Object target) {
-        this.target = target;
-    }
-
+    LoggingHandler(Object target) { this.target = target; }
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("[LOG] Calling " + method.getName());
         Object result = method.invoke(target, args);
@@ -122,9 +86,11 @@ public class ProxyDemo {
         Service real = new RealService();
         Service logged = (Service) Proxy.newProxyInstance(
                 Service.class.getClassLoader(),
-                new Class<?>[] { Service.class },
+                new Class<?>[]{Service.class},
                 new LoggingHandler(real));
         logged.doWork();
         System.out.println(logged.say("Omar"));
     }
 }
+
+

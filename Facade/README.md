@@ -5,6 +5,68 @@
 
 ---
 
+## Pattern Structure
+
+The following diagram illustrates the Facade pattern structure, showing a layered facade approach:
+
+![Facade Pattern Diagram](facade_diagram.jpeg)
+
+**Diagram Components:**
+
+1. **`Client Application`** (Client)
+   - The client that needs to interact with the subsystem
+   - Uses facade interfaces to access subsystem functionality
+   - Has "use" dependencies to both `Facade` and `Facade1` interfaces
+   - Does not need to know about the underlying subsystems directly
+
+2. **`<<interface>> Facade`** (Primary Facade)
+   - Main facade interface that simplifies access to part of the subsystem
+   - Provides a unified interface to `SubSystem1`, `SubSystem2`, and `SubSystem3`
+   - Has "use" dependencies to:
+     - `SubSystem1` - First subsystem component
+     - `SubSystem2` - Second subsystem component
+     - `SubSystem3` - Third subsystem component
+   - Also has a "use" dependency to `Facade1`, suggesting delegation or layering between facades
+
+3. **`<<interface>> Facade1`** (Secondary Facade)
+   - Secondary facade interface that simplifies access to another part of the subsystem
+   - Provides a unified interface to `SubSystem4` and `SubSystem5`
+   - Has "use" dependencies to:
+     - `SubSystem4` - Fourth subsystem component
+     - `SubSystem5` - Fifth subsystem component
+   - Can be used directly by the client or through the primary `Facade`
+
+4. **Subsystem Components** (SubSystem1-5)
+   - Five individual subsystem components grouped within a larger bounding box
+   - Represent the underlying complex system whose details are hidden by the facades
+   - **SubSystem1, SubSystem2, SubSystem3**: Used by the primary `Facade`
+   - **SubSystem4, SubSystem5**: Used by the secondary `Facade1`
+   - These are the actual implementation components that perform the work
+
+**Key Relationships:**
+- `Client Application` **uses** both `Facade` and `Facade1` interfaces (dependency: "use")
+- `Facade` **uses** `SubSystem1`, `SubSystem2`, `SubSystem3`, and also `Facade1` (dependency: "use")
+- `Facade1` **uses** `SubSystem4` and `SubSystem5` (dependency: "use")
+- All relationships are "use" dependencies, indicating that the source depends on the target
+
+**Pattern Flow:**
+1. Client (`Client Application`) requests functionality through facade interfaces
+2. Primary `Facade` coordinates calls to `SubSystem1`, `SubSystem2`, and `SubSystem3`
+3. Primary `Facade` may delegate to `Facade1` for certain operations
+4. Secondary `Facade1` coordinates calls to `SubSystem4` and `SubSystem5`
+5. Client receives simplified interface without knowing subsystem details
+
+**Layered Facade Approach:**
+This diagram demonstrates a **layered facade** structure where:
+- Multiple facades can exist to simplify different parts of a complex subsystem
+- Facades can delegate to other facades, creating a hierarchy
+- Each facade provides a simplified interface to a subset of subsystems
+- The client can use multiple facades or a single facade that coordinates others
+
+This structure allows for better organization of complex subsystems by dividing them into logical groups, each with its own facade, while still providing a simplified interface to clients.
+
+---
+
 ## Why Use the Facade Pattern?
 
 ### The Problem: Complex Subsystem Usage
@@ -356,6 +418,7 @@ logger.info("Message");  // Simple interface
 
 - **`WithFacadeDemo.java`**: Home theater facade example showing simplified interface
 - **`WithoutFacadeDemo.java`**: Direct subsystem access showing complexity
+- **`HotelFacadeDemo.java`**: Hotel restaurant facade example (HotelKeeper simplifies access to different restaurant types)
 
 ---
 

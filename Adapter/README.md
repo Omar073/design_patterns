@@ -5,6 +5,120 @@
 
 ---
 
+## Pattern Structure
+
+The following diagrams illustrate the Adapter pattern structure, showing two different implementations: a charger adapter and a movable adapter.
+
+### Diagram 1: Charger Adapter Example
+
+![Adapter Pattern Diagram - Charger Example](adapter_diagram_1.jpeg)
+
+**Diagram Components:**
+
+1. **`Client` Class** (Client)
+   - The client that wants to use the `IChargerTypeC` interface
+   - Method: `+main(): void` - Entry point for the application
+   - Represents the entity that needs to work with Type C chargers
+
+2. **`<<interface>> IChargerTypeC`** (Target Interface)
+   - The target interface that the client expects to work with
+   - Method: `+chargeTypeC(): void` - Defines the charging method for Type C
+   - This is what the client expects to use
+
+3. **`ChargerTypeC` Class** (Concrete Target)
+   - Direct implementation of the `IChargerTypeC` interface
+   - Method: `+chargeTypeC(): void` - Implements Type C charging
+   - Represents a native Type C charger that doesn't need an adapter
+
+4. **`ChargerMicroUSB` Class** (Adaptee)
+   - The existing class with an incompatible interface
+   - Method: `+chargeMicroUSB(): void` - Defines charging method for Micro USB
+   - Represents a Micro USB charger that needs to be adapted
+
+5. **`ChargerAdapter` Class** (Adapter)
+   - The adapter that makes `ChargerMicroUSB` compatible with `IChargerTypeC`
+   - Attributes:
+     - `-chargerMicroUSB: ChargerMicroUSB` (private) - Holds a reference to the adaptee
+   - Methods:
+     - `+ChargerAdapter(ChargerMicroUSB)` - Constructor that takes a `ChargerMicroUSB` object
+     - `+chargeTypeC(): void` - Implements `IChargerTypeC` interface, delegates to `chargerMicroUSB.chargeMicroUSB()`
+   - Converts Type C interface calls to Micro USB calls
+
+**Key Relationships:**
+- `ChargerAdapter` **implements** `IChargerTypeC` interface (realization)
+- `ChargerTypeC` **implements** `IChargerTypeC` interface (realization)
+- `ChargerAdapter` **uses** `ChargerMicroUSB` (dependency: "use")
+- `Client` **uses** `IChargerTypeC` interface (dependency)
+
+**Pattern Flow:**
+1. Client needs to use a Type C charger interface (`IChargerTypeC`)
+2. Client has a Micro USB charger (`ChargerMicroUSB`) with incompatible interface
+3. Client creates a `ChargerAdapter` with the `ChargerMicroUSB` object
+4. Client uses the adapter through the `IChargerTypeC` interface
+5. Adapter converts `chargeTypeC()` calls to `chargeMicroUSB()` calls internally
+
+**Adapter Pattern Roles:**
+- **Target Interface**: `IChargerTypeC` - What the client expects
+- **Adaptee**: `ChargerMicroUSB` - Existing class with incompatible interface
+- **Adapter**: `ChargerAdapter` - Converts adaptee to target interface
+- **Client**: `Client` - Uses the target interface
+
+### Diagram 2: Movable Adapter Example (Object Adapter)
+
+![Adapter Pattern Diagram - Movable Example](adapter_diagram_2.jpeg)
+
+**Diagram Components:**
+
+1. **`client` Class** (Client)
+   - The client that needs to interact with a `MovableAdapter`
+   - Has an association labeled "target" to the `MovableAdapter` interface
+   - Expects speed in KMPH (Kilometers Per Hour)
+
+2. **`<<interface>> MovableAdapter`** (Target Interface)
+   - The target interface that the client expects to work with
+   - Method: `+speed(): double` - Returns speed in KMPH
+   - Note: "Returns speed in KMPH" - Client expects speed in kilometers per hour
+
+3. **`MovableAdapterImpl` Class** (Adapter)
+   - The adapter that makes `Movable` compatible with `MovableAdapter`
+   - Attributes:
+     - `Movable luxuryCars` (private) - Holds a reference to the adaptee object
+   - Methods:
+     - `+speed(): double` - Implements `MovableAdapter` interface, converts MPH to KMPH
+   - Converts speed from MPH (Miles Per Hour) to KMPH (Kilometers Per Hour)
+
+4. **`Movable` Class** (Adaptee)
+   - The existing class with an incompatible interface
+   - Method: `+speed(): double` - Returns speed in MPH
+   - Note: "Returns speed in MPH" - Returns speed in miles per hour
+
+**Key Relationships:**
+- `MovableAdapterImpl` **implements** `MovableAdapter` interface (realization)
+- `MovableAdapterImpl` **has** `Movable` adaptee (association: "adaptee")
+- `client` **uses** `MovableAdapter` interface (association: "target")
+- Dependency notes clarify unit conversion: MPH → KMPH
+
+**Pattern Flow:**
+1. Client expects to work with `MovableAdapter` interface (returns speed in KMPH)
+2. Client has a `Movable` object (returns speed in MPH) with incompatible interface
+3. Client creates a `MovableAdapterImpl` with the `Movable` object
+4. Client calls `speed()` on the adapter through the `MovableAdapter` interface
+5. Adapter internally calls `speed()` on the `Movable` object, converts MPH to KMPH, and returns the converted value
+
+**Adapter Pattern Roles:**
+- **Target Interface**: `MovableAdapter` - What the client expects (KMPH)
+- **Adaptee**: `Movable` - Existing class with incompatible interface (MPH)
+- **Adapter**: `MovableAdapterImpl` - Converts adaptee to target interface (MPH → KMPH)
+- **Client**: `client` - Uses the target interface
+
+**Key Differences Between Diagrams:**
+- **Diagram 1**: Shows a simple interface conversion (Type C ↔ Micro USB)
+- **Diagram 2**: Shows a unit conversion adapter (MPH ↔ KMPH), demonstrating how adapters can transform data, not just translate method calls
+
+Both diagrams demonstrate how the Adapter pattern allows incompatible interfaces to work together by converting one interface to another through an adapter class.
+
+---
+
 ## Why Use the Adapter Pattern?
 
 ### The Problem: Incompatible Interfaces
@@ -354,6 +468,7 @@ class ThirdPartyLoggerAdapter implements Logger {
 ## File Examples
 
 - **`AdapterDemo.java`**: Object adapter example (SquarePeg to RoundPegTarget)
+- **`ChargerAdapterDemo.java`**: Charger adapter example (Micro USB to Type C adapter)
 
 ---
 

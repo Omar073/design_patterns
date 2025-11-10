@@ -5,6 +5,49 @@
 
 ---
 
+## Pattern Structure
+
+The following diagram illustrates the Prototype pattern structure, highlighting the concepts of shallow cloning and deep cloning:
+
+![Prototype Pattern Diagram](prototype_diagram.jpeg)
+
+**Diagram Components:**
+
+1. **`Employee` Class** (Prototype)
+   - Abstract class or interface serving as the prototype
+   - Defines cloning operations: `ShallowClone()` and `DeepClone()`
+   - Attributes:
+     - `+Name: string` - Employee name
+     - `+Id: int` - Employee ID
+     - `+Address: Address` - Reference type (crucial for understanding shallow vs deep cloning)
+
+2. **`RegularEmployee` Class** (Concrete Prototype)
+   - Inherits from `Employee`
+   - Implements `ShallowClone()` and `DeepClone()` methods
+   - Provides specific implementation for cloning `RegularEmployee` instances
+
+3. **`TempEmployee` Class** (Concrete Prototype)
+   - Inherits from `Employee`
+   - Implements `ShallowClone()` and `DeepClone()` methods
+   - Provides specific implementation for cloning `TempEmployee` instances
+
+4. **`Client` Class**
+   - Uses `Employee` objects through the prototype interface
+   - Creates clones using `ShallowClone()` or `DeepClone()` methods
+
+**Key Relationships:**
+- `RegularEmployee` and `TempEmployee` **inherit** from `Employee` (generalization)
+- `Client` **uses** `Employee` objects (association)
+- Both concrete prototypes **implement** the cloning operations
+
+**Shallow vs Deep Clone:**
+- **Shallow Clone**: Copies `Name` and `Id` values directly, but for `Address` (reference type), it copies only the *reference*. The original and cloned `Employee` share the same `Address` instance.
+- **Deep Clone**: Copies `Name` and `Id`, and for `Address`, it creates a *new* `Address` object and copies its contents. This ensures complete independence between original and cloned `Employee` objects, including their nested `Address` objects.
+
+This structure allows clients to create new objects by cloning existing prototypes, avoiding expensive object creation while supporting both shallow and deep cloning strategies.
+
+---
+
 ## Why Use the Prototype Pattern?
 
 ### The Problem: Expensive Object Creation

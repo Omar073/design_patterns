@@ -3,29 +3,54 @@
 
 interface Coffee {
     double cost();
+
     String description();
 }
 
 class SimpleCoffee implements Coffee {
-    public double cost() { return 2.0; }
-    public String description() { return "Simple coffee"; }
+    public double cost() {
+        return 2.0;
+    }
+
+    public String description() {
+        return "Simple coffee";
+    }
 }
 
 abstract class CoffeeDecorator implements Coffee {
     protected final Coffee delegate;
-    protected CoffeeDecorator(Coffee coffee) { this.delegate = coffee; }
+
+    protected CoffeeDecorator(Coffee coffee) {
+        this.delegate = coffee;
+    }
 }
 
 class Milk extends CoffeeDecorator {
-    public Milk(Coffee c) { super(c); }
-    public double cost() { return delegate.cost() + 0.5; }
-    public String description() { return delegate.description() + ", milk"; }
+    public Milk(Coffee c) {
+        super(c);
+    }
+
+    public double cost() {
+        return delegate.cost() + 0.5;
+    }
+
+    public String description() {
+        return delegate.description() + ", milk";
+    }
 }
 
 class Sugar extends CoffeeDecorator {
-    public Sugar(Coffee c) { super(c); }
-    public double cost() { return delegate.cost() + 0.2; }
-    public String description() { return delegate.description() + ", sugar"; }
+    public Sugar(Coffee c) {
+        super(c);
+    }
+
+    public double cost() {
+        return delegate.cost() + 0.2;
+    }
+
+    public String description() {
+        return delegate.description() + ", sugar";
+    }
 }
 
 public class DecoratorDemo {
@@ -40,5 +65,3 @@ public class DecoratorDemo {
         System.out.println("new BufferedInputStream(new FileInputStream(path)) // decorators stack");
     }
 }
-
-

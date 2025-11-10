@@ -5,6 +5,46 @@
 
 ---
 
+## Pattern Structure
+
+The following diagram illustrates the Proxy pattern structure:
+
+![Proxy Pattern Diagram](diagram.png)
+
+**Diagram Components:**
+
+1. **`Image` Interface** (`<<Interface>>`)
+   - Defines the common interface for both real subject and proxy
+   - Method: `+display(): void`
+
+2. **`RealImage` Class** (Concrete Subject)
+   - Implements `Image` interface
+   - Contains the actual object with core logic
+   - Attributes: `+fileName: String`
+   - Methods: `+RealImage()`, `+display(): void`, `+loadFromDisk(): void`
+   - Performs expensive operations (e.g., loading from disk)
+
+3. **`ProxyImage` Class** (Proxy)
+   - Implements `Image` interface
+   - Acts as surrogate/placeholder for `RealImage`
+   - Attributes: `+realimage: RealImage`, `+fileName: String`
+   - Methods: `+ProxyImage()`, `+display(): void`
+   - Controls access to `RealImage` (lazy loading, access control, etc.)
+
+4. **`ProxyPatternDemo` Class** (Client)
+   - Uses the `Image` interface
+   - Interacts with `ProxyImage` without knowing it's a proxy
+   - Method: `+main(): void`
+
+**Key Relationships:**
+- Both `RealImage` and `ProxyImage` **implement** `Image` interface
+- `ProxyImage` **contains** a reference to `RealImage` (aggregation/composition)
+- Client (`ProxyPatternDemo`) **uses** `ProxyImage` through the `Image` interface
+
+This structure allows the proxy to control when and how the real object is accessed, enabling features like lazy loading, access control, and cross-cutting concerns.
+
+---
+
 ## Why Use the Proxy Pattern?
 
 ### The Problem: Direct Access Issues

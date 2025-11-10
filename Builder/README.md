@@ -5,6 +5,144 @@
 
 ---
 
+## Pattern Structure
+
+The following diagrams illustrate the Builder pattern structure, showing two different implementations: a Director-based builder for drinks and a Director-based builder for documents.
+
+### Diagram 1: Director-Based Builder (Starbucks Example)
+
+![Builder Pattern Diagram - Starbucks Example](builder_diagram_1.jpeg)
+
+**Diagram Components:**
+
+1. **`Starbucks` Class** (Product)
+   - The product being constructed
+   - Attributes:
+     - `size: String` (private) - Size of the drink
+     - `drink: String` (private) - Type of drink
+   - Methods:
+     - `Starbucks()` - Constructor
+     - `setSize(String): void` - Sets the size
+     - `setDrink(String): void` - Sets the drink type
+
+2. **`StarbucksBuilder` Class** (Abstract Builder)
+   - Abstract builder interface defining the construction steps
+   - Holds a reference to the `Starbucks` product (association: `#starbucks`, multiplicity: `0..1`)
+   - Methods:
+     - `StarbucksBuilder()` - Constructor
+     - `getStarbucks(): Starbucks` - Retrieves the built product
+     - `createStarbucks(): void` - Initializes a new `Starbucks` object
+     - `buildSize(): void` - Abstract method for building the size component
+     - `buildDrink(): void` - Abstract method for building the drink component
+
+3. **`CoffeeBuilder` Class** (Concrete Builder)
+   - Concrete implementation of `StarbucksBuilder` for coffee drinks
+   - Implements `buildSize()` and `buildDrink()` methods
+   - Provides specific implementation for constructing coffee drinks
+
+4. **`TeaBuilder` Class** (Concrete Builder)
+   - Concrete implementation of `StarbucksBuilder` for tea drinks
+   - Implements `buildSize()` and `buildDrink()` methods
+   - Provides specific implementation for constructing tea drinks
+
+5. **`Waiter` Class** (Director)
+   - Orchestrates the building process
+   - Holds a reference to `StarbucksBuilder` (association: `-starbucksBuilder`, multiplicity: `0..1`)
+   - Methods:
+     - `Waiter()` - Constructor
+     - `setStarbucksBuilder(StarbucksBuilder): void` - Sets the concrete builder to use
+     - `getstarbucksDrink(): Starbucks` - Gets the final built drink
+     - `constructStarbucks(): void` - Directs the builder to construct the `Starbucks` object by calling `buildSize()` and `buildDrink()`
+
+6. **`Customer` Class** (Client)
+   - The client that initiates the building process
+   - Method: `main(String[]): void` - Entry point for the application
+
+**Key Relationships:**
+- `CoffeeBuilder` and `TeaBuilder` **inherit** from `StarbucksBuilder` (generalization)
+- `StarbucksBuilder` **has** a `Starbucks` product (association, multiplicity: `0..1`)
+- `Waiter` **has** a `StarbucksBuilder` (association, multiplicity: `0..1`)
+- `Customer` **uses** `Waiter` to construct drinks
+
+**Pattern Flow:**
+1. Client (`Customer`) creates a `Waiter` (Director)
+2. Client sets a concrete builder (`CoffeeBuilder` or `TeaBuilder`) on the `Waiter`
+3. Client calls `constructStarbucks()` on the `Waiter`
+4. `Waiter` directs the builder to call `createStarbucks()`, `buildSize()`, and `buildDrink()`
+5. Client retrieves the final `Starbucks` product via `getstarbucksDrink()`
+
+### Diagram 2: Director-Based Builder (Document Example)
+
+![Builder Pattern Diagram - Document Example](builder_diagram_2.jpeg)
+
+**Diagram Components:**
+
+1. **`Document` Class** (Product)
+   - Abstract product interface/class
+   - Represents the document being constructed
+   - Serves as the base for `PDFDocument` and `XMLDocument`
+
+2. **`PDFDocument` Class** (Concrete Product)
+   - Concrete product representing a PDF document
+   - Extends `Document`
+
+3. **`XMLDocument` Class** (Concrete Product)
+   - Concrete product representing an XML document
+   - Extends `Document`
+
+4. **`DocBuilder` Class** (Abstract Builder)
+   - Abstract builder interface defining document construction steps
+   - Methods:
+     - `createDocument(): void` - Initializes the document product
+     - `createText(): void` - Adds text parts to the document
+     - `createImages(): void` - Adds image parts to the document
+     - `getDocument(): Document` - Returns the constructed `Document` object
+   - Has a dependency relationship to `Document` (creates)
+
+5. **`PDFDocBuilder` Class** (Concrete Builder)
+   - Concrete implementation of `DocBuilder` for PDF documents
+   - Implements `createDocument()`, `createText()`, `createImages()`, and `getDocument()`
+   - Creates `PDFDocument` instances
+
+6. **`XMLDocBuilder` Class** (Concrete Builder)
+   - Concrete implementation of `DocBuilder` for XML documents
+   - Implements `createDocument()`, `createText()`, `createImages()`, and `getDocument()`
+   - Creates `XMLDocument` instances
+
+7. **`DocCreationEngine` Class** (Director)
+   - Orchestrates the document building process
+   - Method: `createDocument(DocBuilder)` - Takes a `DocBuilder` and directs it to construct a document
+   - Has a composition relationship with `DocBuilder` (contains)
+
+8. **`Client` Class** (Client)
+   - The client that initiates the document creation process
+   - Invokes the `DocCreationEngine` to create documents
+
+**Key Relationships:**
+- `PDFDocBuilder` and `XMLDocBuilder` **extend** `DocBuilder` (inheritance)
+- `PDFDocument` and `XMLDocument` **extend** `Document` (inheritance)
+- `DocBuilder` **creates** `Document` (dependency)
+- `DocCreationEngine` **contains** `DocBuilder` (composition)
+- `Client` **invokes** `DocCreationEngine` (dependency)
+
+**Pattern Flow:**
+1. Client creates a `DocCreationEngine` (Director)
+2. Client creates a concrete builder (`PDFDocBuilder` or `XMLDocBuilder`)
+3. Client calls `createDocument(builder)` on the `DocCreationEngine`
+4. `DocCreationEngine` directs the builder to call `createDocument()`, `createText()`, and `createImages()`
+5. Client retrieves the final `Document` product via `getDocument()`
+
+**Builder Pattern Roles:**
+- **Director**: `Waiter` (Diagram 1) or `DocCreationEngine` (Diagram 2) - Orchestrates the building process
+- **Abstract Builder**: `StarbucksBuilder` (Diagram 1) or `DocBuilder` (Diagram 2) - Defines construction steps
+- **Concrete Builders**: `CoffeeBuilder`, `TeaBuilder` (Diagram 1) or `PDFDocBuilder`, `XMLDocBuilder` (Diagram 2) - Implement construction steps
+- **Product**: `Starbucks` (Diagram 1) or `Document` (Diagram 2) - The object being constructed
+- **Concrete Products**: `PDFDocument`, `XMLDocument` (Diagram 2) - Specific product types
+
+Both diagrams demonstrate how the Builder pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations through different concrete builders.
+
+---
+
 ## Why Use the Builder Pattern?
 
 ### The Problem: Multiple Constructors (Telescoping Constructor Anti-Pattern)

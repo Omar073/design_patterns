@@ -5,6 +5,67 @@
 
 ---
 
+## Pattern Structure
+
+The following diagram illustrates the Decorator pattern structure:
+
+![Decorator Pattern Diagram](decorator_diagram.jpeg)
+
+**Diagram Components:**
+
+1. **`Beverage` Abstract Class** (Abstract Component)
+   - Acts as the abstract component class
+   - Attributes: `description`
+   - Methods: `getDescription()`, `cost()`, and other useful methods
+   - Base class for all beverages
+
+2. **Concrete Components** (Coffee Types)
+   - Four concrete classes inherit from `Beverage`:
+     - `HouseBlend`
+     - `DarkRoast`
+     - `Espresso`
+     - `Decaf`
+   - Each implements `cost()` method
+   - These are the base coffee types that can be decorated
+
+3. **`CondimentDecorator` Abstract Class** (Abstract Decorator)
+   - Inherits from `Beverage`
+   - Has a composition relationship with `Beverage` (component)
+   - Methods: `getDescription()`
+   - Base class for all condiment decorators
+   - **Key**: Contains a reference to a `Beverage` object (wraps it)
+
+4. **Concrete Decorators** (Condiments)
+   - Four concrete classes inherit from `CondimentDecorator`:
+     - `Milk`
+     - `Mocha`
+     - `Soy`
+     - `Whip`
+   - Each has:
+     - Attribute: `Beverage beverage` (composition relationship)
+     - Methods: `cost()`, `getDescription()`
+   - These decorators wrap and enhance `Beverage` objects
+
+**Key Relationships:**
+- **Inheritance**: 
+  - Concrete beverages (`HouseBlend`, `DarkRoast`, `Espresso`, `Decaf`) inherit from `Beverage`
+  - `CondimentDecorator` inherits from `Beverage`
+  - Concrete decorators (`Milk`, `Mocha`, `Soy`, `Whip`) inherit from `CondimentDecorator`
+- **Composition**: 
+  - `CondimentDecorator` (and all its subclasses) holds a reference to a `Beverage` object
+  - This allows decorators to wrap and enhance any `Beverage` component
+  - Decorators can wrap other decorators, creating a chain
+
+**Why Both `cost()` and `getDescription()`?**
+- Decorators must implement both methods because they need to:
+  - Add their own cost to the wrapped component's cost
+  - Add their own description to the wrapped component's description
+- This allows decorators to enhance both the cost and description dynamically
+
+This structure allows beverages to be wrapped with multiple decorators (e.g., a `DarkRoast` with `Milk` and `Mocha`) to dynamically add cost and description details without modifying the base `Beverage` classes.
+
+---
+
 ## Why Use the Decorator Pattern?
 
 ### The Problem: Subclass Explosion
@@ -342,7 +403,11 @@ window = new BorderDecorator(window);
 
 ## File Examples
 
-- **`DecoratorDemo.java`**: Coffee with condiments example showing decorator composition
+- **`DecoratorDemo.java`**: Coffee with condiments example showing decorator composition (composition-based)
+- **`FileDecoratorDemo.java`**: File encryption and compression example (inheritance-based approach)
+- **`FileDecoratorChainingDemo.java`**: File encryption and compression with decorator chaining (composition-based, proper Decorator pattern)
+- **`FileDecoratorPatternDemo.java`**: File encryption and compression with abstract decorator (matches diagram structure)
+- **`ShapeDecoratorDemo.java`**: Shape with red border decorator example (composition-based, proper Decorator pattern)
 
 ---
 

@@ -4,6 +4,53 @@ This folder contains examples of three related creational design patterns: **Sim
 
 ---
 
+## Pattern Structure
+
+The following diagram illustrates the Simple Factory pattern structure:
+
+![Simple Factory Pattern Diagram](factory_diagram.jpeg)
+
+**Diagram Components:**
+
+1. **`Shape` Interface** (`<<Interface>>`)
+   - Defines the common contract for all shapes
+   - Method: `+draw(): void`
+   - Serves as the product interface that all concrete shapes implement
+
+2. **Concrete Shape Classes:**
+   - **`Circle` Class**: Implements `Shape` interface, provides `+draw(): void` method
+   - **`Square` Class**: Implements `Shape` interface, provides `+draw(): void` method
+   - **`Rectangle` Class**: Implements `Shape` interface, provides `+draw(): void` method
+   - All three classes are concrete implementations of the `Shape` interface
+
+3. **`ShapeFactory` Class** (Factory)
+   - Encapsulates the object creation logic
+   - Method: `+getShape(): Shape` - Creates and returns `Shape` objects based on input
+   - Responsible for instantiating the appropriate concrete shape class
+   - Hides the concrete class instantiation from the client
+
+4. **`FactoryPatternDemo` Class** (Client)
+   - Uses the `ShapeFactory` to obtain `Shape` objects
+   - Method: `+main(): void` - Entry point for the application
+   - Depends on `ShapeFactory` to create shapes (relationship: "asks")
+   - Does not need to know about concrete shape classes (`Circle`, `Square`, `Rectangle`)
+
+**Key Relationships:**
+- `Circle`, `Square`, and `Rectangle` **implement** `Shape` interface (realization)
+- `ShapeFactory` **creates** `Shape` objects (dependency/creation)
+- `FactoryPatternDemo` **uses** `ShapeFactory` to obtain shapes (dependency: "asks")
+- Client depends on factory, factory depends on concrete products
+
+**Pattern Flow:**
+1. Client (`FactoryPatternDemo`) requests a shape from `ShapeFactory`
+2. `ShapeFactory` decides which concrete shape class to instantiate based on input
+3. Factory creates and returns the appropriate `Shape` object
+4. Client uses the shape through the `Shape` interface without knowing the concrete class
+
+This structure encapsulates object creation logic in the factory, allowing clients to create objects without knowing their concrete classes, following the Simple Factory pattern.
+
+---
+
 ## File Overview
 
 | File | Pattern | Example Domain | Key Concept |

@@ -29,9 +29,6 @@ This repository contains practical implementations of design patterns from the G
 5. **[Proxy](Proxy/)** - Provides a placeholder or surrogate for another object to control access
 6. **[Decorator](Decorator/)** - Dynamically adds behavior to objects without altering their structure
 7. **[Adapter](Adapter/)** - Allows incompatible interfaces to work together
-
-### Behavioral Patterns
-
 8. **[Facade](Facade/)** - Provides a simplified interface to a complex subsystem
 
 ## Repository Structure
@@ -133,7 +130,7 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 | [Proxy](Proxy/) | Access control placeholder | Structural |
 | [Decorator](Decorator/) | Dynamic behavior addition | Structural |
 | [Adapter](Adapter/) | Interface compatibility | Structural |
-| [Facade](Facade/) | Simplified subsystem interface | Behavioral |
+| [Facade](Facade/) | Simplified subsystem interface | Structural |
 
 ---
 

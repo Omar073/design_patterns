@@ -25,8 +25,3 @@ img.display(); // loads then displays
 ### Compare: Facade vs Proxy
 - Proxy adds/controls behavior around one object; Facade simplifies a subsystem API.
 - Client cannot directly access real subject through Proxy (by design); Facade exposes a simpler path to reachable subsystem.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

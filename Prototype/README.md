@@ -32,8 +32,3 @@ Circle b = new Circle(10);
 ### Notes
 - Prefer deep copy for mutable nested objects; `String`/wrappers are fine with shallow.
 - Registry centralizes prototypes and keeps client code simple.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

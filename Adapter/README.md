@@ -24,8 +24,3 @@ hole.fits(peg);
 ### Compare
 - **vs Facade**: Facade simplifies a subsystem; Adapter changes one object’s interface.
 - **vs Decorator**: Decorator preserves interface and adds behavior; Adapter changes interface.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

@@ -25,8 +25,3 @@ screen.down(); amp.on(); amp.setVolume(7); tuner.on(); dvd.on(); dvd.play("Incep
 
 ### Facade vs Proxy
 - Proxy adds behavior to access a single object; Facade simplifies access to a subsystem of objects.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

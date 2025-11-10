@@ -25,8 +25,3 @@ CarTelescoping c = new CarTelescoping("V8", 4, "black", true, true);
 ### Compare
 - **vs Abstract Factory**: AF creates families; Builder assembles one complex object.
 - **vs Facade**: Facade simplifies a subsystem; Builder hides construction steps.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

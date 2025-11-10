@@ -22,8 +22,3 @@ Coffee c = new Sugar(new Milk(new SimpleCoffee()));
 ### Compare
 - **vs Adapter**: Adapter changes interface; Decorator preserves interface and adds behavior.
 - **vs Facade**: Facade simplifies; Decorator augments one object’s responsibilities.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

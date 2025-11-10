@@ -30,8 +30,3 @@ Logger b = new Logger(); // divergent instances cause inconsistency
 ### Notes
 - Prefer dependency injection where feasible.
 - Use `enum` to resist reflection/serialization attacks.
-
-### References
-- Slides 1–6.pdf, Labs 1–6.pdf
-
-

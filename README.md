@@ -98,12 +98,6 @@ Each demo includes a `main` method that demonstrates the pattern in action, show
 - **Code Comparisons**: Side-by-side examples showing code with and without the pattern
 - **Pattern Relationships**: Discussions on similarities and differences between related patterns
 
-## Learning Resources
-
-This repository complements the following course materials:
-- `Slides 1-6.pdf` - Design pattern slides
-- `Labs 1-6.pdf` - Lab exercises and examples
-
 ## Pattern Comparisons
 
 See [Comparisons.md](Comparisons.md) for detailed comparisons between:
@@ -119,7 +113,7 @@ This is an educational repository. Each pattern directory is self-contained with
 - Detailed comments explaining each part
 - Comprehensive markdown documentation
 
-For contributions, feel free to contact me on [omarahmed7703@gmail.com] or fork the repo.
+For contributions, feel free to contact me on omarahmed7703@gmail.com or fork the repo.
 
 ## Notes
 

@@ -316,6 +316,7 @@ StaticLogger.printLogs();
 
 - **`EagerSingletonDemo.java`**: Eager initialization (thread-safe, created at class loading)
 - **`LazySingletonDemo.java`**: Lazy initialization (created on first access, not thread-safe)
+- **`SynchronizedSingletonDemo.java`**: Synchronized lazy initialization (thread-safe using synchronized keyword, locks method so only one thread can access at a time)
 
 ---
 

@@ -76,7 +76,7 @@ class PrototypeRegistry {
     }
 }
 
-public class ShapeRegistryDemo {
+public class PrototypeRegistryDemo {
     public static void main(String[] args) {
         System.out.println("== Registry ==");
         PrototypeRegistry registry = new PrototypeRegistry();

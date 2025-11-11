@@ -13,6 +13,7 @@
 // Abstract products
 interface DatabaseConnection {
     void connect();
+
     void executeQuery(String query);
 }
 
@@ -25,7 +26,7 @@ class MySQLConnection implements DatabaseConnection {
     public void connect() {
         System.out.println("Connecting to MySQL database...");
     }
-    
+
     public void executeQuery(String query) {
         System.out.println("Executing MySQL query: " + query);
     }
@@ -36,7 +37,7 @@ class OracleConnection implements DatabaseConnection {
     public void connect() {
         System.out.println("Connecting to Oracle database...");
     }
-    
+
     public void executeQuery(String query) {
         System.out.println("Executing Oracle query: " + query);
     }
@@ -59,7 +60,7 @@ class HTMLReportGenerator implements ReportGenerator {
 class DatabaseConnectionFactory {
     public DatabaseConnection createConnection(String dbType) {
         if (dbType == null) {
-            return null;
+            throw new IllegalArgumentException("Database type cannot be null");
         }
         if (dbType.equalsIgnoreCase("MYSQL")) {
             return new MySQLConnection();
@@ -74,7 +75,7 @@ class DatabaseConnectionFactory {
 class ReportGeneratorFactory {
     public ReportGenerator createReportGenerator(String format) {
         if (format == null) {
-            return null;
+            throw new IllegalArgumentException("Report format cannot be null");
         }
         if (format.equalsIgnoreCase("PDF")) {
             return new PDFReportGenerator();
@@ -89,16 +90,16 @@ class ReportGeneratorFactory {
 class ReportingClient {
     private DatabaseConnection dbConnection;
     private ReportGenerator reportGenerator;
-    
+
     public ReportingClient(String dbType, String reportFormat) {
         // Use simple factories to create products independently
         DatabaseConnectionFactory dbFactory = new DatabaseConnectionFactory();
         ReportGeneratorFactory reportFactory = new ReportGeneratorFactory();
-        
+
         this.dbConnection = dbFactory.createConnection(dbType);
         this.reportGenerator = reportFactory.createReportGenerator(reportFormat);
     }
-    
+
     public void generateReport(String query) {
         dbConnection.connect();
         dbConnection.executeQuery(query);
@@ -111,22 +112,22 @@ class ReportingClient {
 public class Problem1Demo {
     public static void main(String[] args) {
         System.out.println("=== Problem 1: Enterprise Reporting System ===\n");
-        
+
         // MySQL with PDF report
         System.out.println("--- MySQL Database with PDF Report ---");
         ReportingClient mysqlPdfClient = new ReportingClient("MySQL", "PDF");
         mysqlPdfClient.generateReport("SELECT * FROM users");
-        
+
         // Oracle with HTML report
         System.out.println("\n--- Oracle Database with HTML Report ---");
         ReportingClient oracleHtmlClient = new ReportingClient("Oracle", "HTML");
         oracleHtmlClient.generateReport("SELECT * FROM employees");
-        
+
         // MySQL with HTML report (shows independence)
         System.out.println("\n--- MySQL Database with HTML Report ---");
         ReportingClient mysqlHtmlClient = new ReportingClient("MySQL", "HTML");
         mysqlHtmlClient.generateReport("SELECT * FROM products");
-        
+
         System.out.println("\n✓ Simple Factory allows independent creation of database and report format!");
         System.out.println("✓ No need for Abstract Factory since products are independent.");
     }

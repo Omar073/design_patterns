@@ -69,7 +69,7 @@ class Circle implements Shape {
     }
 }
 
-public class CircleShallowDeepCloneDemo {
+public class PrototypeShallowDeepDemo {
     public static void main(String[] args) {
         System.out.println("== Shallow vs Deep clone (shared vs copied nested object) ==");
         Circle original = new Circle(5, "black", new Point(5, 5));

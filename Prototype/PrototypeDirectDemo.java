@@ -66,7 +66,7 @@ class Rectangle implements Shape {
     }
 }
 
-public class ShapeCloningDemo {
+public class PrototypeDirectDemo {
     public static void main(String[] args) {
         System.out.println("== Direct prototype cloning ==");
         Shape circleProto = new Circle(10, "red");

@@ -13,6 +13,7 @@
 // Abstract product
 interface Notification {
     void send(String recipient, String message);
+
     String getType();
 }
 
@@ -21,7 +22,7 @@ class SMSNotification implements Notification {
     public void send(String recipient, String message) {
         System.out.println("Sending SMS to " + recipient + ": " + message);
     }
-    
+
     public String getType() {
         return "SMS";
     }
@@ -33,7 +34,7 @@ class EmailNotification implements Notification {
         System.out.println("  Subject: Notification");
         System.out.println("  Body: " + message);
     }
-    
+
     public String getType() {
         return "Email";
     }
@@ -45,7 +46,7 @@ class PushNotification implements Notification {
         System.out.println("  Title: Alert");
         System.out.println("  Message: " + message);
     }
-    
+
     public String getType() {
         return "Push";
     }
@@ -55,7 +56,7 @@ class PushNotification implements Notification {
 class NotificationFactory {
     public Notification createNotification(String notificationType) {
         if (notificationType == null) {
-            return null;
+            throw new IllegalArgumentException("Notification type cannot be null");
         }
         if (notificationType.equalsIgnoreCase("SMS")) {
             return new SMSNotification();
@@ -71,11 +72,11 @@ class NotificationFactory {
 // Client code - doesn't know about concrete implementations
 class NotificationService {
     private NotificationFactory factory;
-    
+
     public NotificationService() {
         this.factory = new NotificationFactory();
     }
-    
+
     public void sendNotification(String notificationType, String recipient, String message) {
         // Client doesn't know which concrete notification is created
         Notification notification = factory.createNotification(notificationType);
@@ -88,19 +89,19 @@ class NotificationService {
 public class Problem3Demo {
     public static void main(String[] args) {
         System.out.println("=== Problem 3: Notification Service ===\n");
-        
+
         NotificationService service = new NotificationService();
-        
+
         // Client can use any notification type without knowing implementation
         System.out.println("--- Using SMS Notification ---");
         service.sendNotification("SMS", "+1234567890", "Your order has been shipped!");
-        
+
         System.out.println("\n--- Using Email Notification ---");
         service.sendNotification("EMAIL", "user@example.com", "Your order has been shipped!");
-        
+
         System.out.println("\n--- Using Push Notification ---");
         service.sendNotification("PUSH", "device_abc123", "Your order has been shipped!");
-        
+
         System.out.println("\n✓ Simple Factory is sufficient - only one product type (Notification)!");
         System.out.println("✓ Abstract Factory is for creating FAMILIES of related products.");
     }

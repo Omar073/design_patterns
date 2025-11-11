@@ -63,7 +63,7 @@ public class WithoutFacadeDemo {
         amp.setVolume(7);
         tuner.on();
         dvd.on();
-        dvd.play("Inception");
+        dvd.play("Movie");
 
         // Tear down
         dvd.off();
@@ -74,4 +74,3 @@ public class WithoutFacadeDemo {
         System.out.println("\n⚠ Without facade, client must know subsystem details and correct sequence");
     }
 }
-

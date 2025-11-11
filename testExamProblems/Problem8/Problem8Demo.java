@@ -7,7 +7,8 @@
  */
 
 // Prototype interface
-interface Enemy extends Cloneable {
+// Note: Using copy constructor pattern instead of Object.clone() for better control
+interface Enemy {
     Enemy clone();
     void attack();
     void display();

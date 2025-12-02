@@ -17,11 +17,13 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Adapter vs Decorator vs Facade](#adapter-vs-decorator-vs-facade)
    - [Proxy vs Facade](#proxy-vs-facade)
    - [Proxy vs Decorator](#proxy-vs-decorator)
+   - [Bridge vs Decorator](#bridge-vs-decorator)
    - [Adapter vs Proxy](#adapter-vs-proxy)
 
 3. [Cross-Category Comparisons](#cross-category-comparisons)
    - [Facade vs Builder/Factory](#facade-vs-builderfactory)
    - [Builder vs Facade](#builder-vs-facade)
+   - [Flyweight vs Singleton vs Prototype](#flyweight-vs-singleton-vs-prototype)
 
 ---
 
@@ -973,6 +975,38 @@ redCircle.draw();  // Circle + red border
 
 ---
 
+### Bridge vs Decorator
+
+#### Overview
+
+Both patterns use **composition** to work with another object, but they solve **different problems**:
+
+- **Bridge** splits a class into **Abstraction** and **Implementor** hierarchies so each can vary independently.
+- **Decorator** wraps a component to **add or layer behavior** dynamically while keeping the same interface.
+
+| Aspect | Bridge | Decorator |
+|--------|--------|-----------|
+| **Intent** | Separate abstraction from implementation | Add behavior dynamically |
+| **Structure** | Two parallel hierarchies (Abstraction ↔ Implementor) | Component plus chainable decorators |
+| **Variation** | Two independent dimensions (e.g., Transport, Engine) | Many optional features around one type |
+| **Interface** | Abstraction usually defines its own API | Decorator preserves Component interface |
+
+#### Code Intuition
+
+- **Bridge**: `new Car(new GasEngine())` vs `new Plane(new ElectricEngine())` – combine any transport with any engine.
+- **Decorator**: `new Milk(new Sugar(new SimpleCoffee()))` – wrap a coffee with extra responsibilities.
+
+#### When to Use Which
+
+- Use **Bridge** when:
+  - You have **two dimensions** that can grow independently (e.g., `Shape` vs `Color`, `Transport` vs `Engine`).
+  - You want to avoid a class explosion like `RedCircle`, `BlueCircle`, `RedSquare`, `BlueSquare`, etc.
+- Use **Decorator** when:
+  - You want to **add responsibilities** to individual objects at runtime.
+  - You have many optional features and want to avoid subclass explosion.
+
+---
+
 ### Adapter vs Proxy
 
 #### Overview
@@ -1214,6 +1248,48 @@ computer.startComputer();  // Hides complex sequence
 
 ---
 
+### Flyweight vs Singleton vs Prototype
+
+#### Overview
+
+These three patterns all deal with **object instances**, but in different ways:
+
+- **Singleton**: ensures there is **exactly one** instance of a class.
+- **Prototype**: creates **new instances by cloning** existing ones.
+- **Flyweight**: lets **many logical objects share intrinsic state** (data).
+
+| Aspect | Singleton | Prototype | Flyweight |
+|--------|-----------|-----------|-----------|
+| **Goal** | One shared instance | Efficient cloning | Save memory |
+| **Instances** | Single instance | Many full objects | Many objects share few flyweights |
+| **State** | All state in one object | Each copy has full state | Intrinsic shared, extrinsic external |
+| **Best for** | Global services | Expensive-to-create objects | Huge numbers of similar objects |
+
+#### Code Intuition
+
+- **Singleton**: `Logger.getInstance()` always returns the same logger instance.
+- **Prototype**: `Circle copy = prototype.clone();` gives a new circle you can tweak independently.
+- **Flyweight**: `TreeFactory.getTreeType("Oak", GREEN)` returns a shared `TreeType` used by many `Tree` positions.
+
+#### Key Differences
+
+1. **Number of instances**
+   - Singleton: exactly **one** instance.
+   - Prototype: **many** independent instances.
+   - Flyweight: **many logical objects**, but backed by a **small pool of shared flyweights**.
+
+2. **Memory focus**
+   - Singleton: saves memory by not duplicating a shared object.
+   - Prototype: focuses on **creation speed/flexibility**, not memory reduction.
+   - Flyweight: aggressively reduces memory by sharing intrinsic data.
+
+3. **Typical use cases**
+   - Singleton: configuration, logging, caches, connection pools.
+   - Prototype: shapes, GUI elements, or objects with expensive initialization that you want to duplicate.
+   - Flyweight: characters in documents, trees in a forest, tiles or particles in games.
+
+---
+
 ## Quick Reference Table
 
 | Pattern | Intent | Key Characteristic | When to Use |
@@ -1225,7 +1301,9 @@ computer.startComputer();  // Hides complex sequence
 | **Singleton** | Single instance | One instance globally | Need single shared instance |
 | **Adapter** | Convert interface | Interface translation | Incompatible interfaces |
 | **Decorator** | Add behavior | Dynamic enhancement | Need to add features dynamically |
+| **Bridge** | Separate abstraction from implementation | Two independent dimensions | Avoid class explosion from combinations |
 | **Facade** | Simplify subsystem | Simplified interface | Complex subsystem |
+| **Flyweight** | Share intrinsic state | Many objects share common data | Need memory savings with many similar objects |
 | **Proxy** | Control access | Access management | Lazy loading, access control |
 
 ---

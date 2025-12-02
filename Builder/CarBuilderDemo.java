@@ -1,7 +1,13 @@
 // Builder Pattern – Fluent Builder Example
-// Demonstrates a fluent inner static builder for immutable Car objects
+// Demonstrates a fluent *inner static* builder for immutable Car objects.
+// Here the builder is defined *inside* the product class as Car.Builder,
+// unlike the director-based examples where the builder is a separate class.
+// This style is common in Java APIs when:
+//   - you build a single complex product type (Car),
+//   - you don't need a separate Director object,
+//   - and you want a fluent, discoverable API like new Car.Builder(...).color(...).build().
 
-// Fluent builder product
+// Fluent builder product (Car owns its own Builder type)
 class Car {
     private final String engine;
     private final int wheels;
@@ -22,6 +28,9 @@ class Car {
                 ", hasSunroof=" + hasSunroof + ", hasGPS=" + hasGPS + "}";
     }
 
+    // Inner static Builder:
+    // - Scoped inside Car so its only purpose is to build Car instances.
+    // - Called from the outside as new Car.Builder(...).
     public static class Builder {
         // Required parameters
         private final String engine;

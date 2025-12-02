@@ -1,7 +1,12 @@
 // Builder Pattern – Director-based Builder Example
-// Classic director (Waiter) building Palestine coffee/tea drinks
+// Classic Director (Waiter) building different Palestine drinks (coffee / tea)
+// This example matches the textbook Builder structure:
+//   - Product:       PalestineDrink
+//   - Builder:       PalestineDrinkBuilder
+//   - ConcreteBuilder: PalestineTeaBuilder / PalestineCoffeeBuilder
+//   - Director:      Waiter orchestrates the building steps
 
-// Product
+// Product: the complex object being built step‑by‑step
 class PalestineDrink {
     private String size;
     private String drink;
@@ -19,7 +24,7 @@ class PalestineDrink {
     }
 }
 
-// Abstract builder
+// Abstract Builder: declares building steps for the product
 abstract class PalestineDrinkBuilder {
     protected PalestineDrink palestineDrink;
 
@@ -36,7 +41,7 @@ abstract class PalestineDrinkBuilder {
     public abstract void buildDrink();
 }
 
-// Concrete builders
+// Concrete Builders: provide specific implementations of the steps
 class PalestineTeaBuilder extends PalestineDrinkBuilder {
     public void buildSize() {
         palestineDrink.setSize("large");
@@ -57,7 +62,8 @@ class PalestineCoffeeBuilder extends PalestineDrinkBuilder {
     }
 }
 
-// Director
+// Director: knows *how* to build a drink (the sequence of steps),
+// but not *which* concrete drink it is – that depends on the builder.
 class Waiter {
     private PalestineDrinkBuilder builder;
 
@@ -79,14 +85,17 @@ class Waiter {
 public class DirectorBuilderDemo {
     public static void main(String[] args) {
         System.out.println("== Director-based Builder ==");
+
+        // Build a coffee using the coffee builder
         Waiter waiter = new Waiter();
-        PalestineDrinkBuilder coffee = new PalestineCoffeeBuilder();
-        waiter.setPalestineDrinkBuilder(coffee);
+        PalestineDrinkBuilder coffeeBuilder = new PalestineCoffeeBuilder();
+        waiter.setPalestineDrinkBuilder(coffeeBuilder);
         waiter.construct();
         System.out.println(waiter.getDrink());
 
-        PalestineDrinkBuilder tea = new PalestineTeaBuilder();
-        waiter.setPalestineDrinkBuilder(tea);
+        // Reuse the same Director with a different builder to build tea
+        PalestineDrinkBuilder teaBuilder = new PalestineTeaBuilder();
+        waiter.setPalestineDrinkBuilder(teaBuilder);
         waiter.construct();
         System.out.println(waiter.getDrink());
     }

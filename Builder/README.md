@@ -405,7 +405,14 @@ car.setGps(true);
 - Most common variant
 - Builder is an inner static class of the product
 - Fluent interface (method chaining)
-- Example: `FluentBuilderDemo.java`
+- Example: `CarBuilderDemo.java` (uses `Car.Builder`)
+- **Why an inner builder here?**
+  - The builder is used **only** to construct `Car` objects, so it is natural to nest it inside `Car` as `Car.Builder`.
+  - This makes the API very discoverable and fluent for clients: `new Car.Builder("V8", 4).color("red").build();`.
+  - No separate Director is needed; the client directly orchestrates the steps through the builder methods.
+  - This contrasts with `DirectorBuilderDemo.java` / `DocumentBuilderDemo.java`, where:
+    - the builder is a **separate type** (`PalestineDrinkBuilder`, `DocBuilder`),
+    - and a **Director** (`Waiter`, `DocCreationEngine`) controls the building sequence and can swap different builders.
 
 ### 2. Director-based Builder (Classic)
 - Uses a Director class to control construction steps

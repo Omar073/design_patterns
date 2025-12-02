@@ -128,10 +128,10 @@ class DocCreationEngine {
 public class DocumentBuilderDemo {
     public static void main(String[] args) {
         System.out.println("== Director-based Builder Pattern ==\n");
-
+        DocCreationEngine engine = new DocCreationEngine();
+        
         // Creating PDF Document
         System.out.println("--- Creating PDF Document ---");
-        DocCreationEngine engine = new DocCreationEngine();
         PDFDocBuilder pdfDocBuilder = new PDFDocBuilder();
         engine.generateDocument(pdfDocBuilder);
         PDFDocument pdfDocument = (PDFDocument) pdfDocBuilder.getDocument();

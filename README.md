@@ -1,6 +1,6 @@
 # Design Patterns in Java
 
-A comprehensive collection of 8 essential design patterns implemented in Java, with detailed examples, explanations, and comparisons.
+A comprehensive collection of  essential design patterns implemented in Java, with detailed examples, explanations, and comparisons.
 
 ## Overview
 
@@ -30,6 +30,8 @@ This repository contains practical implementations of design patterns from the G
 6. **[Decorator](Decorator/)** - Dynamically adds behavior to objects without altering their structure
 7. **[Adapter](Adapter/)** - Allows incompatible interfaces to work together
 8. **[Facade](Facade/)** - Provides a simplified interface to a complex subsystem
+9. **[Bridge](Bridge/)** - Decouples an abstraction from its implementation so both can vary independently
+10. **[Flyweight](Flyweight/)** - Reduces memory usage by sharing common object state between many objects
 
 ## Repository Structure
 
@@ -71,6 +73,14 @@ design_patterns/
 ├── Facade/
 │   ├── WithFacadeDemo.java         # Home theater with facade
 │   ├── WithoutFacadeDemo.java      # Home theater without facade
+│   └── README.md
+├── Bridge/
+│   ├── BridgeTransportDemo.java    # Transport example (abstraction/implementation split)
+│   ├── BridgeGuiApiDemo.java       # GUI/API bridge example
+│   └── README.md
+├── Flyweight/
+│   ├── FlyweightForestDemo.java    # Forest (shared tree types) example
+│   ├── FlyweightTextEditorDemo.java# Text editor (shared glyphs) example
 │   └── README.md
 └── testExamProblems/               # Test exam problems with pattern solutions
     ├── Problem1/                  # Factory - Enterprise Reporting
@@ -168,6 +178,8 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 | [Decorator](Decorator/) | Dynamic behavior addition | Structural |
 | [Adapter](Adapter/) | Interface compatibility | Structural |
 | [Facade](Facade/) | Simplified subsystem interface | Structural |
+| [Bridge](Bridge/) | Abstraction/implementation decoupling | Structural |
+| [Flyweight](Flyweight/) | Shared state for memory efficiency | Structural |
 
 ---
 

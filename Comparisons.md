@@ -1325,3 +1325,5 @@ These three patterns all deal with **object instances**, but in different ways:
 - **Add behavior?** → Decorator
 - **Control access?** → Proxy
 - **Simplify subsystem?** → Facade
+- **Separate abstraction from implementation dimensions?** → Bridge
+- **Massive number of similar objects; share intrinsic state?** → Flyweight

@@ -1,5 +1,9 @@
 // Singleton Pattern – Synchronized Lazy Initialization Example
 // Thread-safe using synchronized keyword - locks method so only one thread can access at a time
+// Roles:
+//   - Singleton class: SynchronizedSingleton with synchronized getInstance()
+//   - Concern addressed: thread-safety for lazy initialization
+//   - Trade-off: synchronization overhead on every access
 
 class SynchronizedSingleton {
     private static SynchronizedSingleton instance;

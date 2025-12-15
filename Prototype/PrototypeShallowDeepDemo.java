@@ -1,5 +1,8 @@
 // Prototype Pattern – Shallow vs Deep Clone Example
 // Demonstrates the difference between shallow and deep cloning with nested objects
+// Takeaways:
+//   - shallow clone shares nested Point instance; moving it affects the original
+//   - deepClone copies the nested Point, so changes stay isolated
 
 class Point implements Cloneable {
     int x, y;

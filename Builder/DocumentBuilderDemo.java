@@ -1,6 +1,11 @@
 // Builder Pattern – Director-based Builder Example
 // Demonstrates building PDF and XML documents using the Director pattern
 // The Director (DocCreationEngine) orchestrates the construction process
+// Roles:
+//   - Product: Document (PDFDocument, XMLDocument)
+//   - Builder: DocBuilder with concrete builders PDFDocBuilder, XMLDocBuilder
+//   - Director: DocCreationEngine runs the steps in order
+//   - Client: main() selects a builder and reuses the same director logic
 
 // Interface - Document
 interface Document {
@@ -61,7 +66,7 @@ class PDFDocBuilder extends DocBuilder {
     private PDFDocument pdfDoc;
 
     public void createDocument() {
-        this.pdfDoc = new PDFDocument();
+        this.pdfDoc = new PDFDocument();   // allocate product
         System.out.println("Creating PDF Document.");
     }
 
@@ -90,7 +95,7 @@ class XMLDocBuilder extends DocBuilder {
     private XMLDocument xmlDoc;
 
     public void createDocument() {
-        this.xmlDoc = new XMLDocument();
+        this.xmlDoc = new XMLDocument();   // allocate product
         System.out.println("Creating XML Document.");
     }
 
@@ -133,7 +138,7 @@ public class DocumentBuilderDemo {
         // Creating PDF Document
         System.out.println("--- Creating PDF Document ---");
         PDFDocBuilder pdfDocBuilder = new PDFDocBuilder();
-        engine.generateDocument(pdfDocBuilder);
+        engine.generateDocument(pdfDocBuilder);          // run same sequence
         PDFDocument pdfDocument = (PDFDocument) pdfDocBuilder.getDocument();
         System.out.println("Result: " + pdfDocument);
 

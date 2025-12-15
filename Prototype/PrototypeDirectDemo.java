@@ -1,5 +1,9 @@
 // Prototype Pattern – Direct Cloning Example
 // Demonstrates direct prototype cloning without a registry
+// Roles:
+//   - Prototype interface: Shape with clone()
+//   - Concrete prototypes: Circle, Rectangle implement clone()
+//   - Client: main() clones prototypes directly (no registry)
 
 interface Shape extends Cloneable {
     Shape clone();

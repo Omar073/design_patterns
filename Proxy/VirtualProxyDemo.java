@@ -1,5 +1,9 @@
 // Proxy Pattern – Virtual Proxy Example
 // Lazy-loading heavy image - only loads from disk when actually needed
+// Roles:
+//   - Subject: Image
+//   - RealSubject: RealImage (expensive load)
+//   - Proxy: ProxyImage defers creation until display() is invoked
 
 interface Image {
     void display();

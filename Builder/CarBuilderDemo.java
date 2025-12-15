@@ -6,6 +6,10 @@
 //   - you build a single complex product type (Car),
 //   - you don't need a separate Director object,
 //   - and you want a fluent, discoverable API like new Car.Builder(...).color(...).build().
+// Quick map:
+//   - Product: Car
+//   - Builder: Car.Builder (inner static) with required + optional params
+//   - Client: main() builds multiple variants through chaining
 
 // Fluent builder product (Car owns its own Builder type)
 class Car {
@@ -16,7 +20,7 @@ class Car {
     private final boolean hasGPS;
 
     private Car(Builder b) {
-        this.engine = b.engine;
+        this.engine = b.engine; // copy required + optional fields
         this.wheels = b.wheels;
         this.color = b.color;
         this.hasSunroof = b.hasSunroof;
@@ -48,7 +52,7 @@ class Car {
         }
 
         public Builder color(String c) {
-            this.color = c;
+            this.color = c; // set optional value
             return this;
         }
 
@@ -63,7 +67,7 @@ class Car {
         }
 
         public Car build() {
-            return new Car(this);
+            return new Car(this); // hand builder state to Car ctor
         }
     }
 }

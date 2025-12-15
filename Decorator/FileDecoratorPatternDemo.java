@@ -1,6 +1,12 @@
 // Decorator Pattern – File Encryption and Compression
 // Demonstrates proper Decorator pattern with abstract decorator and concrete decorators
 // Shows decorator chaining: NormalFile -> EncryptionDecorator -> CompressionDecorator
+// Roles:
+//   - Component: File
+//   - Concrete component: NormalFile
+//   - Decorator base: FileDecorator
+//   - Concrete decorators: EncryptionDecorator, CompressionDecorator
+//   - Client: main() builds a chain to add behaviors dynamically
 
 // Component interface
 interface File {

@@ -1,5 +1,9 @@
 // Facade Pattern – With Facade Example
 // Demonstrates using a facade to simplify subsystem interactions
+// Roles:
+//   - Subsystems: Amplifier, Tuner, Screen, DvdPlayer
+//   - Facade: HomeTheaterFacade exposes watchMovie/endMovie with the right sequence
+//   - Client: main() calls two simple methods instead of many ordered calls
 
 class Amplifier {
     void on() {

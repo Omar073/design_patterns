@@ -1,6 +1,11 @@
 // Decorator Pattern – Shape Decorator Example
 // Demonstrates adding border color functionality to shapes using decorators
 // Shows how decorators can add visual enhancements to shapes
+// Roles:
+//   - Component: Shape
+//   - Concrete components: Circle, Rectangle
+//   - Decorator base: ShapeDecorator delegates to a Shape
+//   - Concrete decorator: RedShapeDecorator adds border behavior
 
 // Interface named Shape
 interface Shape {

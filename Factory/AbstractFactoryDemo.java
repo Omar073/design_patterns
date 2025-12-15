@@ -1,6 +1,13 @@
 // Abstract Factory – create families of related objects without specifying concrete classes
 // Demo: Windows/Mac GUI widgets (Button, Checkbox) with runtime factory selection.
 // Also shows a direct-instantiation variant (without factory) for contrast.
+// Roles cheat sheet:
+//   - Abstract products: Button, Checkbox
+//   - Concrete products: WindowsButton/Checkbox, MacButton/Checkbox
+//   - Abstract factory: GUIFactory
+//   - Concrete factories: WindowsFactory, MacFactory
+//   - Client: Application depends only on GUIFactory and product interfaces
+// Compare: DirectApp shows the tight coupling you avoid by using the factory.
 
 interface Button {
     void paint();
@@ -70,7 +77,7 @@ class Application {
     private final Checkbox checkbox;
 
     Application(GUIFactory factory) {
-        this.button = factory.createButton();
+        this.button = factory.createButton();   // choose family at runtime
         this.checkbox = factory.createCheckbox();
     }
 
@@ -86,6 +93,7 @@ class DirectApp {
     private final Checkbox checkbox;
 
     DirectApp(boolean mac) {
+        // Direct instantiation forces client to know concrete classes
         if (mac) {
             button = new MacButton();
             checkbox = new MacCheckbox();

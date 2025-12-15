@@ -1,5 +1,9 @@
 // Proxy Pattern – Protection Proxy Example
 // College internet blocks access to certain banned hosts
+// Roles:
+//   - Subject: Internet
+//   - RealSubject: RealInternet
+//   - Proxy: ProtectedInternetProxy filters calls based on banned list
 
 import java.util.HashSet;
 import java.util.Set;

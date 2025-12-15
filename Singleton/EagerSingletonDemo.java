@@ -1,5 +1,9 @@
 // Singleton Pattern – Eager Initialization Example
 // Simple, thread-safe by default, but may waste memory/startup time
+// Roles:
+//   - Singleton class: EagerSingleton with private ctor + static final instance
+//   - Accessor: getInstance() returns the one instance
+//   - Client: main() shows identity equality
 
 class EagerSingleton {
     private static final EagerSingleton INSTANCE = new EagerSingleton();

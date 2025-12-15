@@ -9,6 +9,11 @@ import java.util.Map;
 // Flyweight Pattern – Forest example
 // Shows how many Tree objects can share a small number of TreeType flyweights.
 // Intrinsic state: TreeType (name, color) is shared; extrinsic state: Tree (x, y) is unique.
+// Roles:
+//   - Flyweight: TreeType holds intrinsic state (name, color)
+//   - Flyweight factory: TreeFactory caches TreeType by key
+//   - Context: Tree holds extrinsic state (x, y) plus a TreeType reference
+//   - Client: Forest creates many Trees while reusing limited TreeTypes
 
 // Flyweight: shared tree type (intrinsic state)
 class TreeType {

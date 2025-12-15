@@ -8,6 +8,11 @@
  * Note: This creates only ONE product type (Notification), so Simple Factory
  * is the appropriate pattern. Abstract Factory is for creating FAMILIES
  * of related products.
+ *
+ * Roles:
+ *  - Product: Notification (SMS, Email, Push)
+ *  - Factory: NotificationFactory centralizes creation logic
+ *  - Client: NotificationService asks factory and uses only the interface
  */
 
 // Abstract product

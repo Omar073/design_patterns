@@ -1,5 +1,7 @@
 // Builder Pattern – Telescoping Constructor Example (Contrast)
 // Demonstrates the problem with telescoping constructors (less readable alternative to Builder)
+// Use this file as a contrast case: multiple overloaded constructors grow unwieldy
+// and force callers to remember parameter order. The builder-based demos solve this.
 
 // Telescoping contrast (less readable)
 class CarTelescoping {
@@ -38,8 +40,8 @@ class CarTelescoping {
 public class TelescopingConstructorDemo {
     public static void main(String[] args) {
         System.out.println("== Telescoping Constructors (contrast) ==");
-        System.out.println(new CarTelescoping("V6", 4));
-        System.out.println(new CarTelescoping("V8", 4, "black", true, true));
+        System.out.println(new CarTelescoping("V6", 4)); // rely on defaults
+        System.out.println(new CarTelescoping("V8", 4, "black", true, true)); // hard to read args
         System.out.println("\nNote: This approach is less readable and harder to maintain than using Builder pattern.");
     }
 }

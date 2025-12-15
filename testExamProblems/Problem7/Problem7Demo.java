@@ -4,6 +4,12 @@
  * 
  * This demo shows how Decorator avoids subclass explosion by
  * dynamically composing ice cream with toppings at runtime.
+ *
+ * Roles:
+ *  - Component: IceCream
+ *  - Concrete component: BasicIceCream
+ *  - Decorators: ChocolateDecorator, NutsDecorator, CaramelDecorator
+ *  - Client: main() stacks decorators to build combinations
  */
 
 // Component interface

@@ -6,6 +6,10 @@ import java.util.Map;
 // Flyweight Pattern – Text editor example
 // Demonstrates sharing CharacterGlyph objects (intrinsic state: symbol)
 // while passing position (row, column) as extrinsic state on each draw call.
+// Roles:
+//   - Flyweight: CharacterGlyph stores intrinsic symbol
+//   - Flyweight factory: GlyphFactory caches glyphs per character
+//   - Client: main() passes extrinsic position to draw()
 
 // Flyweight
 interface Glyph {

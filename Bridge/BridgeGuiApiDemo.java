@@ -4,6 +4,10 @@ package Bridge;
 // Demonstrates a Dialog abstraction (SettingsDialog, AlertDialog)
 // that delegates drawing to a WindowAPI implementation (WindowsAPI, LinuxAPI).
 // Swapping implementations changes the look without changing dialog code.
+// Roles:
+//   - Implementor: WindowAPI (WindowsAPI, LinuxAPI)
+//   - Abstraction: Dialog (SettingsDialog, AlertDialog refine it)
+//   - Client chooses a pairing at runtime to mix any dialog with any API
 
 // Implementor
 interface WindowAPI {
@@ -55,6 +59,7 @@ class SettingsDialog extends Dialog {
 
     @Override
     public void render(String title) {
+        // Defer drawing details to the selected implementation
         windowAPI.drawWindow(title);
         windowAPI.drawButton("Save");
         windowAPI.drawButton("Cancel");
@@ -79,6 +84,7 @@ public class BridgeGuiApiDemo {
         WindowAPI windowsApi = new WindowsAPI();
         WindowAPI linuxApi = new LinuxAPI();
 
+        // Pair abstractions with implementations at runtime
         Dialog windowsSettings = new SettingsDialog(windowsApi);
         Dialog linuxSettings = new SettingsDialog(linuxApi);
 

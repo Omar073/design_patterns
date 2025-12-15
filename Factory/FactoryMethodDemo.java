@@ -1,6 +1,12 @@
 // Factory Method – define an interface for creating an object, but let subclasses decide which class to instantiate
 // Demo: Different types of dialogs (Windows/Mac) that create platform-specific buttons.
 // The factory method is implemented in subclasses to create the appropriate button type.
+// Roles:
+//   - Product: Button (WindowsButton, MacButton)
+//   - Creator: Dialog declares factory method createButton()
+//   - Concrete creators: WindowsDialog, MacDialog override createButton()
+//   - Template method render() uses the factory method so subclasses decide the product
+// Note: DirectDialog shows the if/else branching that Factory Method removes.
 
 // Product interface
 interface Button {
@@ -43,7 +49,7 @@ abstract class Dialog {
     }
 
     void simulateClick() {
-        Button button = createButton();
+        Button button = createButton(); // each call can return proper subtype
         button.onClick();
     }
 }

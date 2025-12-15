@@ -1,5 +1,6 @@
 // Facade Pattern – Without Facade Example
 // Demonstrates the complexity of using subsystem components directly
+// Compare with WithFacadeDemo: client must know every subsystem and correct ordering.
 
 class Amplifier {
     void on() {

@@ -4,6 +4,11 @@
  * 
  * This demo shows how Proxy filters internet access, blocking
  * restricted websites while allowing access to others.
+ *
+ * Roles:
+ *  - Subject: Internet
+ *  - RealSubject: RealInternet
+ *  - Proxy: UniversityProxy filters calls before delegating
  */
 
 import java.util.ArrayList;

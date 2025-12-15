@@ -1,6 +1,11 @@
 // Simple Factory Pattern – parameterized factory method that creates objects based on a string parameter
 // Demo: Notification system where a factory creates Email or SMS notifications based on user preference.
 // This is a simpler variant than Factory Method - uses a single factory class with a parameterized method.
+// Roles:
+//   - Product: Notification (EmailNotification, SMSNotification)
+//   - Factory: NotificationFactory centralizes the branching logic
+//   - Client: User chooses a type and lets the factory handle concrete classes
+// Contrast: DirectUser shows the client becoming tightly coupled to concrete classes.
 
 // Product interface
 interface Notification {
@@ -64,7 +69,7 @@ class SMSNotification implements Notification {
 class NotificationFactory {
     public Notification createNotification(String notificationType, String message) {
         if (notificationType.equals("Email")) {
-            return new EmailNotification(message);
+            return new EmailNotification(message); // select concrete product
         } else if (notificationType.equals("SMS")) {
             return new SMSNotification(message);
         }
@@ -83,6 +88,7 @@ class User {
     }
 
     public void placeOrder() {
+        // Ask factory, stay unaware of concrete classes
         Notification notification = factory.createNotification(notificationType, "Order Placed");
         notification.encryptMessage();
         notification.send();
@@ -106,7 +112,7 @@ class DirectUser {
     public void placeOrder() {
         Notification notification;
         if (notificationType.equals("Email")) {
-            notification = new EmailNotification("Order Placed");
+            notification = new EmailNotification("Order Placed"); // direct dependency
         } else if (notificationType.equals("SMS")) {
             notification = new SMSNotification("Order Placed");
         } else {

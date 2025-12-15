@@ -8,6 +8,12 @@
  * 
  * Note: DatabaseConnection and ReportGenerator are independent products,
  * so Abstract Factory is not needed. Simple Factory is sufficient.
+ *
+ * Roles:
+ *  - Products: DatabaseConnection (MySQLConnection, OracleConnection),
+ *              ReportGenerator (PDFReportGenerator, HTMLReportGenerator)
+ *  - Factories: DatabaseConnectionFactory, ReportGeneratorFactory centralize creation
+ *  - Client: ReportingClient depends only on product interfaces
  */
 
 // Abstract products

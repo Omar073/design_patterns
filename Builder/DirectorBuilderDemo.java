@@ -5,6 +5,8 @@
 //   - Builder:       PalestineDrinkBuilder
 //   - ConcreteBuilder: PalestineTeaBuilder / PalestineCoffeeBuilder
 //   - Director:      Waiter orchestrates the building steps
+// This mirrors the textbook UML: Director controls the sequence, builders define the steps,
+// and the product stays decoupled from construction order.
 
 // Product: the complex object being built step‑by‑step
 class PalestineDrink {
@@ -68,7 +70,7 @@ class Waiter {
     private PalestineDrinkBuilder builder;
 
     public void setPalestineDrinkBuilder(PalestineDrinkBuilder b) {
-        this.builder = b;
+        this.builder = b; // swap builders at runtime
     }
 
     public PalestineDrink getDrink() {
@@ -76,7 +78,7 @@ class Waiter {
     }
 
     public void construct() {
-        builder.createPalestineDrink();
+        builder.createPalestineDrink(); // fixed build sequence
         builder.buildSize();
         builder.buildDrink();
     }

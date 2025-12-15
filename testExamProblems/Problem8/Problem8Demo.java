@@ -4,6 +4,11 @@
  * 
  * This demo shows how Prototype avoids expensive initialization
  * by cloning pre-initialized enemy prototypes.
+ *
+ * Roles:
+ *  - Prototype interface: Enemy with clone()
+ *  - Concrete prototypes: Goblin, Orc (expensive to construct)
+ *  - Client: main() clones prototypes, then customizes the copies
  */
 
 // Prototype interface

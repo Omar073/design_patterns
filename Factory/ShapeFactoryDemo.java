@@ -1,6 +1,8 @@
 // Simple Factory Pattern – Shape Factory Example
 // This example demonstrates the Simple Factory pattern using shapes (Circle, Rectangle, Square).
 // The factory class encapsulates object creation logic based on a string parameter.
+// When to use: one family of products with a single creation decision that you want
+// to centralize instead of sprinkling switch/if logic across the codebase.
 
 // Step 1: Create an interface
 interface Shape {
@@ -29,7 +31,8 @@ class Circle implements Shape {
     }
 }
 
-// Step 3: Create a Factory to generate object of concrete class based on given information
+// Step 3: Create a Factory to generate object of concrete class based on given
+// information
 class ShapeFactory {
     // use getShape method to get object of type shape
     public Shape getShape(String shapeType) {
@@ -37,7 +40,7 @@ class ShapeFactory {
             return null;
         }
         if (shapeType.equalsIgnoreCase("CIRCLE")) {
-            return new Circle();
+            return new Circle();       // decide which concrete shape to build
         } else if (shapeType.equalsIgnoreCase("RECTANGLE")) {
             return new Rectangle();
         } else if (shapeType.equalsIgnoreCase("SQUARE")) {
@@ -47,17 +50,18 @@ class ShapeFactory {
     }
 }
 
-// Step 4: Use the Factory to get object of concrete class by passing an information
+// Step 4: Use the Factory to get object of concrete class by passing an
+// information
 public class ShapeFactoryDemo {
     public static void main(String[] args) {
         ShapeFactory shapeFactory = new ShapeFactory();
 
         // Get an object of Circle and call its draw method
-        Shape shape1 = shapeFactory.getShape("CIRCLE");
+        Shape shape1 = shapeFactory.getShape("CIRCLE");     // creation centralized
         shape1.draw();
 
         // Get an object of Rectangle and call its draw method
-        Shape shape2 = shapeFactory.getShape("RECTANGLE");
+        Shape shape2 = shapeFactory.getShape("RECTANGLE");  // client still uses Shape interface
         shape2.draw();
 
         // Get an object of Square and call its draw method
@@ -66,4 +70,3 @@ public class ShapeFactoryDemo {
 
     }
 }
-

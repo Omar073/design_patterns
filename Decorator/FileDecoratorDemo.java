@@ -2,6 +2,7 @@
 // Demonstrates adding encryption and compression functionality to File operations
 // Note: This example uses inheritance-based approach (as shown in diagram)
 // True Decorator pattern uses composition, but this shows the concept
+// Read in parallel with FileDecoratorPatternDemo.java to see composition-based decorators.
 
 // Base class
 class File {

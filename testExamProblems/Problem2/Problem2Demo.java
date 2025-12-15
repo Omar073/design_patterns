@@ -4,6 +4,10 @@
  * 
  * This demo shows how Singleton ensures a single logger instance
  * across the entire application, preventing inconsistent file writes.
+ *
+ * Roles:
+ *  - Singleton: Logger with private constructor and synchronized getInstance()
+ *  - Clients: UserService, OrderService, PaymentService obtain the same logger
  */
 
 import java.io.FileWriter;

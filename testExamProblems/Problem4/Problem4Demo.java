@@ -4,6 +4,12 @@
  * 
  * This demo shows how Adapter bridges the gap between NumPy arrays
  * (from preprocessing) and Pandas DataFrames (expected by ML model).
+ *
+ * Roles:
+ *  - Target: DataFrame interface expected by MLModel
+ *  - Adaptee: NumPyArray with a different API
+ *  - Adapter: NumPyToDataFrameAdapter converts calls to the adaptee
+ *  - Client: MLModel trains using only the target interface
  */
 
 // Target interface - what the ML model expects

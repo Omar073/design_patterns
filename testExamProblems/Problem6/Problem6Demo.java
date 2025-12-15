@@ -4,6 +4,11 @@
  * 
  * This demo shows how Builder eliminates messy long parameter lists
  * when creating Computer objects with many configuration options.
+ *
+ * Roles:
+ *  - Product: Computer
+ *  - Builder: Computer.Builder with required and optional params
+ *  - Client: main() fluently sets options and builds instances
  */
 
 // Product class

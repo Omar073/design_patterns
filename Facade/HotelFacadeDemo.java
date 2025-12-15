@@ -1,6 +1,10 @@
 // Facade Pattern – Hotel Restaurant Example
 // Demonstrates how HotelKeeper facade simplifies access to different restaurant types
 // Client doesn't need to know about VegRestaurant, NonVegRestaurant, etc.
+// Roles:
+//   - Subsystems: VegRestaurant, NonVegRestaurant, VegNonBothRestaurant with menus
+//   - Facade: HotelKeeper exposes simple getters for menus
+//   - Client: main() uses the facade instead of instantiating subsystems directly
 
 // Hotel interface
 interface Hotel {

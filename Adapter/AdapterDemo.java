@@ -1,6 +1,11 @@
 // Adapter Pattern – convert one interface to another clients expect
 // Object adapter: adapt SquarePeg to RoundPegTarget (RoundHole expects RoundPegTarget)
 // Class adapter (conceptual in Java): using inheritance for adaptation (limited by single inheritance)
+// Roles:
+//   - Target: RoundPegTarget interface expected by RoundHole
+//   - Adaptee: SquarePeg with incompatible getWidth()
+//   - Adapter: SquarePegAdapter converts width to an equivalent radius
+//   - Client: RoundHole uses only the target interface and is unaware of SquarePeg
 
 class RoundHole {
     private final double radius;
@@ -10,6 +15,7 @@ class RoundHole {
     }
 
     public boolean fits(RoundPegTarget peg) {
+        // Client code works against RoundPegTarget, unaware of squares
         return peg.getRadius() <= radius;
     }
 }
@@ -67,6 +73,7 @@ public class AdapterDemo {
         SquarePeg smallSquare = new SquarePeg(5);
         SquarePeg bigSquare = new SquarePeg(10);
 
+        // Wrap square pegs so the hole can treat them as round targets
         RoundPegTarget smallAdapter = new SquarePegAdapter(smallSquare);
         RoundPegTarget bigAdapter = new SquarePegAdapter(bigSquare);
         System.out.println("Small square fits: " + hole.fits(smallAdapter));

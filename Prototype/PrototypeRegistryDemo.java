@@ -1,5 +1,10 @@
 // Prototype Pattern – Registry Example
 // Demonstrates using a prototype registry to manage and clone prototypes by key
+// Roles:
+//   - Prototype interface: Shape with clone()
+//   - Concrete prototypes: Circle, Rectangle
+//   - Registry: PrototypeRegistry stores prototypes and returns clones
+//   - Client: main() requests clones by key instead of keeping prototype refs
 
 import java.util.HashMap;
 import java.util.Map;

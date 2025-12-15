@@ -1,5 +1,9 @@
 // Proxy Pattern – Logging Proxy Example
 // Dynamic proxy adding cross-cutting logging functionality
+// Roles:
+//   - Subject: Service interface
+//   - RealSubject: RealService
+//   - Proxy: java.lang.reflect.Proxy with LoggingHandler adds logging around calls
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,5 +1,9 @@
 // Singleton Pattern – Lazy Initialization Example
 // Non-synchronized - only safe for single-threaded environments
+// Roles:
+//   - Singleton class: LazySingleton with lazy static field
+//   - Accessor: getInstance() instantiates on first call (not thread-safe)
+//   - Client: main() shows single instance reuse
 
 class LazySingleton {
     private static LazySingleton instance;

@@ -1,6 +1,12 @@
 // Decorator Pattern – File Encryption and Compression with Chaining
 // Demonstrates proper Decorator pattern using composition (wrapping)
 // Shows how decorators can be chained to add multiple behaviors
+// Roles:
+//   - Component: File
+//   - Concrete component: NormalFile
+//   - Decorator base: FileDecorator delegates to wrapped File
+//   - Concrete decorators: EncryptionDecorator, CompressionDecorator
+//   - Client: main() wraps in sequence to compose behaviors
 
 // Component interface
 interface File {
@@ -26,7 +32,7 @@ abstract class FileDecorator implements File {
     private File wrappedFile;
     
     public FileDecorator(File wrappedFile) {
-        this.wrappedFile = wrappedFile;
+        this.wrappedFile = wrappedFile; // store component being wrapped
     }
     
     @Override
@@ -67,13 +73,13 @@ class EncryptionDecorator extends FileDecorator {
     
     @Override
     public String readData() {
-        String data = super.readData();
+        String data = super.readData(); // delegate then decrypt
         return decrypt(data);
     }
     
     @Override
     public void writeData(String data) {
-        data = encrypt(data);
+        data = encrypt(data); // encrypt before writing downstream
         super.writeData(data);
     }
 }
@@ -101,13 +107,13 @@ class CompressionDecorator extends FileDecorator {
     
     @Override
     public String readData() {
-        String data = super.readData();
+        String data = super.readData(); // delegate then uncompress
         return uncompress(data);
     }
     
     @Override
     public void writeData(String data) {
-        data = compress(data);
+        data = compress(data); // compress before writing downstream
         super.writeData(data);
     }
 }

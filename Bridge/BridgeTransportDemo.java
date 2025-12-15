@@ -4,6 +4,10 @@ package Bridge;
 // Demonstrates separating the Transport abstraction hierarchy (Car, Plane)
 // from the Engine implementation hierarchy (GasEngine, ElectricEngine).
 // This avoids creating classes like GasCar, ElectricCar, GasPlane, ElectricPlane.
+// Roles:
+//   - Implementor: Engine (GasEngine, ElectricEngine)
+//   - Abstraction: Transport with refined variants Car, Plane
+//   - Client: main() freely composes any Transport with any Engine
 
 // Implementor
 interface Engine {
@@ -42,7 +46,7 @@ abstract class Transport {
 
     protected Transport(Engine engine) {
         this.engine = engine;
-        this.engine.start();
+        this.engine.start(); // initialization delegated to implementation
     }
 
     public abstract void drive();
@@ -56,7 +60,7 @@ class Car extends Transport {
 
     @Override
     public void drive() {
-        engine.move();
+        engine.move(); // use implementor behavior
         System.out.println("Car is being driven.");
     }
 }
@@ -79,6 +83,7 @@ public class BridgeTransportDemo {
         Engine gasEngine = new GasEngine();
         Engine electricEngine = new ElectricEngine();
 
+        // Mix and match abstractions with implementations
         Transport carWithGasEngine = new Car(gasEngine);
         carWithGasEngine.drive();
 

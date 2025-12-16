@@ -1305,6 +1305,7 @@ These three patterns all deal with **object instances**, but in different ways:
 | **Facade** | Simplify subsystem | Simplified interface | Complex subsystem |
 | **Flyweight** | Share intrinsic state | Many objects share common data | Need memory savings with many similar objects |
 | **Proxy** | Control access | Access management | Lazy loading, access control |
+| **Strategy** | Swap algorithms/behaviors | Encapsulated, pluggable strategies | Need interchangeable behaviors at runtime |
 
 ---
 
@@ -1327,3 +1328,8 @@ These three patterns all deal with **object instances**, but in different ways:
 - **Simplify subsystem?** → Facade
 - **Separate abstraction from implementation dimensions?** → Bridge
 - **Massive number of similar objects; share intrinsic state?** → Flyweight
+
+### Behavioral Patterns
+
+**Need to vary algorithms/behaviors?**
+- **Choose/swap algorithms at runtime?** → Strategy

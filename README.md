@@ -33,6 +33,11 @@ This repository contains practical implementations of design patterns from the G
 9. **[Bridge](Bridge/)** - Decouples an abstraction from its implementation so both can vary independently
 10. **[Flyweight](Flyweight/)** - Reduces memory usage by sharing common object state between many objects
 
+### Behavioral Patterns
+
+11. **[Strategy](Startegy/)** - Encapsulates interchangeable algorithms or behaviors and lets you swap them at runtime
+12. **[Chain of Responsibility](ChainOfResponsibility/)** - Passes a request along a chain of handlers until one handles it
+
 ## Repository Structure
 
 ```
@@ -82,6 +87,14 @@ design_patterns/
 │   ├── FlyweightForestDemo.java    # Forest (shared tree types) example
 │   ├── FlyweightTextEditorDemo.java# Text editor (shared glyphs) example
 │   └── README.md
+├── Startegy/
+│   ├── StrategyDuckDemo.java       # Duck behaviors using Strategy pattern
+│   ├── StrategyEncryptionDemo.java # Encryption algorithms as strategies
+│   └── README.md                   # Strategy pattern documentation and diagrams
+├── ChainOfResponsibility/
+│   ├── ChainOfResponsibilityEmailDemo.java    # Email processing chain
+│   ├── ChainOfResponsibilityApprovalDemo.java # Purchase approval chain
+│   └── README.md                              # Chain of Responsibility documentation
 └── testExamProblems/               # Test exam problems with pattern solutions
     ├── Problem1/                  # Factory - Enterprise Reporting
     ├── Problem2/                  # Singleton - Logging System
@@ -180,6 +193,8 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 | [Facade](Facade/) | Simplified subsystem interface | Structural |
 | [Bridge](Bridge/) | Abstraction/implementation decoupling | Structural |
 | [Flyweight](Flyweight/) | Shared state for memory efficiency | Structural |
+| [Strategy](Startegy/) | Pluggable algorithms/behaviors | Behavioral |
+| [Chain of Responsibility](ChainOfResponsibility/) | Request handling chain | Behavioral |
 
 ---
 

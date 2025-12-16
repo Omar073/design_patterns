@@ -26,20 +26,23 @@ Each section gives:
 - [Flyweight](#flyweight)
 - [Proxy](#proxy)
 
+### Behavioral Patterns
+- [Strategy](#strategy)
+- [Chain of Responsibility](#chain-of-responsibility)
+
 ---
 
 ## Pattern Classification Overview
 
-The table below summarizes the patterns in this codebase using the classic **GoF classification** by **purpose** (Creational vs Structural) and **scope** (Class vs Object).
+The table below summarizes the patterns in this codebase using the classic **GoF classification** by **purpose** (Creational, Structural, Behavioral) and **scope** (Class vs Object).
 
-| Scope  | Purpose     | Patterns in this repo                           |
-|--------|-------------|-------------------------------------------------|
-| Class  | Creational  | Factory Method (part of Factory family)        |
+| Scope  | Purpose     | Patterns in this repo                                  |
+|--------|-------------|--------------------------------------------------------|
+| Class  | Creational  | Factory Method (part of Factory family)               |
 | Object | Creational  | Abstract Factory, Builder, Prototype, Singleton, Simple Factory |
-| Class  | Structural  | Adapter (class form – shown conceptually)      |
+| Class  | Structural  | Adapter (class form – shown conceptually)             |
 | Object | Structural  | Adapter (object form), Bridge, Decorator, Facade, Flyweight, Proxy |
-
-Only **Creational** and **Structural** patterns are implemented here; Behavioral patterns (Strategy, Observer, etc.) are not part of this project.
+| Object | Behavioral  | Strategy, Chain of Responsibility                     |
 
 ---
 
@@ -164,6 +167,108 @@ copy.setColor("blue");
 
 ---
 
+## Strategy
+
+- **Intent**: Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime without changing the client code.
+- **When to use**:
+  - You have several ways to perform the same task (different algorithms or behaviors).
+  - Behavior should be chosen at runtime (config, user choice, context) instead of via big `if/else` chains.
+  - You want to avoid subclass explosion when **what varies is behavior**, not the data structure of the class.
+- **Structure**:
+  - Diagrams:
+    - `Startegy/diagram1.png`–`diagram3.png`: show the **naive Duck inheritance** and the problems of putting `fly()` and `quack()` directly in the superclass (rubber and decoy ducks that shouldn’t fly or quack).
+    - `Startegy/diagram4.png`–`diagram5.png`: extract fly/quack into **behavior interfaces** (`FlyBehavior`, `QuackBehavior`) with concrete implementations like `FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`.
+    - `Startegy/diagram6.png`–`diagram7.png`: final design where `Duck` has `FlyBehavior flyBehavior` and `QuackBehavior quackBehavior`, and the client works with ducks while behaviors are encapsulated and swappable.
+  - Roles:
+    - **Strategy**: interface representing an algorithm (`FlyBehavior`, `QuackBehavior`, `EncryptionStrategy`).
+    - **Concrete Strategies**: implementations of the algorithm (`FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`, `AesEncryption`, `RsaEncryption`, `EccEncryption`).
+    - **Context**: class that **has a** strategy and delegates to it (`Duck`, `SecureMessenger`).
+    - **Client**: picks which strategy instance the context should use.
+- **Code feel**:
+
+```java
+// Duck context with pluggable behaviors
+Duck mallard = new MallardDuck();          // FlyWithWings + Quack by default
+mallard.performFly();                      // Delegates to FlyBehavior
+mallard.performQuack();                    // Delegates to QuackBehavior
+
+Duck rubber = new RubberDuck();            // FlyNoWay + Squeak
+rubber.setFlyBehavior(new RocketFly());    // Swap strategy at runtime
+rubber.performFly();                       // Now rocket-powered
+```
+
+```java
+// Encryption strategies in a messenger context
+SecureMessenger messenger = new SecureMessenger(new AesEncryption());
+messenger.send("Alice", "Hi Alice!");            // Standard security
+
+messenger.setStrategy(new RsaEncryption());      // Higher security
+messenger.send("Bob", "Confidential meeting");   // Uses RSA now
+```
+- **Similar to / compared with**:
+  - **State**: same class diagram shape; Strategy focuses on interchangeable algorithms, State focuses on transitions between object states.
+  - **Bridge**: Bridge splits abstraction and implementation into two hierarchies; Strategy swaps algorithms used by a single context class.
+  - **Decorator**: Decorator wraps objects to add responsibilities; Strategy swaps out the core behavior implementation without wrapping.
+
+- **Further reading**: [Strategy README](Startegy/README.md), demos: `StrategyDuckDemo.java`, `StrategyEncryptionDemo.java`
+
+---
+
+## Chain of Responsibility
+
+- **Intent**: Pass a request along a chain of handlers. Each handler decides whether to process the request or pass it to the next handler in the chain.
+- **When to use**:
+  - Multiple objects can handle a request, and the handler isn't known a priori.
+  - You want to issue a request to one of several objects without specifying the receiver explicitly.
+  - The set of handlers should be specified dynamically.
+- **Structure**:
+  - Diagrams:
+    - ![Chain of Responsibility Flow](ChainOfResponsibility/diagram1.png)  
+      *Shows client sending request through handler chain where each handler either processes or forwards the request.*
+    - ![Chain of Responsibility UML](ChainOfResponsibility/diagram2.png)  
+      *Shows Handler interface with successor reference, and ConcreteHandlerA/B implementing it.*
+    - ![Email Handler Chain](ChainOfResponsibility/diagram 3.png)  
+      *Shows email processing chain: Spam → Fan → Complaint → NewLoc handlers.*
+    - ![Email Handlers UML](ChainOfResponsibility/diagram4.png)  
+      *Shows Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler subclasses.*
+  - Roles:
+    - **Handler**: defines interface for handling requests and optionally implements successor link.
+    - **ConcreteHandler**: handles requests it's responsible for; can access successor; forwards requests it can't handle.
+    - **Client**: initiates request to first handler in chain.
+- **Code feel**:
+
+```java
+// Email handling chain
+Handler spamHandler = new SpamHandler();
+Handler fanHandler = new FanHandler();
+Handler complaintHandler = new ComplaintHandler();
+
+spamHandler.setSuccessor(fanHandler);
+fanHandler.setSuccessor(complaintHandler);
+
+Email email = new Email("COMPLAINT", "Product broken", "customer@example.com");
+spamHandler.handleRequest(email);  // Passes through chain until ComplaintHandler handles it
+```
+
+```java
+// Purchase approval chain
+Approver teamLead = new TeamLead("Alice");
+Approver manager = new Manager("Bob");
+teamLead.setSuccessor(manager);
+
+PurchaseRequest req = new PurchaseRequest(2500, "Equipment", "John");
+teamLead.handleRequest(req);  // TeamLead forwards to Manager who approves
+```
+- **Similar to / compared with**:
+  - **Command**: Chain of Responsibility can use Command pattern to represent requests as objects.
+  - **Composite**: Chain of Responsibility often used with Composite, where parent component acts as successor.
+  - **Decorator**: Both use recursive composition; Decorator adds responsibilities, Chain of Responsibility passes requests along.
+  - **Strategy**: Strategy chooses an algorithm; Chain of Responsibility finds which handler can process a request.
+
+- **Further reading**: [Chain of Responsibility README](ChainOfResponsibility/README.md), demos: `ChainOfResponsibilityEmailDemo.java`, `ChainOfResponsibilityApprovalDemo.java`
+
+---
+
 ## Adapter
 
 - **Intent**: Convert the interface of a class into another interface clients expect so that incompatible classes can work together.
@@ -283,6 +388,7 @@ hotel.bookStayWithBreakfast();
 - **Similar to / compared with**:
   - **Adapter**: Adapter changes one class's interface; Facade groups many classes behind a simpler interface.
   - **Bridge**: Bridge decouples abstraction from implementation for two hierarchies; Facade is just a convenient front-end to an existing subsystem.
+  - **Proxy**: Proxy controls access or adds lazy loading/security around one object; Facade only simplifies usage of many classes without access control semantics.
 
 - **Further reading**: [Facade README](Facade/README.md), demos: [WithoutFacadeDemo](Facade/WithoutFacadeDemo.java), [WithFacadeDemo](Facade/WithFacadeDemo.java), [HotelFacadeDemo](Facade/HotelFacadeDemo.java)
 

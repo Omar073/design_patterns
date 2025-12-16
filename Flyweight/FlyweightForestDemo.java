@@ -50,7 +50,7 @@ class Tree {
 
 // Flyweight Factory
 class TreeFactory {
-    // key is the name and color of the tree type
+    // key is the name_color of the tree type
     private static final Map<String, TreeType> treeTypes = new HashMap<>();
 
     public static TreeType getTreeType(String name, Color color) {

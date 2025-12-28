@@ -1306,6 +1306,7 @@ These three patterns all deal with **object instances**, but in different ways:
 | **Flyweight** | Share intrinsic state | Many objects share common data | Need memory savings with many similar objects |
 | **Proxy** | Control access | Access management | Lazy loading, access control |
 | **Strategy** | Swap algorithms/behaviors | Encapsulated, pluggable strategies | Need interchangeable behaviors at runtime |
+| **Command** | Encapsulate requests as objects | Request/operation encapsulation | Need undo/redo, queuing, logging operations |
 
 ---
 
@@ -1333,3 +1334,5 @@ These three patterns all deal with **object instances**, but in different ways:
 
 **Need to vary algorithms/behaviors?**
 - **Choose/swap algorithms at runtime?** → Strategy
+- **Need to encapsulate operations/requests?** → Command
+- **Need to pass requests through handlers?** → Chain of Responsibility

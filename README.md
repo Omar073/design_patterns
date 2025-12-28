@@ -37,6 +37,7 @@ This repository contains practical implementations of design patterns from the G
 
 11. **[Strategy](Startegy/)** - Encapsulates interchangeable algorithms or behaviors and lets you swap them at runtime
 12. **[Chain of Responsibility](ChainOfResponsibility/)** - Passes a request along a chain of handlers until one handles it
+13. **[Command](Command/)** - Encapsulates requests as objects, allowing parameterization, queuing, logging, and undo/redo functionality
 
 ## Repository Structure
 
@@ -95,6 +96,14 @@ design_patterns/
 │   ├── ChainOfResponsibilityEmailDemo.java    # Email processing chain
 │   ├── ChainOfResponsibilityApprovalDemo.java # Purchase approval chain
 │   └── README.md                              # Chain of Responsibility documentation
+├── Command/
+│   ├── CommandPatternDemo.java                # Basic Command pattern - Smart home remote control
+│   ├── CommandUndoDemo.java                   # Command with undo/redo support
+│   ├── CommandMacroDemo.java                  # Macro commands (composite commands)
+│   ├── CommandQueueDemo.java                  # Command queue for batch processing
+│   ├── diagram1.png                           # General Command pattern structure
+│   ├── diagram2.png                           # Command pattern implementation diagram
+│   └── README.md                              # Command pattern documentation
 └── testExamProblems/               # Test exam problems with pattern solutions
     ├── Problem1/                  # Factory - Enterprise Reporting
     ├── Problem2/                  # Singleton - Logging System
@@ -195,6 +204,7 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 | [Flyweight](Flyweight/) | Shared state for memory efficiency | Structural |
 | [Strategy](Startegy/) | Pluggable algorithms/behaviors | Behavioral |
 | [Chain of Responsibility](ChainOfResponsibility/) | Request handling chain | Behavioral |
+| [Command](Command/) | Request/operation encapsulation | Behavioral |
 
 ---
 

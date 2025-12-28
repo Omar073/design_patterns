@@ -29,6 +29,7 @@ Each section gives:
 ### Behavioral Patterns
 - [Strategy](#strategy)
 - [Chain of Responsibility](#chain-of-responsibility)
+- [Command](#command)
 
 ---
 
@@ -266,6 +267,63 @@ teamLead.handleRequest(req);  // TeamLead forwards to Manager who approves
   - **Strategy**: Strategy chooses an algorithm; Chain of Responsibility finds which handler can process a request.
 
 - **Further reading**: [Chain of Responsibility README](ChainOfResponsibility/README.md), demos: `ChainOfResponsibilityEmailDemo.java`, `ChainOfResponsibilityApprovalDemo.java`
+
+---
+
+## Command
+
+- **Intent**: Encapsulate a request under an object as a command and pass it to invoker object. Invoker object looks for the appropriate object which can handle this command and pass the command to the corresponding object and that object executes the command.
+- **Also Known As**: Action or Transaction
+- **When to use**:
+  - You need to parameterize objects with operations
+  - You need to queue operations, schedule them, or execute them remotely
+  - You need to support undo/redo functionality
+  - You need to log operations for auditing or debugging
+  - You need to support macro commands (combining multiple commands)
+- **Structure**:
+  - Diagrams:
+    - ![Command Diagram 1](Command/diagram1.png)  
+      *Shows the general Command pattern structure with Command interface, Invoker, Concrete Commands, and Receivers.*
+    - ![Command Diagram 2](Command/diagram2.png)  
+      *Shows the specific implementation with RemoteControl as Invoker, TurnOnCommand/ChangeChannelCommand as Concrete Commands, and TV/Stereo as Receivers.*
+  - Roles:
+    - **Command**: Interface defining `execute()` method
+    - **Concrete Commands**: Implement Command interface, encapsulate receiver and operation
+    - **Invoker**: Holds and invokes commands (e.g., RemoteControl)
+    - **Receiver**: Performs actual operations (e.g., TV, Stereo)
+    - **Client**: Creates commands, sets them in invoker, executes
+- **Code feel**:
+
+```java
+// Create receiver and command
+TV tv = new TV("Living Room");
+Command turnOnTV = new TurnOnCommand(tv);
+
+// Create invoker and set command
+RemoteControl remote = new RemoteControl();
+remote.setCommand(turnOnTV);
+remote.pressButton();  // Executes command
+```
+
+```java
+// Macro command (combining multiple commands)
+List<Command> partyMode = Arrays.asList(
+    new TurnOnCommand(tv),
+    new TurnOnCommand(stereo),
+    new AdjustVolumeCommand(stereo)
+);
+Command macro = new MacroCommand(partyMode);
+remote.setCommand(macro);
+remote.pressButton();  // Executes all commands
+```
+
+- **Similar to / compared with**:
+  - **vs Strategy**: Strategy encapsulates algorithms; Command encapsulates requests/operations
+  - **vs Memento**: Memento stores state for undo; Command stores operations for undo
+  - **vs Chain of Responsibility**: Chain passes requests along a chain; Command encapsulates requests
+  - **vs Observer**: Observer notifies multiple observers; Command encapsulates a single operation
+
+- **Further reading**: [Command README](Command/README.md), demos: [CommandPatternDemo](Command/CommandPatternDemo.java), [CommandUndoDemo](Command/CommandUndoDemo.java), [CommandMacroDemo](Command/CommandMacroDemo.java), [CommandQueueDemo](Command/CommandQueueDemo.java)
 
 ---
 

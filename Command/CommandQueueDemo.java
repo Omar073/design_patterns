@@ -19,10 +19,6 @@ import java.util.Queue;
  * This enables batch processing, scheduling, and asynchronous execution.
  */
 interface QueueCommand {
-    /**
-     * Executes the command. When called, the command performs its operation
-     * on its receiver.
-     */
     void execute();
 }
 
@@ -80,9 +76,6 @@ class PrintCommand implements QueueCommand {
         this.document = document;
     }
 
-    /**
-     * Executes the command by printing the document on the printer.
-     */
     @Override
     public void execute() {
         printer.print(document);
@@ -107,12 +100,9 @@ class SendEmailCommand implements QueueCommand {
         this.subject = subject;
     }
 
-    /**
-     * Executes the command by sending the email.
-     */
     @Override
     public void execute() {
-        emailService.send(recipient, subject); // Call receiver's method with parameters
+        emailService.send(recipient, subject);
     }
 }
 

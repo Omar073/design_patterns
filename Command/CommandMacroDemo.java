@@ -33,28 +33,16 @@ interface MacroCommand {
  * This is a concrete receiver that performs actual operations.
  */
 class MacroTV {
-    private String name;  // Name/location of the TV
-    
-    /**
-     * Constructor: Creates a new TV with a given name.
-     * @param name The name/location of the TV
-     */
+    private String name;
+
     public MacroTV(String name) {
         this.name = name;
     }
-    
-    /**
-     * Turns the TV on.
-     * In a real application, this would send a signal to the TV hardware.
-     */
+
     public void on() {
         System.out.println(name + " TV is ON");
     }
-    
-    /**
-     * Turns the TV off.
-     * In a real application, this would send a signal to the TV hardware.
-     */
+
     public void off() {
         System.out.println(name + " TV is OFF");
     }
@@ -65,34 +53,20 @@ class MacroTV {
  * A stereo system that can be turned on/off and have its volume adjusted.
  */
 class MacroStereo {
-    private String name;  // Name/location of the stereo
-    
-    /**
-     * Constructor: Creates a new stereo with a given name.
-     * @param name The name/location of the stereo
-     */
+    private String name;
+
     public MacroStereo(String name) {
         this.name = name;
     }
-    
-    /**
-     * Turns the stereo on.
-     */
+
     public void on() {
         System.out.println(name + " Stereo is ON");
     }
-    
-    /**
-     * Turns the stereo off.
-     */
+
     public void off() {
         System.out.println(name + " Stereo is OFF");
     }
-    
-    /**
-     * Sets the volume to a specific level.
-     * @param volume The volume level to set
-     */
+
     public void setVolume(int volume) {
         System.out.println(name + " Stereo volume set to " + volume);
     }
@@ -103,204 +77,111 @@ class MacroStereo {
  * A light that can be turned on and off.
  */
 class MacroLight {
-    private String name;  // Name/location of the light
-    
-    /**
-     * Constructor: Creates a new light with a given name.
-     * @param name The name/location of the light
-     */
+    private String name;
+
     public MacroLight(String name) {
         this.name = name;
     }
-    
-    /**
-     * Turns the light on.
-     */
+
     public void on() {
         System.out.println(name + " Light is ON");
     }
-    
-    /**
-     * Turns the light off.
-     */
+
     public void off() {
         System.out.println(name + " Light is OFF");
     }
 }
 
-/**
- * CONCRETE COMMAND: TVOnCommand
- * Command to turn a TV on.
- * This is a simple command that performs a single operation.
- */
 class TVOnCommand implements MacroCommand {
-    private MacroTV tv;  // The receiver (TV to control)
-    
-    /**
-     * Constructor: Creates a command to turn on a specific TV.
-     * @param tv The TV to turn on
-     */
+    private MacroTV tv;
+
     public TVOnCommand(MacroTV tv) {
-        this.tv = tv;  // Store reference to the receiver
+        this.tv = tv;
     }
-    
-    /**
-     * Executes the command by turning the TV on.
-     */
+
     @Override
     public void execute() {
-        tv.on();  // Call receiver's method to perform the action
+        tv.on();
     }
 }
 
-/**
- * CONCRETE COMMAND: TVOffCommand
- * Command to turn a TV off.
- */
 class TVOffCommand implements MacroCommand {
-    private MacroTV tv;  // The receiver (TV to control)
-    
-    /**
-     * Constructor: Creates a command to turn off a specific TV.
-     * @param tv The TV to turn off
-     */
+    private MacroTV tv;
+
     public TVOffCommand(MacroTV tv) {
-        this.tv = tv;  // Store reference to the receiver
+        this.tv = tv;
     }
-    
-    /**
-     * Executes the command by turning the TV off.
-     */
+
     @Override
     public void execute() {
-        tv.off();  // Call receiver's method to perform the action
+        tv.off();
     }
 }
 
-/**
- * CONCRETE COMMAND: StereoOnCommand
- * Command to turn a stereo on.
- */
 class StereoOnCommand implements MacroCommand {
-    private MacroStereo stereo;  // The receiver (stereo to control)
-    
-    /**
-     * Constructor: Creates a command to turn on a specific stereo.
-     * @param stereo The stereo to turn on
-     */
+    private MacroStereo stereo;
+
     public StereoOnCommand(MacroStereo stereo) {
-        this.stereo = stereo;  // Store reference to the receiver
+        this.stereo = stereo;
     }
-    
-    /**
-     * Executes the command by turning the stereo on.
-     */
+
     @Override
     public void execute() {
-        stereo.on();  // Call receiver's method to perform the action
+        stereo.on();
     }
 }
 
-/**
- * CONCRETE COMMAND: StereoOffCommand
- * Command to turn a stereo off.
- */
 class StereoOffCommand implements MacroCommand {
-    private MacroStereo stereo;  // The receiver (stereo to control)
-    
-    /**
-     * Constructor: Creates a command to turn off a specific stereo.
-     * @param stereo The stereo to turn off
-     */
+    private MacroStereo stereo;
+
     public StereoOffCommand(MacroStereo stereo) {
-        this.stereo = stereo;  // Store reference to the receiver
+        this.stereo = stereo;
     }
-    
-    /**
-     * Executes the command by turning the stereo off.
-     */
+
     @Override
     public void execute() {
-        stereo.off();  // Call receiver's method to perform the action
+        stereo.off();
     }
 }
 
-/**
- * CONCRETE COMMAND: StereoVolumeCommand
- * Command to set the volume on a stereo.
- * 
- * Note: This command takes a parameter (volume level) in addition to
- * the receiver. This shows how commands can encapsulate both the
- * receiver and parameters needed for the operation.
- */
 class StereoVolumeCommand implements MacroCommand {
-    private MacroStereo stereo;  // The receiver (stereo to control)
-    private int volume;           // The volume level to set
-    
-    /**
-     * Constructor: Creates a command to set volume on a specific stereo.
-     * @param stereo The stereo whose volume should be set
-     * @param volume The volume level to set
-     */
+    private MacroStereo stereo;
+    private int volume;
+
     public StereoVolumeCommand(MacroStereo stereo, int volume) {
-        this.stereo = stereo;  // Store reference to the receiver
-        this.volume = volume;  // Store the parameter
+        this.stereo = stereo;
+        this.volume = volume;
     }
-    
-    /**
-     * Executes the command by setting the stereo volume.
-     */
+
     @Override
     public void execute() {
-        stereo.setVolume(volume);  // Call receiver's method with parameter
+        stereo.setVolume(volume);
     }
 }
 
-/**
- * CONCRETE COMMAND: MacroLightOnCommand
- * Command to turn a light on.
- */
 class MacroLightOnCommand implements MacroCommand {
-    private MacroLight light;  // The receiver (light to control)
-    
-    /**
-     * Constructor: Creates a command to turn on a specific light.
-     * @param light The light to turn on
-     */
+    private MacroLight light;
+
     public MacroLightOnCommand(MacroLight light) {
-        this.light = light;  // Store reference to the receiver
+        this.light = light;
     }
-    
-    /**
-     * Executes the command by turning the light on.
-     */
+
     @Override
     public void execute() {
-        light.on();  // Call receiver's method to perform the action
+        light.on();
     }
 }
 
-/**
- * CONCRETE COMMAND: MacroLightOffCommand
- * Command to turn a light off.
- */
 class MacroLightOffCommand implements MacroCommand {
-    private MacroLight light;  // The receiver (light to control)
-    
-    /**
-     * Constructor: Creates a command to turn off a specific light.
-     * @param light The light to turn off
-     */
+    private MacroLight light;
+
     public MacroLightOffCommand(MacroLight light) {
-        this.light = light;  // Store reference to the receiver
+        this.light = light;
     }
-    
-    /**
-     * Executes the command by turning the light off.
-     */
+
     @Override
     public void execute() {
-        light.off();  // Call receiver's method to perform the action
+        light.off();
     }
 }
 
@@ -322,8 +203,8 @@ class MacroLightOffCommand implements MacroCommand {
  * - Can be nested (macro commands can contain other macro commands)
  */
 class CompositeMacroCommand implements MacroCommand {
-    private List<MacroCommand> commands;  // List of commands to execute
-    
+    private List<MacroCommand> commands; // List of commands to execute
+
     /**
      * Constructor: Creates a macro command from a list of commands.
      * 
@@ -333,7 +214,7 @@ class CompositeMacroCommand implements MacroCommand {
         // Create a copy of the list to avoid external modifications
         this.commands = new ArrayList<>(commands);
     }
-    
+
     /**
      * Executes the macro command by executing all contained commands in order.
      * 
@@ -351,7 +232,7 @@ class CompositeMacroCommand implements MacroCommand {
         System.out.println("--- Executing Macro Command ---");
         // Execute each command in the list
         for (MacroCommand command : commands) {
-            command.execute();  // Execute each command sequentially
+            command.execute(); // Execute each command sequentially
         }
         System.out.println("--- Macro Command Complete ---\n");
     }
@@ -370,12 +251,12 @@ class CompositeMacroCommand implements MacroCommand {
  * a macro command - it just calls execute().
  */
 class MacroRemoteControl {
-    private MacroCommand command;  // The command currently set (can be simple or macro)
-    
+    private MacroCommand command; // The command currently set (can be simple or macro)
+
     public void setCommand(MacroCommand command) {
         this.command = command;
     }
-    
+
     public void pressButton() {
         if (command != null) {
             command.execute();
@@ -396,53 +277,53 @@ class MacroRemoteControl {
 public class CommandMacroDemo {
     public static void main(String[] args) {
         System.out.println("=== Command Pattern with Macro Commands Demo ===\n");
-        
+
         // STEP 1: Create receivers (the objects that will perform actual work)
         // These are the devices we want to control
         MacroTV tv = new MacroTV("Living Room");
         MacroStereo stereo = new MacroStereo("Music System");
         MacroLight light = new MacroLight("Living Room");
-        
+
         // STEP 2: Create individual commands (simple commands)
         // Each command performs a single operation on a single device
-        MacroCommand tvOn = new TVOnCommand(tv);                    // Turn TV on
-        MacroCommand stereoOn = new StereoOnCommand(stereo);         // Turn stereo on
-        MacroCommand stereoVolume = new StereoVolumeCommand(stereo, 11);  // Set stereo volume to 11
-        MacroCommand lightOn = new MacroLightOnCommand(light);      // Turn light on
-        
-        MacroCommand tvOff = new TVOffCommand(tv);                   // Turn TV off
-        MacroCommand stereoOff = new StereoOffCommand(stereo);      // Turn stereo off
-        MacroCommand lightOff = new MacroLightOffCommand(light);     // Turn light off
-        
+        MacroCommand tvOn = new TVOnCommand(tv); // Turn TV on
+        MacroCommand stereoOn = new StereoOnCommand(stereo); // Turn stereo on
+        MacroCommand stereoVolume = new StereoVolumeCommand(stereo, 11); // Set stereo volume to 11
+        MacroCommand lightOn = new MacroLightOnCommand(light); // Turn light on
+
+        MacroCommand tvOff = new TVOffCommand(tv); // Turn TV off
+        MacroCommand stereoOff = new StereoOffCommand(stereo); // Turn stereo off
+        MacroCommand lightOff = new MacroLightOffCommand(light); // Turn light off
+
         // STEP 3: Create macro commands (composite commands)
         // A macro command combines multiple simple commands into one
-        
+
         // Create "Party Mode On" macro: turns on light, TV, stereo, and sets volume
         // This demonstrates how we can combine multiple operations into one command
         List<MacroCommand> partyModeOn = new ArrayList<>();
-        partyModeOn.add(lightOn);        // First: Turn light on
-        partyModeOn.add(tvOn);           // Second: Turn TV on
-        partyModeOn.add(stereoOn);       // Third: Turn stereo on
-        partyModeOn.add(stereoVolume);   // Fourth: Set volume to 11
+        partyModeOn.add(lightOn); // First: Turn light on
+        partyModeOn.add(tvOn); // Second: Turn TV on
+        partyModeOn.add(stereoOn); // Third: Turn stereo on
+        partyModeOn.add(stereoVolume); // Fourth: Set volume to 11
         // Create the macro command from the list
         MacroCommand partyModeOnMacro = new CompositeMacroCommand(partyModeOn);
-        
+
         // Create "Party Mode Off" macro: turns off light, TV, and stereo
         // This shows how we can create a reverse macro command
         List<MacroCommand> partyModeOff = new ArrayList<>();
-        partyModeOff.add(lightOff);      // First: Turn light off
-        partyModeOff.add(tvOff);         // Second: Turn TV off
-        partyModeOff.add(stereoOff);     // Third: Turn stereo off
+        partyModeOff.add(lightOff); // First: Turn light off
+        partyModeOff.add(tvOff); // Second: Turn TV off
+        partyModeOff.add(stereoOff); // Third: Turn stereo off
         // Create the macro command from the list
         MacroCommand partyModeOffMacro = new CompositeMacroCommand(partyModeOff);
-        
+
         // STEP 4: Create the invoker (remote control)
         // The remote control can execute both simple and macro commands
         MacroRemoteControl remote = new MacroRemoteControl();
-        
+
         // STEP 5: Execute macro commands
         // Notice how we execute a macro command exactly like a simple command
-        
+
         // Execute "Party Mode On" macro
         // This single command execution will:
         // 1. Turn on the light
@@ -450,25 +331,25 @@ public class CommandMacroDemo {
         // 3. Turn on the stereo
         // 4. Set the stereo volume to 11
         System.out.println("--- Activating Party Mode ---");
-        remote.setCommand(partyModeOnMacro);  // Set the macro command
-        remote.pressButton();                 // Execute it (all operations happen)
-        
+        remote.setCommand(partyModeOnMacro); // Set the macro command
+        remote.pressButton(); // Execute it (all operations happen)
+
         // Execute "Party Mode Off" macro
         // This single command execution will:
         // 1. Turn off the light
         // 2. Turn off the TV
         // 3. Turn off the stereo
         System.out.println("--- Deactivating Party Mode ---");
-        remote.setCommand(partyModeOffMacro);  // Set a different macro command
-        remote.pressButton();                    // Execute it (all operations happen)
-        
+        remote.setCommand(partyModeOffMacro); // Set a different macro command
+        remote.pressButton(); // Execute it (all operations happen)
+
         // SUMMARY: What we've demonstrated
         System.out.println("--- Macro Command Benefits ---");
         System.out.println("✓ Combine multiple commands into one");
         System.out.println("✓ Execute complex operations with single button press");
         System.out.println("✓ Commands can be easily reordered or modified");
         System.out.println("✓ Supports both individual and composite commands");
-        
+
         // KEY TAKEAWAYS:
         // 1. Macro commands are commands that contain other commands
         // 2. They can be treated exactly like simple commands

@@ -146,12 +146,9 @@ class TurnOffCommand implements Command {
         this.device = device;
     }
 
-    /**
-     * Executes the command by calling turnOff() on the receiver.
-     */
     @Override
     public void execute() {
-        device.turnOff(); // Delegate to the receiver to perform the actual operation
+        device.turnOff();
     }
 }
 
@@ -171,12 +168,9 @@ class ChangeChannelCommand implements Command {
         this.tv = tv;
     }
 
-    /**
-     * Executes the command by calling changeChannel() on the TV.
-     */
     @Override
     public void execute() {
-        tv.changeChannel(); // Call TV-specific method
+        tv.changeChannel();
     }
 }
 
@@ -192,12 +186,9 @@ class AdjustVolumeCommand implements Command {
         this.stereo = stereo;
     }
 
-    /**
-     * Executes the command by calling adjustVolume() on the stereo.
-     */
     @Override
     public void execute() {
-        stereo.adjustVolume(); // Call Stereo-specific method
+        stereo.adjustVolume();
     }
 }
 

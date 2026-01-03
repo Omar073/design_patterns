@@ -20,8 +20,9 @@ Each section gives:
 
 ### Structural Patterns
 - [Adapter](#adapter)
-- [Decorator](#decorator)
 - [Bridge](#bridge)
+- [Composite](#composite)
+- [Decorator](#decorator)
 - [Facade](#facade)
 - [Flyweight](#flyweight)
 - [Proxy](#proxy)
@@ -30,6 +31,11 @@ Each section gives:
 - [Strategy](#strategy)
 - [Chain of Responsibility](#chain-of-responsibility)
 - [Command](#command)
+- [Iterator](#iterator)
+- [Mediator](#mediator)
+- [Memento](#memento)
+- [Observer](#observer)
+- [State](#state)
 
 ---
 
@@ -42,8 +48,8 @@ The table below summarizes the patterns in this codebase using the classic **GoF
 | Class  | Creational  | Factory Method (part of Factory family)               |
 | Object | Creational  | Abstract Factory, Builder, Prototype, Singleton, Simple Factory |
 | Class  | Structural  | Adapter (class form – shown conceptually)             |
-| Object | Structural  | Adapter (object form), Bridge, Decorator, Facade, Flyweight, Proxy |
-| Object | Behavioral  | Strategy, Chain of Responsibility                     |
+| Object | Structural  | Adapter (object form), Bridge, Composite, Decorator, Facade, Flyweight, Proxy |
+| Object | Behavioral  | Strategy, Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State                     |
 
 ---
 
@@ -327,6 +333,314 @@ remote.pressButton();  // Executes all commands
 
 ---
 
+## Iterator
+
+- **Intent**: Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+- **When to use**:
+  - You need to traverse a collection without exposing its internal structure
+  - You want to provide a uniform way to traverse different collection types
+  - You need to support multiple simultaneous traversals
+  - Collection structure may change (array → list → tree)
+- **Structure**:
+  - Roles:
+    - **Iterator**: Interface defining traversal methods (hasNext(), next())
+    - **ConcreteIterator**: Implements Iterator, maintains position, implements traversal
+    - **Aggregate**: Interface defining iterator creation method (createIterator())
+    - **ConcreteAggregate**: Implements Aggregate, creates appropriate iterator
+- **Code feel**:
+
+```java
+// Get Iterator from Aggregate
+Library library = new Library();
+library.addBook("The Great Gatsby");
+library.addBook("1984");
+
+Iterator<String> iterator = library.createIterator();
+
+// Traverse using Iterator
+while (iterator.hasNext()) {
+    String book = iterator.next();
+    System.out.println(book);
+}
+```
+
+```java
+// Iterator hides internal structure
+class BookIterator implements Iterator<String> {
+    private String[] books;
+    private int position;
+    
+    public boolean hasNext() {
+        return position < books.length;
+    }
+    
+    public String next() {
+        return books[position++];
+    }
+}
+```
+
+- **Similar to / compared with**:
+  - **vs Visitor**: Iterator traverses elements; Visitor performs operations on elements
+  - **vs Composite**: Iterator traverses collections; Composite builds tree structures
+
+- **Further reading**: [Iterator README](Iterator/README.md), demo: [IteratorPatternDemo](Iterator/IteratorPatternDemo.java)
+
+---
+
+## Mediator
+
+- **Intent**: Reduce communication complexity between multiple objects or classes by providing a mediator class that handles all communications between different classes, supporting easy maintainability through loose coupling. The Mediator Design Pattern simplifies communication between multiple objects in a system by centralizing their interactions through a mediator. Instead of objects interacting directly, they communicate via a mediator, reducing dependencies and making the system easier to manage.
+- **When to use**:
+  - You have many objects communicating with each other in complex ways
+  - You want to reduce dependencies between objects by centralizing their interactions
+  - Communication logic is scattered across multiple classes
+  - You need centralized coordination of component interactions
+  - Complex communication: Your system involves a set of objects that need to communicate with each other in a complex manner
+  - Loose coupling: You want to promote loose coupling between objects
+  - Centralized control: You need a centralized mechanism to coordinate interactions
+- **Structure**:
+  - Diagrams:
+    - ![Mediator Diagram 1](Mediator/diagram1.png)  
+      *Shows the general Mediator pattern structure with Mediator interface, Concrete Mediator, Colleague interface, and Concrete Colleague classes.*
+    - ![Mediator Diagram 2](Mediator/diagram2.png)  
+      *Shows the Air Traffic Control example with AirTrafficControlTower as Mediator, AirportControlTower as Concrete Mediator, Airplane as Colleague, and CommercialAirplane as Concrete Colleague.*
+  - Roles:
+    - **Mediator**: Interface defining communication contract (`onEvent()` method or `requestTakeoff()`, `requestLanding()`)
+    - **ConcreteMediator**: Implements Mediator, knows about all colleagues, contains coordination logic
+    - **Colleague**: Interface for components that need to communicate (`setMediator()`, `triggerEvent()` or `requestTakeoff()`, `requestLanding()`)
+    - **ConcreteColleague**: Implements Colleague, communicates only through mediator (e.g., Alarm, CoffeePot, Calendar, Sprinkler or CommercialAirplane)
+    - **Client**: Creates components and mediator, registers components with mediator
+- **Code feel**:
+
+```java
+// Create components and mediator
+Alarm alarm = new Alarm("Morning");
+CoffeePot coffeePot = new CoffeePot("Kitchen");
+Calendar calendar = new Calendar("Home");
+Sprinkler sprinkler = new Sprinkler("Garden");
+
+SmartHomeMediatorImpl mediator = new SmartHomeMediatorImpl();
+mediator.registerComponents(alarm, coffeePot, calendar, sprinkler);
+
+// Components communicate through mediator
+alarm.ring();  // Mediator coordinates: checks calendar, starts sprinkler if needed, starts coffee
+calendar.setDayOfWeek("Saturday");  // Mediator adjusts routines based on day
+```
+
+```java
+// Mediator contains all coordination logic
+public void onEvent(String event, Colleague sender) {
+    if ("ALARM_RING".equals(event)) {
+        if (calendar.isWeekend()) {
+            if (!isRaining && temperature > 65) {
+                sprinkler.start();
+            }
+        } else {
+            if (!isRaining && temperature > 70) {
+                sprinkler.start();
+            }
+        }
+        coffeePot.startBrewing();
+    }
+}
+```
+
+```java
+// Air Traffic Control Example - Airplanes communicate through mediator
+AirTrafficControlTower controlTower = new AirportControlTower();
+Airplane airplane1 = new CommercialAirplane(controlTower, "AA101");
+Airplane airplane2 = new CommercialAirplane(controlTower, "UA202");
+
+// Airplanes communicate through mediator, not directly
+airplane1.requestTakeoff();  // Goes through control tower
+airplane2.requestLanding();  // Goes through control tower
+```
+
+- **Similar to / compared with**:
+  - **vs Facade**: Mediator coordinates peer objects; Facade simplifies subsystem interface
+  - **vs Observer**: Mediator centralizes communication; Observer distributes notifications
+  - **vs Command**: Mediator coordinates multiple objects; Command encapsulates single operations
+
+- **Further reading**: [Mediator README](Mediator/README.md), demos: [MediatorPatternDemo](Mediator/MediatorPatternDemo.java), [MediatorAirplaneDemo](Mediator/MediatorAirplaneDemo.java)
+
+---
+
+## Memento
+
+- **Intent**: Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later. Use the Memento Pattern when you need to be able to return an object to one of its previous states; for instance, if your user requests an "undo."
+- **When to use**:
+  - You need to implement undo/redo functionality
+  - You need to save and restore an object's state
+  - You need to provide checkpoints for rollback operations
+  - You need to maintain encapsulation while saving state
+- **Structure**:
+  - Roles:
+    - **Memento**: Stores the internal state of the Originator (opaque to Caretaker)
+    - **Originator**: Creates mementos containing snapshots of its current state and uses mementos to restore state
+    - **Caretaker**: Stores mementos but never operates on or examines their contents
+- **Code feel**:
+
+```java
+// Create Originator and Caretaker
+TextEditor editor = new TextEditor();
+History history = new History();
+
+// Save initial state
+history.saveState(editor.save());
+
+// Perform operations
+editor.write("Hello");
+history.saveState(editor.save());
+
+editor.write(" World");
+history.saveState(editor.save());
+
+// Undo - restore previous state
+editor.restore(history.undo());
+
+// Redo - restore undone state
+editor.restore(history.redo());
+```
+
+```java
+// Memento is opaque - Caretaker cannot access its contents
+class TextEditorMemento {
+    private final String content;  // Private - only Originator can access
+    private final int cursorPosition;
+    
+    TextEditorMemento(String content, int cursorPosition) {
+        this.content = content;
+        this.cursorPosition = cursorPosition;
+    }
+    
+    // Package-private getters - only Originator can call these
+    String getContent() { return content; }
+    int getCursorPosition() { return cursorPosition; }
+}
+```
+
+- **Similar to / compared with**:
+  - **vs Command**: Memento stores state snapshots; Command stores operations for undo
+  - **vs Prototype**: Memento stores past state for restoration; Prototype creates new objects by cloning
+  - **vs State**: Memento represents past state (for restoration); State represents current state (for behavior)
+
+- **Further reading**: [Memento README](Memento/README.md), demo: [MementoPatternDemo](Memento/MementoPatternDemo.java)
+
+---
+
+## Observer
+
+- **Intent**: Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+- **Also Known As**: Dependents or Publish-Subscribe
+- **When to use**:
+  - You need to notify multiple objects when one object's state changes
+  - You want to maintain loose coupling between subject and observers
+  - You need to implement event-driven systems or publish-subscribe functionality
+  - Multiple views need to stay synchronized with model data
+- **Structure**:
+  - Roles:
+    - **Subject**: Maintains list of observers, provides attach/detach/notify methods
+    - **Observer**: Interface defining update() method for receiving notifications
+    - **ConcreteSubject**: Implements Subject, stores state, notifies observers when state changes
+    - **ConcreteObserver**: Implements Observer, updates its own state when notified
+- **Code feel**:
+
+```java
+// Create Subject and Observers
+WeatherStation weatherStation = new WeatherStation();
+PhoneApp phoneApp = new PhoneApp("WeatherPro");
+WebsiteDashboard website = new WebsiteDashboard("Weather.com");
+
+// Register observers
+weatherStation.registerObserver(phoneApp);
+weatherStation.registerObserver(website);
+
+// Update weather data - observers are automatically notified!
+weatherStation.setMeasurements(25.5f, 65.0f, 1013.25f);
+```
+
+```java
+// Subject notifies all observers automatically
+public void setMeasurements(float temp, float hum, float press) {
+    this.temperature = temp;
+    this.humidity = hum;
+    this.pressure = press;
+    notifyObservers();  // Automatically notify all registered observers
+}
+
+// Observer receives update
+public void update(float temp, float hum, float press) {
+    this.temperature = temp;
+    this.humidity = hum;
+    this.pressure = press;
+    display();  // Update display
+}
+```
+
+- **Similar to / compared with**:
+  - **vs Mediator**: Observer distributes notifications; Mediator centralizes coordination
+  - **vs Command**: Observer notifies multiple observers; Command encapsulates single operations
+  - **vs Chain of Responsibility**: Observer broadcasts to all; Chain passes to one handler
+
+- **Further reading**: [Observer README](Observer/README.md), demo: [ObserverPatternDemo](Observer/ObserverPatternDemo.java)
+
+---
+
+## State
+
+- **Intent**: Allow an object to alter its behavior when its internal state changes. The object will appear to change its class. A State Pattern says that "the class behavior changes based on its state". In State Pattern, we create objects that represent various states and a context object whose behavior varies as its state object changes.
+- **Also Known As**: Objects for States
+- **When to use**:
+  - An object's behavior depends on its state, and it must change behavior at runtime
+  - You have many conditional statements that depend on the object's state
+  - State transitions are complex or numerous
+  - You want to eliminate large if/else or switch statements based on state
+- **Structure**:
+  - Roles:
+    - **State**: Interface defining behavior for states
+    - **ConcreteState**: Implements State, represents specific state and defines behavior
+    - **Context**: Maintains current state object, delegates behavior to current state
+- **Code feel**:
+
+```java
+// Create Context
+VendingMachine machine = new VendingMachine();
+
+// Behavior changes based on state automatically
+machine.pressDispense();  // Does nothing (NoCoinState)
+machine.insertCoin();     // Transitions to HasCoinState
+machine.pressDispense();  // Dispenses item (HasCoinState)
+```
+
+```java
+// Each state defines its own behavior
+class NoCoinState implements VendingMachineState {
+    public void insertCoin() {
+        machine.setState(machine.getHasCoinState());  // Transition
+    }
+    
+    public void pressDispense() {
+        System.out.println("Please insert a coin first.");
+    }
+}
+
+class HasCoinState implements VendingMachineState {
+    public void pressDispense() {
+        machine.setState(machine.getDispensingState());  // Transition
+    }
+}
+```
+
+- **Similar to / compared with**:
+  - **vs Strategy**: State changes behavior with internal state; Strategy swaps algorithms
+  - **vs Memento**: State represents current state for behavior; Memento stores past state for restoration
+  - **vs Command**: State encapsulates state-specific behavior; Command encapsulates operations
+
+- **Further reading**: [State README](State/README.md), demo: [StatePatternDemo](State/StatePatternDemo.java)
+
+---
+
 ## Adapter
 
 - **Intent**: Convert the interface of a class into another interface clients expect so that incompatible classes can work together.
@@ -360,6 +674,72 @@ hole.fits(adapter);
 
 ---
 
+## Bridge
+
+- **Intent**: Decouple an abstraction from its implementation so that the two can vary independently.
+- **When to use**:
+  - You have two independent dimensions that can both change (e.g., transport type vs engine type, GUI vs OS API).
+  - You want to avoid combinatorial explosion like `GasCar`, `ElectricCar`, `GasPlane`, `ElectricPlane`, etc.
+- **Structure**:
+  - Diagrams:
+    - ![Bridge Structure – Generic](Bridge/bridge_structure_uml.jpeg)  
+      *Shows the general Bridge layout: Abstraction holding an Implementor, with RefinedAbstractions and ConcreteImplementors on each side.*
+    - ![Bridge Example – Transport/Engine](Bridge/bridge_example_uml.jpeg)  
+      *Shows the Transport/Engine example where Car and Plane use GasEngine or ElectricEngine via the Bridge composition.*
+  - Roles:
+    - **Abstraction** + **Refined Abstractions**: high-level interface and its variations (e.g., `Transport`, `Car`, `Plane`).
+    - **Implementor** + **Concrete Implementors**: platform- or detail-specific behaviors (e.g., `Engine`, `GasEngine`, `ElectricEngine`).
+    - **Client**: uses Abstraction; doesn't know which Implementor is used.
+- **Code feel**:
+
+```java
+Transport car = new Car(new GasEngine());
+Transport plane = new Plane(new ElectricEngine());
+car.drive();
+plane.drive();
+```
+- **Similar to / compared with**:
+  - **Adapter**: Adapter usually wraps one existing class to fix an incompatible interface; Bridge is a design choice from the start to separate two hierarchies.
+  - **Strategy**: Strategy swaps algorithms; Bridge splits class responsibilities between abstraction and implementation.
+  - **Decorator**: Decorator stacks behaviors; Bridge separates two dimensions (type vs implementation).
+
+- **Further reading**: [Bridge README](Bridge/README.md), demos: [BridgeTransportDemo](Bridge/BridgeTransportDemo.java), [BridgeGuiApiDemo](Bridge/BridgeGuiApiDemo.java)
+
+---
+
+## Composite
+
+- **Intent**: Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+- **When to use**:
+  - You want to represent part-whole hierarchies of objects
+  - You want clients to be able to ignore the difference between compositions of objects and individual objects
+  - You want to treat all objects in the composition uniformly
+- **Structure**:
+  - Roles:
+    - **Component**: Declares interface for objects in composition and for accessing/managing child components
+    - **Leaf**: Represents leaf objects in the composition (has no children)
+    - **Composite**: Defines behavior for components having children and stores child components
+    - **Client**: Manipulates objects in the composition through the Component interface
+- **Code feel**:
+
+```java
+// Treat individual and composite objects uniformly
+Component file = new File("document.txt");
+Component folder = new Folder("Documents");
+folder.add(file);
+folder.add(new File("readme.txt"));
+
+folder.display();  // Displays folder and all contents
+```
+
+- **Similar to / compared with**:
+  - **vs Decorator**: Composite builds tree structures; Decorator adds behavior to objects
+  - **vs Iterator**: Composite structures can be traversed using Iterator pattern
+
+- **Further reading**: [Composite README](Composite/README.md), demo: [CompositePatternDemo](Composite/CompositePatternDemo.java)
+
+---
+
 ## Decorator
 
 - **Intent**: Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
@@ -387,39 +767,6 @@ c = new Sugar(c);
   - **Adapter**: Adapter changes the interface; Decorator keeps the same interface and adds responsibilities.
 
 - **Further reading**: [Decorator README](Decorator/README.md), demos: [DecoratorDemo](Decorator/DecoratorDemo.java), [ShapeDecoratorDemo](Decorator/ShapeDecoratorDemo.java), [FileDecoratorDemo](Decorator/FileDecoratorDemo.java), [FileDecoratorChainingDemo](Decorator/FileDecoratorChainingDemo.java), [FileDecoratorPatternDemo](Decorator/FileDecoratorPatternDemo.java)
-
----
-
-## Bridge
-
-- **Intent**: Decouple an abstraction from its implementation so that the two can vary independently.
-- **When to use**:
-  - You have two independent dimensions that can both change (e.g., transport type vs engine type, GUI vs OS API).
-  - You want to avoid combinatorial explosion like `GasCar`, `ElectricCar`, `GasPlane`, `ElectricPlane`, etc.
-- **Structure**:
-  - Diagrams:
-    - ![Bridge Structure – Generic](Bridge/bridge_structure_uml.jpeg)  
-      *Shows the general Bridge layout: Abstraction holding an Implementor, with RefinedAbstractions and ConcreteImplementors on each side.*
-    - ![Bridge Example – Transport/Engine](Bridge/bridge_example_uml.jpeg)  
-      *Shows the Transport/Engine example where Car and Plane use GasEngine or ElectricEngine via the Bridge composition.*
-  - Roles:
-    - **Abstraction** + **Refined Abstractions**: high-level interface and its variations (e.g., `Transport`, `Car`, `Plane`).
-    - **Implementor** + **Concrete Implementors**: platform- or detail-specific behaviors (e.g., `Engine`, `GasEngine`, `ElectricEngine`).
-    - **Client**: uses Abstraction; doesn’t know which Implementor is used.
-- **Code feel**:
-
-```java
-Transport car = new Car(new GasEngine());
-Transport plane = new Plane(new ElectricEngine());
-car.drive();
-plane.drive();
-```
-- **Similar to / compared with**:
-  - **Adapter**: Adapter usually wraps one existing class to fix an incompatible interface; Bridge is a design choice from the start to separate two hierarchies.
-  - **Strategy**: Strategy swaps algorithms; Bridge splits class responsibilities between abstraction and implementation.
-  - **Decorator**: Decorator stacks behaviors; Bridge separates two dimensions (type vs implementation).
-
-- **Further reading**: [Bridge README](Bridge/README.md), demos: [BridgeTransportDemo](Bridge/BridgeTransportDemo.java), [BridgeGuiApiDemo](Bridge/BridgeGuiApiDemo.java)
 
 ---
 

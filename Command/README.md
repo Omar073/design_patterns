@@ -264,31 +264,95 @@ public class CommandPatternDemo {
 
 ## Why Use the Command Pattern?
 
-### The Problem: Tight Coupling
+### Code Without Command Pattern
 
-Without the Command pattern, the invoker (remote control) would be tightly coupled to specific receivers (devices):
+Without the Command pattern, the invoker (remote control) must directly know about and call methods on specific receivers:
 
 ```java
-// Problem: Tight coupling
+// Problem: Tight coupling - RemoteControl knows about all concrete devices
 class RemoteControl {
     private TV tv;
     private Stereo stereo;
+    private Light light;
     
-    void pressTVButton() {
+    public RemoteControl(TV tv, Stereo stereo, Light light) {
+        this.tv = tv;
+        this.stereo = stereo;
+        this.light = light;
+    }
+    
+    // Must have separate methods for each device and operation
+    void pressTVOnButton() {
         tv.turnOn();  // Directly calls TV method
     }
     
-    void pressStereoButton() {
+    void pressTVOffButton() {
+        tv.turnOff();
+    }
+    
+    void pressTVChannelButton() {
+        tv.changeChannel();  // Directly calls TV method
+    }
+    
+    void pressStereoOnButton() {
         stereo.turnOn();  // Directly calls Stereo method
+    }
+    
+    void pressStereoOffButton() {
+        stereo.turnOff();
+    }
+    
+    void pressStereoVolumeButton() {
+        stereo.adjustVolume();  // Directly calls Stereo method
+    }
+    
+    void pressLightOnButton() {
+        light.turnOn();  // Directly calls Light method
+    }
+    
+    void pressLightOffButton() {
+        light.turnOff();
+    }
+    
+    // To add a new device, must add more methods here!
+    // void pressNewDeviceButton() {
+    //     newDevice.doSomething();
+    // }
+}
+
+// Client code - tightly coupled
+public class WithoutCommandDemo {
+    public static void main(String[] args) {
+        TV tv = new TV("Living Room");
+        Stereo stereo = new Stereo("Music System");
+        Light light = new Light("Kitchen");
+        
+        // RemoteControl must know about all devices at construction
+        RemoteControl remote = new RemoteControl(tv, stereo, light);
+        
+        // Direct method calls - no flexibility
+        remote.pressTVOnButton();
+        remote.pressStereoOnButton();
+        remote.pressLightOnButton();
+        
+        // Problems:
+        // - Cannot queue commands
+        // - Cannot log commands
+        // - Cannot undo commands
+        // - Cannot combine commands (macro)
+        // - Adding new device requires modifying RemoteControl
     }
 }
 ```
 
 **Problems:**
-- ❌ **Tight coupling**: Remote control knows about all devices
-- ❌ **Hard to extend**: Adding new devices requires modifying remote control
+- ❌ **Tight coupling**: Remote control knows about all concrete device classes
+- ❌ **Hard to extend**: Adding new devices requires modifying remote control class
 - ❌ **No flexibility**: Can't queue, log, or undo commands
-- ❌ **Violates Open/Closed**: Must modify remote control for new commands
+- ❌ **Violates Open/Closed Principle**: Must modify remote control for new commands
+- ❌ **Method explosion**: Need separate methods for each device-operation combination
+- ❌ **No reusability**: Cannot reuse or combine commands
+- ❌ **No dynamic behavior**: Cannot change what buttons do at runtime
 
 ### The Solution: Command Pattern
 
@@ -348,12 +412,32 @@ The Command pattern solves these problems by:
 ## When to Use Command Pattern
 
 ### ✅ Use Command Pattern When:
+
+#### Decoupling is Needed:
+- You want to **decouple the sender (requester) of a request from the object that performs the request**
+- This helps in making your code more flexible and extensible
+- The invoker doesn't need to know about the receiver or how the operation is performed
+
+#### Undo/Redo Functionality is Required:
+- You need to **support undo and redo operations** in your application
+- Each command can encapsulate an operation and its inverse, making it easy to undo or redo actions
+- Commands maintain their own undo logic, keeping it co-located with the command
+
+#### Support for Queues and Logging:
+- You want to **maintain a history of commands**, log them, or put them in a queue for execution
+- The Command Pattern provides a structured way to achieve this
+- Commands can be stored, queued, and executed later or in batches
+
+#### Dynamic Configuration:
+- You need the ability to **dynamically configure and assemble commands at runtime**
+- The Command Pattern allows for flexible composition of commands
+- Commands can be combined into macro commands or modified before execution
+
+#### Additional Use Cases:
 - You need to **parameterize objects** with operations
-- You need to **queue operations**, schedule them, or execute them remotely
-- You need to **support undo/redo** functionality
-- You need to **log operations** for auditing or debugging
+- You need to **schedule operations** or execute them remotely
 - You need to **support macro commands** (combining multiple commands)
-- You need to **decouple invoker from receiver**
+- You need to **log operations** for auditing or debugging
 
 ### ❌ Don't Use Command Pattern When:
 - **Simple operations**: Direct method calls are sufficient

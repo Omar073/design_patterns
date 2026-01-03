@@ -20,7 +20,12 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Bridge vs Decorator](#bridge-vs-decorator)
    - [Adapter vs Proxy](#adapter-vs-proxy)
 
-3. [Cross-Category Comparisons](#cross-category-comparisons)
+3. [Behavioral Patterns](#behavioral-patterns)
+   - [Mediator vs Facade](#mediator-vs-facade)
+   - [Mediator vs Observer](#mediator-vs-observer)
+   - [Mediator vs Command](#mediator-vs-command)
+
+4. [Cross-Category Comparisons](#cross-category-comparisons)
    - [Facade vs Builder/Factory](#facade-vs-builderfactory)
    - [Builder vs Facade](#builder-vs-facade)
    - [Flyweight vs Singleton vs Prototype](#flyweight-vs-singleton-vs-prototype)
@@ -1290,6 +1295,799 @@ These three patterns all deal with **object instances**, but in different ways:
 
 ---
 
+## Behavioral Patterns
+
+### Mediator vs Facade
+
+#### Overview
+
+Both patterns simplify interactions, but Mediator coordinates peer objects while Facade simplifies subsystem access.
+
+| Aspect | Mediator | Facade |
+|--------|----------|--------|
+| **Intent** | Centralize communication between peer objects | Simplify subsystem interface |
+| **Participants** | Peer objects (colleagues) | Subsystem components |
+| **Communication** | Objects communicate with each other (through mediator) | Client uses facade instead of subsystem |
+| **Coupling** | Reduces coupling between colleagues | Reduces coupling between client and subsystem |
+| **Complexity** | O(n) communication (through mediator) | Simplified interface to complex subsystem |
+| **Focus** | Coordination logic | Interface simplification |
+
+#### Code Comparison
+
+**Mediator:**
+```java
+// Mediator: Coordinates peer objects
+Alarm alarm = new Alarm();
+CoffeePot coffeePot = new CoffeePot();
+Calendar calendar = new Calendar();
+
+SmartHomeMediator mediator = new SmartHomeMediator();
+mediator.registerComponents(alarm, coffeePot, calendar);
+
+alarm.ring();  // Mediator coordinates: checks calendar, starts coffee
+```
+
+**Facade:**
+```java
+// Facade: Simplifies subsystem access
+ComputerFacade computer = new ComputerFacade();
+computer.startComputer();  // Hides complex subsystem interactions
+```
+
+#### Key Differences
+
+1. **Object Relationships**
+   - **Mediator**: Coordinates **peer objects** that need to communicate with each other
+   - **Facade**: Provides simplified interface to a **subsystem** (hierarchical relationship)
+
+2. **Communication Pattern**
+   - **Mediator**: Objects communicate **with each other** through the mediator
+   - **Facade**: Client communicates **with subsystem** through the facade (one-way)
+
+3. **Complexity Reduction**
+   - **Mediator**: Reduces **inter-object communication complexity** (O(n²) to O(n))
+   - **Facade**: Reduces **subsystem usage complexity** (hides internal complexity)
+
+4. **Use Cases**
+   - **Mediator**: GUI components in dialog, chat applications, workflow systems
+   - **Facade**: Home theater systems, computer startup sequences, API wrappers
+
+---
+
+### Mediator vs Observer
+
+#### Overview
+
+Both patterns handle communication, but Mediator centralizes it while Observer distributes notifications.
+
+| Aspect | Mediator | Observer |
+|--------|----------|----------|
+| **Intent** | Centralize communication between objects | Notify multiple observers of state changes |
+| **Communication** | Centralized through one mediator | Distributed through subject-observer relationships |
+| **Coupling** | Colleagues don't know about each other | Observers know about subject, subject knows about observers |
+| **Coordination** | Mediator actively coordinates | Subject passively notifies |
+| **Complexity** | O(n) through mediator | O(n) notifications (one-to-many) |
+
+#### Code Comparison
+
+**Mediator:**
+```java
+// Mediator: Centralized coordination
+class SmartHomeMediator {
+    void onEvent(String event, Colleague sender) {
+        if ("ALARM_RING".equals(event)) {
+            // Mediator coordinates multiple actions
+            if (calendar.isWeekend()) {
+                sprinkler.start();
+            }
+            coffeePot.startBrewing();
+        }
+    }
+}
+```
+
+**Observer:**
+```java
+// Observer: Distributed notifications
+class WeatherStation extends Subject {
+    void setTemperature(int temp) {
+        this.temperature = temp;
+        notifyObservers();  // Notifies all observers
+    }
+}
+
+class PhoneDisplay implements Observer {
+    void update(int temperature) {
+        display(temperature);  // Each observer handles notification independently
+    }
+}
+```
+
+#### Key Differences
+
+1. **Communication Model**
+   - **Mediator**: **Centralized** - all communication flows through one mediator
+   - **Observer**: **Distributed** - subject notifies multiple observers directly
+
+2. **Coordination**
+   - **Mediator**: Mediator **actively coordinates** colleagues based on events
+   - **Observer**: Subject **passively notifies** observers, observers handle independently
+
+3. **Coupling**
+   - **Mediator**: Colleagues **don't know about each other** (only know mediator)
+   - **Observer**: Observers **know about subject**, subject knows about observers
+
+4. **Use Cases**
+   - **Mediator**: When you need centralized coordination logic (GUI dialogs, workflow systems)
+   - **Observer**: When you need one-to-many notifications (event systems, MVC architecture)
+
+---
+
+### Mediator vs Command
+
+#### Overview
+
+Mediator coordinates multiple objects, while Command encapsulates single operations.
+
+| Aspect | Mediator | Command |
+|--------|----------|---------|
+| **Intent** | Coordinate communication between multiple objects | Encapsulate requests as objects |
+| **Focus** | Object coordination | Operation encapsulation |
+| **Participants** | Multiple colleagues + mediator | Command + invoker + receiver |
+| **Complexity** | Reduces inter-object communication | Enables queuing, logging, undo |
+| **Use Case** | Complex object interactions | Request queuing, undo/redo, logging |
+
+#### Code Comparison
+
+**Mediator:**
+```java
+// Mediator: Coordinates multiple objects
+class SmartHomeMediator {
+    void onEvent(String event, Colleague sender) {
+        if ("ALARM_RING".equals(event)) {
+            // Coordinates multiple objects
+            coffeePot.startBrewing();
+            if (shouldStartSprinkler()) {
+                sprinkler.start();
+            }
+        }
+    }
+}
+```
+
+**Command:**
+```java
+// Command: Encapsulates single operation
+class TurnOnCommand implements Command {
+    private Device device;
+    
+    void execute() {
+        device.turnOn();  // Encapsulates one operation
+    }
+}
+
+RemoteControl remote = new RemoteControl();
+remote.setCommand(new TurnOnCommand(tv));
+remote.pressButton();
+```
+
+#### Key Differences
+
+1. **Scope**
+   - **Mediator**: Coordinates **multiple objects** communicating with each other
+   - **Command**: Encapsulates **single operations** or requests
+
+2. **Purpose**
+   - **Mediator**: **Reduces communication complexity** between objects
+   - **Command**: Enables **queuing, logging, undo** of operations
+
+3. **Structure**
+   - **Mediator**: Mediator knows about all colleagues, contains coordination logic
+   - **Command**: Command encapsulates receiver and operation, invoker executes commands
+
+4. **Use Cases**
+   - **Mediator**: GUI components, chat applications, workflow coordination
+   - **Command**: Menu systems, undo/redo, macro recording, remote control systems
+
+---
+
+### Memento vs Command (for Undo)
+
+#### Overview
+
+Both patterns can be used for undo functionality, but they approach it differently: Memento stores state snapshots while Command stores operations.
+
+| Aspect | Memento | Command |
+|--------|---------|---------|
+| **Intent** | Save/restore object state | Encapsulate operations as objects |
+| **What's Stored** | State snapshots | Operations (commands) |
+| **Undo Mechanism** | Restore previous state | Execute inverse operation |
+| **Encapsulation** | State hidden in memento | Operation hidden in command |
+| **Use Case** | State-based undo | Operation-based undo |
+
+#### Code Comparison
+
+**Memento:**
+```java
+// Memento: Stores state snapshots
+class TextEditor {
+    public Memento save() {
+        return new Memento(this.content, this.cursorPosition);
+    }
+    
+    public void restore(Memento memento) {
+        this.content = memento.getContent();
+        this.cursorPosition = memento.getCursorPosition();
+    }
+}
+
+// Undo: Restore previous state
+editor.restore(history.undo());
+```
+
+**Command:**
+```java
+// Command: Stores operations
+class WriteCommand implements Command {
+    private String text;
+    private TextEditor editor;
+    
+    public void execute() {
+        editor.write(text);
+    }
+    
+    public void undo() {
+        editor.delete(text.length());  // Inverse operation
+    }
+}
+
+// Undo: Execute inverse operation
+command.undo();
+```
+
+#### Key Differences
+
+1. **What's Stored**
+   - **Memento**: **State snapshots** at specific points in time
+   - **Command**: **Operations** (actions) that can be executed/undone
+
+2. **Undo Mechanism**
+   - **Memento**: **Restore** previous state from snapshot
+   - **Command**: **Execute inverse** operation to undo
+
+3. **Memory Usage**
+   - **Memento**: Stores full state (can be memory-intensive)
+   - **Command**: Stores operation details (usually smaller)
+
+4. **Use Cases**
+   - **Memento**: Text editors, graphics applications, games (save/load)
+   - **Command**: Menu systems, macro recording, transaction systems
+
+**They can work together**: Command pattern can use Memento to store state before operations.
+
+---
+
+### Memento vs Prototype
+
+#### Overview
+
+Both patterns deal with object state, but Memento stores state for restoration while Prototype creates new objects by cloning.
+
+| Aspect | Memento | Prototype |
+|--------|---------|-----------|
+| **Intent** | Save/restore object state | Create new objects by cloning |
+| **Purpose** | State restoration | Object creation |
+| **Access** | Opaque (only Originator) | Accessible (clients can clone) |
+| **Use Case** | Undo/redo, checkpoints | Efficient object creation |
+
+#### Code Comparison
+
+**Memento:**
+```java
+// Memento: Stores state for restoration
+class TextEditor {
+    public Memento save() {
+        return new Memento(this.content, this.cursorPosition);
+    }
+    
+    public void restore(Memento memento) {
+        this.content = memento.getContent();  // Restore previous state
+        this.cursorPosition = memento.getCursorPosition();
+    }
+}
+```
+
+**Prototype:**
+```java
+// Prototype: Creates new objects by cloning
+class Circle implements Cloneable {
+    private int radius;
+    private String color;
+    
+    public Circle clone() {
+        return (Circle) super.clone();  // Create new object
+    }
+}
+
+// Usage: Create new instances
+Circle circle2 = circle1.clone();  // New object, can modify independently
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Memento**: **Restore** object to previous state
+   - **Prototype**: **Create** new object instances
+
+2. **State Management**
+   - **Memento**: Stores **past state** for restoration
+   - **Prototype**: Creates **new objects** with copied state
+
+3. **Access Control**
+   - **Memento**: **Opaque** - only Originator can access
+   - **Prototype**: **Accessible** - clients can clone and modify
+
+4. **Use Cases**
+   - **Memento**: Undo/redo, save/load, checkpoints
+   - **Prototype**: Expensive object creation, object templates
+
+---
+
+### Observer vs Command
+
+#### Overview
+
+Both patterns deal with notifications and actions, but Observer notifies multiple objects while Command encapsulates operations.
+
+| Aspect | Observer | Command |
+|--------|----------|---------|
+| **Intent** | Notify multiple observers of state changes | Encapsulate operations as objects |
+| **Focus** | Event notification | Operation encapsulation |
+| **Participants** | Subject + multiple observers | Command + invoker + receiver |
+| **Communication** | Broadcast to all observers | Single operation execution |
+| **Use Case** | Event-driven systems, MVC | Undo/redo, queuing, logging |
+
+#### Code Comparison
+
+**Observer:**
+```java
+// Observer: Notifies multiple observers
+class WeatherStation implements Subject {
+    void setTemperature(float temp) {
+        this.temperature = temp;
+        notifyObservers();  // Broadcasts to all observers
+    }
+}
+
+class PhoneApp implements Observer {
+    void update(float temp) {
+        display(temp);  // Each observer reacts independently
+    }
+}
+```
+
+**Command:**
+```java
+// Command: Encapsulates single operation
+class TurnOnCommand implements Command {
+    private Device device;
+    
+    void execute() {
+        device.turnOn();  // Single operation
+    }
+}
+
+RemoteControl remote = new RemoteControl();
+remote.setCommand(new TurnOnCommand(tv));
+remote.pressButton();  // Executes command
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Observer**: **Notifies** multiple objects of state changes
+   - **Command**: **Encapsulates** operations for execution
+
+2. **Communication**
+   - **Observer**: **Broadcasts** to all registered observers
+   - **Command**: **Executes** single operation on receiver
+
+3. **Use Cases**
+   - **Observer**: Event systems, MVC, publish-subscribe
+   - **Command**: Menu systems, undo/redo, macro recording
+
+---
+
+### Observer vs Chain of Responsibility
+
+#### Overview
+
+Both patterns handle requests/events, but Observer broadcasts to all while Chain passes to one handler.
+
+| Aspect | Observer | Chain of Responsibility |
+|--------|----------|------------------------|
+| **Intent** | Notify multiple observers of changes | Pass request along chain until handled |
+| **Communication** | Broadcast to all observers | Sequential chain processing |
+| **Handlers** | All observers receive notification | One handler processes request |
+| **Use Case** | Event notification | Request handling |
+
+#### Code Comparison
+
+**Observer:**
+```java
+// Observer: Broadcasts to all
+class WeatherStation implements Subject {
+    void setTemperature(float temp) {
+        this.temperature = temp;
+        notifyObservers();  // All observers notified
+    }
+}
+
+// All observers receive update
+phoneApp.update(temp);
+website.update(temp);
+watch.update(temp);
+```
+
+**Chain of Responsibility:**
+```java
+// Chain: Passes to one handler
+class SpamHandler extends Handler {
+    void handleRequest(Email email) {
+        if (isSpam(email)) {
+            process(email);  // Handles and stops
+        } else {
+            successor.handleRequest(email);  // Passes to next
+        }
+    }
+}
+```
+
+#### Key Differences
+
+1. **Communication Pattern**
+   - **Observer**: **Broadcasts** to all observers simultaneously
+   - **Chain**: **Sequentially passes** request until one handler processes it
+
+2. **Handler Behavior**
+   - **Observer**: **All observers** receive and process notification
+   - **Chain**: **One handler** processes request, then stops
+
+3. **Use Cases**
+   - **Observer**: Event systems, model-view updates
+   - **Chain**: Request routing, validation pipelines, approval workflows
+
+---
+
+### State vs Strategy
+
+#### Overview
+
+Both patterns change behavior, but State changes behavior based on internal state while Strategy swaps algorithms.
+
+| Aspect | State | Strategy |
+|--------|-------|----------|
+| **Intent** | Change behavior based on internal state | Swap algorithms/behaviors |
+| **Focus** | State-dependent behavior | Algorithm selection |
+| **State Management** | States are related and transition | Strategies are independent |
+| **Transitions** | States transition between each other | Strategies are swapped |
+| **Use Case** | Object behavior depends on state | Need different algorithms for same task |
+
+#### Code Comparison
+
+**State:**
+```java
+// State: Behavior changes with internal state
+class VendingMachine {
+    private VendingMachineState currentState;
+    
+    public void insertCoin() {
+        currentState.insertCoin();  // Behavior depends on current state
+    }
+}
+
+class NoCoinState implements VendingMachineState {
+    public void insertCoin() {
+        machine.setState(machine.getHasCoinState());  // Transitions to another state
+    }
+}
+```
+
+**Strategy:**
+```java
+// Strategy: Swaps algorithms
+class Sorter {
+    private SortStrategy strategy;
+    
+    public void setStrategy(SortStrategy strategy) {
+        this.strategy = strategy;  // Swap strategy
+    }
+    
+    public void sort(int[] array) {
+        strategy.sort(array);  // Uses current strategy
+    }
+}
+
+// Strategies are independent - no transitions
+class QuickSort implements SortStrategy { ... }
+class MergeSort implements SortStrategy { ... }
+```
+
+#### Key Differences
+
+1. **State Management**
+   - **State**: States are **related** and **transition** between each other
+   - **Strategy**: Strategies are **independent** and **interchangeable**
+
+2. **Behavior Change**
+   - **State**: Behavior changes **automatically** with internal state
+   - **Strategy**: Behavior changes by **explicitly swapping** strategies
+
+3. **Use Cases**
+   - **State**: Vending machines, traffic lights, game character states
+   - **Strategy**: Sorting algorithms, encryption methods, payment methods
+
+**Key Difference:**
+- State = behavior changes with **internal state** (stateful, transitions)
+- Strategy = behavior changes by **choosing algorithm** (stateless, no transitions)
+
+---
+
+### State vs Memento
+
+#### Overview
+
+Both patterns deal with state, but State represents current state for behavior while Memento stores past state for restoration.
+
+| Aspect | State | Memento |
+|--------|-------|---------|
+| **Intent** | Change behavior based on current state | Save/restore object state |
+| **Purpose** | State-dependent behavior | State restoration |
+| **State Type** | Current state (active) | Past state (passive) |
+| **Use Case** | Behavior changes with state | Undo/redo, checkpoints |
+
+#### Code Comparison
+
+**State:**
+```java
+// State: Current state defines behavior
+class VendingMachine {
+    private VendingMachineState currentState;  // Current state
+    
+    public void insertCoin() {
+        currentState.insertCoin();  // Behavior based on current state
+    }
+}
+
+class NoCoinState implements VendingMachineState {
+    public void insertCoin() {
+        machine.setState(machine.getHasCoinState());  // Change current state
+    }
+}
+```
+
+**Memento:**
+```java
+// Memento: Stores past state for restoration
+class TextEditor {
+    public Memento save() {
+        return new Memento(this.content, this.cursorPosition);  // Save current state
+    }
+    
+    public void restore(Memento memento) {
+        this.content = memento.getContent();  // Restore past state
+        this.cursorPosition = memento.getCursorPosition();
+    }
+}
+```
+
+#### Key Differences
+
+1. **State Type**
+   - **State**: Represents **current state** (active, defines behavior)
+   - **Memento**: Stores **past state** (passive, for restoration)
+
+2. **Purpose**
+   - **State**: **Behavior changes** based on current state
+   - **Memento**: **Restore** object to previous state
+
+3. **Use Cases**
+   - **State**: Vending machines, traffic lights, workflow states
+   - **Memento**: Undo/redo, save/load, checkpoints
+
+**Key Difference:**
+- State = **current state** for behavior (active)
+- Memento = **past state** for restoration (passive)
+
+---
+
+### State vs Command
+
+#### Overview
+
+State encapsulates state-specific behavior while Command encapsulates operations as objects.
+
+| Aspect | State | Command |
+|--------|-------|---------|
+| **Intent** | Change behavior based on state | Encapsulate operations as objects |
+| **Focus** | State-dependent behavior | Operation encapsulation |
+| **Behavior** | Changes automatically with state | Executed on demand |
+| **Use Case** | Object behavior depends on state | Queuing, logging, undo operations |
+
+#### Code Comparison
+
+**State:**
+```java
+// State: Behavior changes with state
+class VendingMachine {
+    private VendingMachineState currentState;
+    
+    public void pressDispense() {
+        currentState.pressDispense();  // Behavior depends on current state
+    }
+}
+
+class NoCoinState implements VendingMachineState {
+    public void pressDispense() {
+        System.out.println("Please insert coin first.");  // State-specific behavior
+    }
+}
+```
+
+**Command:**
+```java
+// Command: Encapsulates operations
+class TurnOnCommand implements Command {
+    private Device device;
+    
+    public void execute() {
+        device.turnOn();  // Encapsulates operation
+    }
+}
+
+RemoteControl remote = new RemoteControl();
+remote.setCommand(new TurnOnCommand(tv));
+remote.pressButton();  // Executes command
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **State**: Encapsulates **state-specific behavior**
+   - **Command**: Encapsulates **operations** as objects
+
+2. **Behavior Change**
+   - **State**: Behavior changes **automatically** with state
+   - **Command**: Operations are **executed** on demand
+
+3. **Use Cases**
+   - **State**: Vending machines, traffic lights, game states
+   - **Command**: Menu systems, undo/redo, macro recording
+
+**Key Difference:**
+- State = behavior based on **current state**
+- Command = **operation** encapsulation
+
+---
+
+### Iterator vs Visitor
+
+#### Overview
+
+Both patterns work with collections, but Iterator traverses elements while Visitor performs operations on elements.
+
+| Aspect | Iterator | Visitor |
+|--------|----------|---------|
+| **Intent** | Traverse elements of a collection | Perform operations on elements |
+| **Focus** | Accessing elements sequentially | Operating on elements |
+| **Purpose** | Traversal | Processing |
+| **Use Case** | Traverse collections uniformly | Apply operations to elements |
+
+#### Code Comparison
+
+**Iterator:**
+```java
+// Iterator: Traverses elements
+Iterator<String> iterator = library.createIterator();
+while (iterator.hasNext()) {
+    String book = iterator.next();  // Just access element
+    System.out.println(book);
+}
+```
+
+**Visitor:**
+```java
+// Visitor: Performs operations on elements
+class BookVisitor {
+    void visit(Book book) {
+        book.print();  // Perform operation
+    }
+}
+
+for (Book book : library) {
+    visitor.visit(book);  // Operate on element
+}
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Iterator**: **Traverses** elements of a collection
+   - **Visitor**: **Performs operations** on elements
+
+2. **Focus**
+   - **Iterator**: **Accessing** elements sequentially
+   - **Visitor**: **Operating** on elements
+
+3. **Use Cases**
+   - **Iterator**: Collection traversal, hiding internal structure
+   - **Visitor**: Applying operations, double dispatch
+
+**They work together**: Iterator can be used with Visitor to traverse and operate on elements.
+
+---
+
+### Iterator vs Composite
+
+#### Overview
+
+Iterator provides traversal while Composite builds tree structures. They often work together.
+
+| Aspect | Iterator | Composite |
+|--------|----------|-----------|
+| **Intent** | Traverse collections | Compose objects into tree structures |
+| **Focus** | Accessing elements | Building structures |
+| **Purpose** | Traversal | Structure composition |
+| **Use Case** | Traverse aggregate objects | Represent part-whole hierarchies |
+
+#### Code Comparison
+
+**Iterator:**
+```java
+// Iterator: Traverses collection
+Iterator<String> iterator = library.createIterator();
+while (iterator.hasNext()) {
+    System.out.println(iterator.next());
+}
+```
+
+**Composite:**
+```java
+// Composite: Builds tree structure
+class FileSystem {
+    private List<FileSystem> children;
+    
+    void add(FileSystem component) {
+        children.add(component);
+    }
+}
+
+// Iterator can traverse Composite structure
+Iterator<FileSystem> iterator = root.createIterator();
+while (iterator.hasNext()) {
+    FileSystem component = iterator.next();
+    component.display();
+}
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Iterator**: **Traverses** collections
+   - **Composite**: **Builds** tree structures
+
+2. **Focus**
+   - **Iterator**: **Accessing** elements
+   - **Composite**: **Structuring** objects
+
+3. **Relationship**
+   - **Iterator**: Works **with** Composite to traverse tree structures
+   - **Composite**: Can use Iterator to traverse its children
+
+**They work together**: Iterator is commonly used to traverse Composite structures.
+
+---
+
 ## Quick Reference Table
 
 | Pattern | Intent | Key Characteristic | When to Use |
@@ -1307,6 +2105,11 @@ These three patterns all deal with **object instances**, but in different ways:
 | **Proxy** | Control access | Access management | Lazy loading, access control |
 | **Strategy** | Swap algorithms/behaviors | Encapsulated, pluggable strategies | Need interchangeable behaviors at runtime |
 | **Command** | Encapsulate requests as objects | Request/operation encapsulation | Need undo/redo, queuing, logging operations |
+| **Mediator** | Centralize object communication | Centralized coordination | Complex inter-object communication |
+| **Memento** | Save/restore object state | State snapshot for undo/redo | Need undo/redo, state checkpoints |
+| **Observer** | Notify multiple objects of changes | One-to-many state notification | Need event-driven updates, publish-subscribe |
+| **State** | Change behavior with object state | State-specific behavior encapsulation | Object behavior depends on internal state |
+| **Iterator** | Traverse collection elements | Sequential access without exposing structure | Need to traverse collections uniformly |
 
 ---
 
@@ -1336,3 +2139,8 @@ These three patterns all deal with **object instances**, but in different ways:
 - **Choose/swap algorithms at runtime?** → Strategy
 - **Need to encapsulate operations/requests?** → Command
 - **Need to pass requests through handlers?** → Chain of Responsibility
+- **Need to coordinate multiple objects communicating?** → Mediator
+- **Need to save/restore object state for undo/redo?** → Memento
+- **Need to notify multiple objects of state changes?** → Observer
+- **Need behavior to change with object's internal state?** → State
+- **Need to traverse collections without exposing structure?** → Iterator

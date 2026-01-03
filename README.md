@@ -26,18 +26,24 @@ This repository contains practical implementations of design patterns from the G
 
 ### Structural Patterns
 
-5. **[Proxy](Proxy/)** - Provides a placeholder or surrogate for another object to control access
-6. **[Decorator](Decorator/)** - Dynamically adds behavior to objects without altering their structure
-7. **[Adapter](Adapter/)** - Allows incompatible interfaces to work together
-8. **[Facade](Facade/)** - Provides a simplified interface to a complex subsystem
-9. **[Bridge](Bridge/)** - Decouples an abstraction from its implementation so both can vary independently
+5. **[Adapter](Adapter/)** - Allows incompatible interfaces to work together
+6. **[Bridge](Bridge/)** - Decouples an abstraction from its implementation so both can vary independently
+7. **[Composite](Composite/)** - Composes objects into tree structures to represent part-whole hierarchies
+8. **[Decorator](Decorator/)** - Dynamically adds behavior to objects without altering their structure
+9. **[Facade](Facade/)** - Provides a simplified interface to a complex subsystem
 10. **[Flyweight](Flyweight/)** - Reduces memory usage by sharing common object state between many objects
+11. **[Proxy](Proxy/)** - Provides a placeholder or surrogate for another object to control access
 
 ### Behavioral Patterns
 
 11. **[Strategy](Startegy/)** - Encapsulates interchangeable algorithms or behaviors and lets you swap them at runtime
 12. **[Chain of Responsibility](ChainOfResponsibility/)** - Passes a request along a chain of handlers until one handles it
 13. **[Command](Command/)** - Encapsulates requests as objects, allowing parameterization, queuing, logging, and undo/redo functionality
+14. **[Iterator](Iterator/)** - Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation
+15. **[Mediator](Mediator/)** - Reduces communication complexity between multiple objects by centralizing their interactions through a mediator
+16. **[Memento](Memento/)** - Captures and externalizes an object's internal state so it can be restored later, enabling undo/redo functionality
+17. **[Observer](Observer/)** - Defines a one-to-many dependency so that when one object changes state, all its dependents are notified and updated automatically
+18. **[State](State/)** - Allows an object to alter its behavior when its internal state changes, eliminating large conditional statements
 
 ## Repository Structure
 
@@ -104,6 +110,24 @@ design_patterns/
 │   ├── diagram1.png                           # General Command pattern structure
 │   ├── diagram2.png                           # Command pattern implementation diagram
 │   └── README.md                              # Command pattern documentation
+├── Mediator/
+│   ├── MediatorPatternDemo.java               # Mediator pattern - Smart home automation system
+│   ├── MediatorAirplaneDemo.java              # Mediator pattern - Air traffic control system
+│   ├── diagram1.png                           # General Mediator pattern structure
+│   ├── diagram2.png                           # Air Traffic Control example diagram
+│   └── README.md                              # Mediator pattern documentation
+├── Memento/
+│   ├── MementoPatternDemo.java                # Memento pattern - Text editor with undo/redo
+│   └── README.md                              # Memento pattern documentation
+├── Observer/
+│   ├── ObserverPatternDemo.java               # Observer pattern - Weather station with display devices
+│   └── README.md                              # Observer pattern documentation
+├── State/
+│   ├── StatePatternDemo.java                  # State pattern - Vending machine with state transitions
+│   └── README.md                              # State pattern documentation
+├── Iterator/
+│   ├── IteratorPatternDemo.java               # Iterator pattern - Book collection traversal
+│   └── README.md                              # Iterator pattern documentation
 └── testExamProblems/               # Test exam problems with pattern solutions
     ├── Problem1/                  # Factory - Enterprise Reporting
     ├── Problem2/                  # Singleton - Logging System
@@ -196,15 +220,21 @@ For contributions, feel free to contact me on omarahmed7703@gmail.com or fork th
 | [Prototype](Prototype/) | Clone-based object creation | Creational |
 | [Factory](Factory/) | Family of related objects | Creational |
 | [Builder](Builder/) | Step-by-step object construction | Creational |
-| [Proxy](Proxy/) | Access control placeholder | Structural |
-| [Decorator](Decorator/) | Dynamic behavior addition | Structural |
 | [Adapter](Adapter/) | Interface compatibility | Structural |
-| [Facade](Facade/) | Simplified subsystem interface | Structural |
 | [Bridge](Bridge/) | Abstraction/implementation decoupling | Structural |
+| [Composite](Composite/) | Tree structure composition | Structural |
+| [Decorator](Decorator/) | Dynamic behavior addition | Structural |
+| [Facade](Facade/) | Simplified subsystem interface | Structural |
 | [Flyweight](Flyweight/) | Shared state for memory efficiency | Structural |
+| [Proxy](Proxy/) | Access control placeholder | Structural |
 | [Strategy](Startegy/) | Pluggable algorithms/behaviors | Behavioral |
 | [Chain of Responsibility](ChainOfResponsibility/) | Request handling chain | Behavioral |
 | [Command](Command/) | Request/operation encapsulation | Behavioral |
+| [Iterator](Iterator/) | Sequential collection traversal | Behavioral |
+| [Mediator](Mediator/) | Centralized object communication | Behavioral |
+| [Memento](Memento/) | State snapshot for undo/redo | Behavioral |
+| [Observer](Observer/) | One-to-many state notification | Behavioral |
+| [State](State/) | Behavior changes with object state | Behavioral |
 
 ---
 

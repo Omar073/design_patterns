@@ -28,7 +28,6 @@ interface UndoableCommand {
 
 /**
  * RECEIVER: Light
- * This is the object that actually performs the work.
  * It maintains its own state (isOn) to track whether it's on or off.
  * 
  * Note: The receiver doesn't know about commands or undo - it just
@@ -104,7 +103,6 @@ class LightOffCommand implements UndoableCommand {
 
 /**
  * NO COMMAND (Null Object Pattern)
- * This is a special command that does nothing.
  * 
  * Purpose: Instead of using null to represent "no command",
  * we use this object. This avoids null checks and makes the
@@ -121,10 +119,6 @@ class NoCommand implements UndoableCommand {
         // Do nothing - this is intentional
     }
 
-    /**
-     * Does nothing when undone.
-     * Since execute() does nothing, undo() also does nothing.
-     */
     @Override
     public void undo() {
         // Do nothing

@@ -14,24 +14,13 @@
  * Provides methods to check if more elements exist and to get the next element.
  */
 interface Iterator<T> {
-    /**
-     * Returns true if the iteration has more elements.
-     * 
-     * @return true if there are more elements, false otherwise
-     */
     boolean hasNext();
     
     /**
-     * Returns the next element in the iteration.
-     * 
-     * @return the next element
      * @throws java.util.NoSuchElementException if no more elements exist
      */
     T next();
     
-    /**
-     * Removes the last element returned by next() (optional operation).
-     */
     void remove();
 }
 
@@ -40,11 +29,6 @@ interface Iterator<T> {
  * Defines the interface for creating an Iterator object.
  */
 interface Aggregate<T> {
-    /**
-     * Creates an iterator for traversing the collection.
-     * 
-     * @return an Iterator for this collection
-     */
     Iterator<T> createIterator();
 }
 
@@ -96,9 +80,6 @@ class Library implements Aggregate<String> {
         this.count = 0;
     }
     
-    /**
-     * Adds a book to the library.
-     */
     public void addBook(String book) {
         if (count < MAX_BOOKS) {
             books[count++] = book;
@@ -108,16 +89,10 @@ class Library implements Aggregate<String> {
         }
     }
     
-    /**
-     * Gets the number of books in the library.
-     */
     public int getCount() {
         return count;
     }
     
-    /**
-     * Creates an iterator for traversing the books.
-     */
     @Override
     public Iterator<String> createIterator() {
         return new BookIterator(books);

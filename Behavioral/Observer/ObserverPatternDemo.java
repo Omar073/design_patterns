@@ -63,9 +63,6 @@ class WeatherStation implements Subject {
         }
     }
 
-    /**
-     * Updates the weather measurements and notifies all observers.
-     */
     public void setMeasurements(float temperature, float humidity, float pressure) {
         this.temperature = temperature;
         this.humidity = humidity;

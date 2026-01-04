@@ -102,5 +102,5 @@ Instead of `new Goblin()` (which loads 3D models every time), we:
 
 ## Reference
 
-For more details on the Prototype pattern, see: [../../Prototype/README.md](../../Prototype/README.md)
+For more details on the Prototype pattern, see: [../../Creational/Prototype/README.md](../../Creational/Prototype/README.md)
 

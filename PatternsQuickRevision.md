@@ -59,7 +59,7 @@ The table below summarizes the patterns in this codebase using the classic **GoF
 - **When to use**:
   - Exactly one shared object should exist (e.g., configuration, logger, cache, connection pool).
 - **Structure**:
-  - No diagram image, but see examples in `Singleton/README.md`.
+  - No diagram image, but see examples in `Creational/Singleton/README.md`.
   - Pattern:
     - Private constructor.
     - Static field to hold single instance.
@@ -71,7 +71,7 @@ The table below summarizes the patterns in this codebase using the classic **GoF
   - **Flyweight**: Flyweight allows many shared instances (one per intrinsic key); Singleton enforces exactly one instance.
   - **Static class**: Static classes have no instance and cannot implement interfaces; Singleton is an object and can be passed around.
 
-- **Further reading**: [Singleton README](Singleton/README.md), demos: [EagerSingletonDemo](Singleton/EagerSingletonDemo.java), [LazySingletonDemo](Singleton/LazySingletonDemo.java), [SynchronizedSingletonDemo](Singleton/SynchronizedSingletonDemo.java)
+- **Further reading**: [Singleton README](Creational/Singleton/README.md), demos: [EagerSingletonDemo](Creational/Singleton/EagerSingletonDemo.java), [LazySingletonDemo](Creational/Singleton/LazySingletonDemo.java), [SynchronizedSingletonDemo](Creational/Singleton/SynchronizedSingletonDemo.java)
 
 ---
 
@@ -83,7 +83,7 @@ The table below summarizes the patterns in this codebase using the classic **GoF
   - You want to vary which concrete classes are instantiated without changing client code.
 - **Structure**:
   - Diagram:
-    - ![Factory Diagram](Factory/factory_diagram.jpeg)  
+    - ![Factory Diagram](Creational/Factory/factory_diagram.jpeg)  
       *Shows the base product interface, its concrete products, and a factory class responsible for creating them for the client.*
   - Key variants:
     - **Simple Factory**: one class with a method that uses `if/switch` to return different products.
@@ -105,7 +105,7 @@ class ShapeFactory {
   - **Prototype**: Prototype clones existing instances; factories build new ones from scratch.
   - **Singleton**: Singleton controls *how many* instances exist; factories control *which type* of instance you get.
 
-- **Further reading**: [Factory README](Factory/README.md), demos: [SimpleFactoryDemo](Factory/SimpleFactoryDemo.java), [ShapeFactoryDemo](Factory/ShapeFactoryDemo.java), [FactoryMethodDemo](Factory/FactoryMethodDemo.java), [AbstractFactoryDemo](Factory/AbstractFactoryDemo.java)
+- **Further reading**: [Factory README](Creational/Factory/README.md), demos: [SimpleFactoryDemo](Creational/Factory/SimpleFactoryDemo.java), [ShapeFactoryDemo](Creational/Factory/ShapeFactoryDemo.java), [FactoryMethodDemo](Creational/Factory/FactoryMethodDemo.java), [AbstractFactoryDemo](Creational/Factory/AbstractFactoryDemo.java)
 
 ---
 
@@ -117,9 +117,9 @@ class ShapeFactory {
 -  - You want readable, step-by-step creation instead of a telescoping constructor.
 - **Structure**:
   - Diagrams:
-    - ![Builder Diagram 1](Builder/builder_diagram_1.jpeg)  
+    - ![Builder Diagram 1](Creational/Builder/builder_diagram_1.jpeg)  
       *Shows the core Builder pattern class diagram: Product, abstract Builder, ConcreteBuilder, and an optional Director coordinating construction.*
-    - ![Builder Diagram 2](Builder/builder_diagram_2.jpeg)  
+    - ![Builder Diagram 2](Creational/Builder/builder_diagram_2.jpeg)  
       *Shows a concrete usage example of the Builder pattern, where a client assembles an object step‑by‑step via builder methods and then calls `build()`.*
   - Roles:
     - **Builder**: defines steps to build parts.
@@ -138,7 +138,7 @@ Car car = new CarBuilder()
   - **Factory**: Factory returns a fully-built object in one call; Builder focuses on step-by-step construction.
   - **Prototype**: Prototype clones an existing configured object; Builder constructs from scratch via steps.
 
-- **Further reading**: [Builder README](Builder/README.md), demos: [CarBuilderDemo](Builder/CarBuilderDemo.java), [DirectorBuilderDemo](Builder/DirectorBuilderDemo.java), [DocumentBuilderDemo](Builder/DocumentBuilderDemo.java), [TelescopingConstructorDemo](Builder/TelescopingConstructorDemo.java)
+- **Further reading**: [Builder README](Creational/Builder/README.md), demos: [CarBuilderDemo](Creational/Builder/CarBuilderDemo.java), [DirectorBuilderDemo](Creational/Builder/DirectorBuilderDemo.java), [DocumentBuilderDemo](Creational/Builder/DocumentBuilderDemo.java), [TelescopingConstructorDemo](Creational/Builder/TelescopingConstructorDemo.java)
 
 ---
 
@@ -150,7 +150,7 @@ Car car = new CarBuilder()
   - You need many similar objects configured at runtime.
 - **Structure**:
   - Diagram:
-    - ![Prototype Diagram](Prototype/prototype_diagram.jpeg)  
+    - ![Prototype Diagram](Creational/Prototype/prototype_diagram.jpeg)  
       *Shows the Prototype interface, concrete prototype subclasses, and the client cloning them instead of using `new`.*
   - Roles:
     - **Prototype**: declares clone operation.
@@ -170,7 +170,7 @@ copy.setColor("blue");
   - **Factory**: Factory chooses a class to instantiate; Prototype duplicates existing configured objects.
   - **Flyweight**: Prototype makes copies; Flyweight shares intrinsic state among many logical objects.
 
-- **Further reading**: [Prototype README](Prototype/README.md), demos: [PrototypeDirectDemo](Prototype/PrototypeDirectDemo.java), [PrototypeRegistryDemo](Prototype/PrototypeRegistryDemo.java), [PrototypeShallowDeepDemo](Prototype/PrototypeShallowDeepDemo.java)
+- **Further reading**: [Prototype README](Creational/Prototype/README.md), demos: [PrototypeDirectDemo](Creational/Prototype/PrototypeDirectDemo.java), [PrototypeRegistryDemo](Creational/Prototype/PrototypeRegistryDemo.java), [PrototypeShallowDeepDemo](Creational/Prototype/PrototypeShallowDeepDemo.java)
 
 ---
 
@@ -183,9 +183,9 @@ copy.setColor("blue");
   - You want to avoid subclass explosion when **what varies is behavior**, not the data structure of the class.
 - **Structure**:
   - Diagrams:
-    - `Startegy/diagram1.png`–`diagram3.png`: show the **naive Duck inheritance** and the problems of putting `fly()` and `quack()` directly in the superclass (rubber and decoy ducks that shouldn’t fly or quack).
-    - `Startegy/diagram4.png`–`diagram5.png`: extract fly/quack into **behavior interfaces** (`FlyBehavior`, `QuackBehavior`) with concrete implementations like `FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`.
-    - `Startegy/diagram6.png`–`diagram7.png`: final design where `Duck` has `FlyBehavior flyBehavior` and `QuackBehavior quackBehavior`, and the client works with ducks while behaviors are encapsulated and swappable.
+    - `Behavioral/Startegy/diagram1.png`–`diagram3.png`: show the **naive Duck inheritance** and the problems of putting `fly()` and `quack()` directly in the superclass (rubber and decoy ducks that shouldn't fly or quack).
+    - `Behavioral/Startegy/diagram4.png`–`diagram5.png`: extract fly/quack into **behavior interfaces** (`FlyBehavior`, `QuackBehavior`) with concrete implementations like `FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`.
+    - `Behavioral/Startegy/diagram6.png`–`diagram7.png`: final design where `Duck` has `FlyBehavior flyBehavior` and `QuackBehavior quackBehavior`, and the client works with ducks while behaviors are encapsulated and swappable.
   - Roles:
     - **Strategy**: interface representing an algorithm (`FlyBehavior`, `QuackBehavior`, `EncryptionStrategy`).
     - **Concrete Strategies**: implementations of the algorithm (`FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`, `AesEncryption`, `RsaEncryption`, `EccEncryption`).
@@ -217,7 +217,7 @@ messenger.send("Bob", "Confidential meeting");   // Uses RSA now
   - **Bridge**: Bridge splits abstraction and implementation into two hierarchies; Strategy swaps algorithms used by a single context class.
   - **Decorator**: Decorator wraps objects to add responsibilities; Strategy swaps out the core behavior implementation without wrapping.
 
-- **Further reading**: [Strategy README](Startegy/README.md), demos: `StrategyDuckDemo.java`, `StrategyEncryptionDemo.java`
+- **Further reading**: [Strategy README](Behavioral/Startegy/README.md), demos: [StrategyDuckDemo](Behavioral/Startegy/StrategyDuckDemo.java), [StrategyEncryptionDemo](Behavioral/Startegy/StrategyEncryptionDemo.java)
 
 ---
 
@@ -230,13 +230,13 @@ messenger.send("Bob", "Confidential meeting");   // Uses RSA now
   - The set of handlers should be specified dynamically.
 - **Structure**:
   - Diagrams:
-    - ![Chain of Responsibility Flow](ChainOfResponsibility/diagram1.png)  
+    - ![Chain of Responsibility Flow](Behavioral/ChainOfResponsibility/diagram1.png)  
       *Shows client sending request through handler chain where each handler either processes or forwards the request.*
-    - ![Chain of Responsibility UML](ChainOfResponsibility/diagram2.png)  
+    - ![Chain of Responsibility UML](Behavioral/ChainOfResponsibility/diagram2.png)  
       *Shows Handler interface with successor reference, and ConcreteHandlerA/B implementing it.*
-    - ![Email Handler Chain](ChainOfResponsibility/diagram 3.png)  
+    - ![Email Handler Chain](Behavioral/ChainOfResponsibility/diagram 3.png)  
       *Shows email processing chain: Spam → Fan → Complaint → NewLoc handlers.*
-    - ![Email Handlers UML](ChainOfResponsibility/diagram4.png)  
+    - ![Email Handlers UML](Behavioral/ChainOfResponsibility/diagram4.png)  
       *Shows Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler subclasses.*
   - Roles:
     - **Handler**: defines interface for handling requests and optionally implements successor link.
@@ -272,7 +272,7 @@ teamLead.handleRequest(req);  // TeamLead forwards to Manager who approves
   - **Decorator**: Both use recursive composition; Decorator adds responsibilities, Chain of Responsibility passes requests along.
   - **Strategy**: Strategy chooses an algorithm; Chain of Responsibility finds which handler can process a request.
 
-- **Further reading**: [Chain of Responsibility README](ChainOfResponsibility/README.md), demos: `ChainOfResponsibilityEmailDemo.java`, `ChainOfResponsibilityApprovalDemo.java`
+- **Further reading**: [Chain of Responsibility README](Behavioral/ChainOfResponsibility/README.md), demos: `ChainOfResponsibilityEmailDemo.java`, `ChainOfResponsibilityApprovalDemo.java`
 
 ---
 
@@ -288,9 +288,9 @@ teamLead.handleRequest(req);  // TeamLead forwards to Manager who approves
   - You need to support macro commands (combining multiple commands)
 - **Structure**:
   - Diagrams:
-    - ![Command Diagram 1](Command/diagram1.png)  
+    - ![Command Diagram 1](Behavioral/Command/diagram1.png)  
       *Shows the general Command pattern structure with Command interface, Invoker, Concrete Commands, and Receivers.*
-    - ![Command Diagram 2](Command/diagram2.png)  
+    - ![Command Diagram 2](Behavioral/Command/diagram2.png)  
       *Shows the specific implementation with RemoteControl as Invoker, TurnOnCommand/ChangeChannelCommand as Concrete Commands, and TV/Stereo as Receivers.*
   - Roles:
     - **Command**: Interface defining `execute()` method
@@ -329,7 +329,7 @@ remote.pressButton();  // Executes all commands
   - **vs Chain of Responsibility**: Chain passes requests along a chain; Command encapsulates requests
   - **vs Observer**: Observer notifies multiple observers; Command encapsulates a single operation
 
-- **Further reading**: [Command README](Command/README.md), demos: [CommandPatternDemo](Command/CommandPatternDemo.java), [CommandUndoDemo](Command/CommandUndoDemo.java), [CommandMacroDemo](Command/CommandMacroDemo.java), [CommandQueueDemo](Command/CommandQueueDemo.java)
+- **Further reading**: [Command README](Behavioral/Command/README.md), demos: [CommandPatternDemo](Behavioral/Command/CommandPatternDemo.java), [CommandUndoDemo](Behavioral/Command/CommandUndoDemo.java), [CommandMacroDemo](Behavioral/Command/CommandMacroDemo.java), [CommandQueueDemo](Behavioral/Command/CommandQueueDemo.java)
 
 ---
 
@@ -384,7 +384,7 @@ class BookIterator implements Iterator<String> {
   - **vs Visitor**: Iterator traverses elements; Visitor performs operations on elements
   - **vs Composite**: Iterator traverses collections; Composite builds tree structures
 
-- **Further reading**: [Iterator README](Iterator/README.md), demo: [IteratorPatternDemo](Iterator/IteratorPatternDemo.java)
+- **Further reading**: [Iterator README](Behavioral/Iterator/README.md), demo: [IteratorPatternDemo](Behavioral/Iterator/IteratorPatternDemo.java)
 
 ---
 
@@ -401,9 +401,9 @@ class BookIterator implements Iterator<String> {
   - Centralized control: You need a centralized mechanism to coordinate interactions
 - **Structure**:
   - Diagrams:
-    - ![Mediator Diagram 1](Mediator/diagram1.png)  
+    - ![Mediator Diagram 1](Behavioral/Mediator/diagram1.png)  
       *Shows the general Mediator pattern structure with Mediator interface, Concrete Mediator, Colleague interface, and Concrete Colleague classes.*
-    - ![Mediator Diagram 2](Mediator/diagram2.png)  
+    - ![Mediator Diagram 2](Behavioral/Mediator/diagram2.png)  
       *Shows the Air Traffic Control example with AirTrafficControlTower as Mediator, AirportControlTower as Concrete Mediator, Airplane as Colleague, and CommercialAirplane as Concrete Colleague.*
   - Roles:
     - **Mediator**: Interface defining communication contract (`onEvent()` method or `requestTakeoff()`, `requestLanding()`)
@@ -462,7 +462,7 @@ airplane2.requestLanding();  // Goes through control tower
   - **vs Observer**: Mediator centralizes communication; Observer distributes notifications
   - **vs Command**: Mediator coordinates multiple objects; Command encapsulates single operations
 
-- **Further reading**: [Mediator README](Mediator/README.md), demos: [MediatorPatternDemo](Mediator/MediatorPatternDemo.java), [MediatorAirplaneDemo](Mediator/MediatorAirplaneDemo.java)
+- **Further reading**: [Mediator README](Behavioral/Mediator/README.md), demos: [MediatorPatternDemo](Behavioral/Mediator/MediatorPatternDemo.java), [MediatorAirplaneDemo](Behavioral/Mediator/MediatorAirplaneDemo.java)
 
 ---
 
@@ -525,7 +525,7 @@ class TextEditorMemento {
   - **vs Prototype**: Memento stores past state for restoration; Prototype creates new objects by cloning
   - **vs State**: Memento represents past state (for restoration); State represents current state (for behavior)
 
-- **Further reading**: [Memento README](Memento/README.md), demo: [MementoPatternDemo](Memento/MementoPatternDemo.java)
+- **Further reading**: [Memento README](Behavioral/Memento/README.md), demo: [MementoPatternDemo](Behavioral/Memento/MementoPatternDemo.java)
 
 ---
 
@@ -583,7 +583,7 @@ public void update(float temp, float hum, float press) {
   - **vs Command**: Observer notifies multiple observers; Command encapsulates single operations
   - **vs Chain of Responsibility**: Observer broadcasts to all; Chain passes to one handler
 
-- **Further reading**: [Observer README](Observer/README.md), demo: [ObserverPatternDemo](Observer/ObserverPatternDemo.java)
+- **Further reading**: [Observer README](Behavioral/Observer/README.md), demo: [ObserverPatternDemo](Behavioral/Observer/ObserverPatternDemo.java)
 
 ---
 
@@ -637,7 +637,7 @@ class HasCoinState implements VendingMachineState {
   - **vs Memento**: State represents current state for behavior; Memento stores past state for restoration
   - **vs Command**: State encapsulates state-specific behavior; Command encapsulates operations
 
-- **Further reading**: [State README](State/README.md), demo: [StatePatternDemo](State/StatePatternDemo.java)
+- **Further reading**: [State README](Behavioral/State/README.md), demo: [StatePatternDemo](Behavioral/State/StatePatternDemo.java)
 
 ---
 
@@ -649,9 +649,9 @@ class HasCoinState implements VendingMachineState {
   - You want to reuse an existing class without modifying it.
 - **Structure**:
   - Diagrams:
-    - ![Adapter Diagram 1](Adapter/adapter_diagram_1.jpeg)  
+    - ![Adapter Diagram 1](Structural/Adapter/adapter_diagram_1.jpeg)  
       *Shows a client using a Target interface while an Adapter wraps an Adaptee to translate calls.*
-    - ![Adapter Diagram 2](Adapter/adapter_diagram_2.jpeg)  
+    - ![Adapter Diagram 2](Structural/Adapter/adapter_diagram_2.jpeg)  
       *Shows the Movable speed example converting MPH to KMPH via an object adapter.*
   - Roles:
     - **Target**: interface that the client expects.
@@ -670,7 +670,7 @@ hole.fits(adapter);
   - **Bridge**: Bridge is a design from the start to separate abstraction and implementation; Adapter is usually added later to fix an incompatibility.
   - **Facade**: Facade provides a new simpler interface to a whole subsystem; Adapter converts one existing class’s interface to another.
 
-- **Further reading**: [Adapter README](Adapter/README.md), demos: [AdapterDemo](Adapter/AdapterDemo.java), [ChargerAdapterDemo](Adapter/ChargerAdapterDemo.java)
+- **Further reading**: [Adapter README](Structural/Adapter/README.md), demos: [AdapterDemo](Structural/Adapter/AdapterDemo.java), [ChargerAdapterDemo](Structural/Adapter/ChargerAdapterDemo.java)
 
 ---
 
@@ -682,9 +682,9 @@ hole.fits(adapter);
   - You want to avoid combinatorial explosion like `GasCar`, `ElectricCar`, `GasPlane`, `ElectricPlane`, etc.
 - **Structure**:
   - Diagrams:
-    - ![Bridge Structure – Generic](Bridge/bridge_structure_uml.jpeg)  
+    - ![Bridge Structure – Generic](Structural/Bridge/bridge_structure_uml.jpeg)  
       *Shows the general Bridge layout: Abstraction holding an Implementor, with RefinedAbstractions and ConcreteImplementors on each side.*
-    - ![Bridge Example – Transport/Engine](Bridge/bridge_example_uml.jpeg)  
+    - ![Bridge Example – Transport/Engine](Structural/Bridge/bridge_example_uml.jpeg)  
       *Shows the Transport/Engine example where Car and Plane use GasEngine or ElectricEngine via the Bridge composition.*
   - Roles:
     - **Abstraction** + **Refined Abstractions**: high-level interface and its variations (e.g., `Transport`, `Car`, `Plane`).
@@ -703,7 +703,7 @@ plane.drive();
   - **Strategy**: Strategy swaps algorithms; Bridge splits class responsibilities between abstraction and implementation.
   - **Decorator**: Decorator stacks behaviors; Bridge separates two dimensions (type vs implementation).
 
-- **Further reading**: [Bridge README](Bridge/README.md), demos: [BridgeTransportDemo](Bridge/BridgeTransportDemo.java), [BridgeGuiApiDemo](Bridge/BridgeGuiApiDemo.java)
+- **Further reading**: [Bridge README](Structural/Bridge/README.md), demos: [BridgeTransportDemo](Structural/Bridge/BridgeTransportDemo.java), [BridgeGuiApiDemo](Structural/Bridge/BridgeGuiApiDemo.java)
 
 ---
 
@@ -736,7 +736,7 @@ folder.display();  // Displays folder and all contents
   - **vs Decorator**: Composite builds tree structures; Decorator adds behavior to objects
   - **vs Iterator**: Composite structures can be traversed using Iterator pattern
 
-- **Further reading**: [Composite README](Composite/README.md), demo: [CompositePatternDemo](Composite/CompositePatternDemo.java)
+- **Further reading**: [Composite README](Structural/Composite/README.md), demo: [CompositePatternDemo](Structural/Composite/CompositePatternDemo.java)
 
 ---
 
@@ -748,7 +748,7 @@ folder.display();  // Displays folder and all contents
   - You want to add/remove behavior at runtime and avoid subclass explosion.
 - **Structure**:
   - Diagram:
-    - ![Decorator Diagram](Decorator/decorator_diagram.jpeg)  
+    - ![Decorator Diagram](Structural/Decorator/decorator_diagram.jpeg)  
       *Shows the Component hierarchy with Decorator subclasses that wrap components to add responsibilities dynamically.*
   - Roles:
     - **Component**: base interface or abstract class.
@@ -766,7 +766,7 @@ c = new Sugar(c);
   - **Proxy**: Proxy controls access; Decorator adds behavior while preserving the same interface.
   - **Adapter**: Adapter changes the interface; Decorator keeps the same interface and adds responsibilities.
 
-- **Further reading**: [Decorator README](Decorator/README.md), demos: [DecoratorDemo](Decorator/DecoratorDemo.java), [ShapeDecoratorDemo](Decorator/ShapeDecoratorDemo.java), [FileDecoratorDemo](Decorator/FileDecoratorDemo.java), [FileDecoratorChainingDemo](Decorator/FileDecoratorChainingDemo.java), [FileDecoratorPatternDemo](Decorator/FileDecoratorPatternDemo.java)
+- **Further reading**: [Decorator README](Structural/Decorator/README.md), demos: [DecoratorDemo](Structural/Decorator/DecoratorDemo.java), [ShapeDecoratorDemo](Structural/Decorator/ShapeDecoratorDemo.java), [FileDecoratorDemo](Structural/Decorator/FileDecoratorDemo.java), [FileDecoratorChainingDemo](Structural/Decorator/FileDecoratorChainingDemo.java), [FileDecoratorPatternDemo](Structural/Decorator/FileDecoratorPatternDemo.java)
 
 ---
 
@@ -778,7 +778,7 @@ c = new Sugar(c);
   - You want to decouple client code from many subsystem classes.
 - **Structure**:
   - Diagram:
-    - ![Facade Diagram](Facade/facade_diagram.jpeg)  
+    - ![Facade Diagram](Structural/Facade/facade_diagram.jpeg)  
       *Shows a single Facade class delegating work to multiple complex subsystem classes behind the scenes.*
   - Roles:
     - **Facade**: offers simple high-level operations.
@@ -795,7 +795,7 @@ hotel.bookStayWithBreakfast();
   - **Bridge**: Bridge decouples abstraction from implementation for two hierarchies; Facade is just a convenient front-end to an existing subsystem.
   - **Proxy**: Proxy controls access or adds lazy loading/security around one object; Facade only simplifies usage of many classes without access control semantics.
 
-- **Further reading**: [Facade README](Facade/README.md), demos: [WithoutFacadeDemo](Facade/WithoutFacadeDemo.java), [WithFacadeDemo](Facade/WithFacadeDemo.java), [HotelFacadeDemo](Facade/HotelFacadeDemo.java)
+- **Further reading**: [Facade README](Structural/Facade/README.md), demos: [WithoutFacadeDemo](Structural/Facade/WithoutFacadeDemo.java), [WithFacadeDemo](Structural/Facade/WithFacadeDemo.java), [HotelFacadeDemo](Structural/Facade/HotelFacadeDemo.java)
 
 ---
 
@@ -806,9 +806,9 @@ hotel.bookStayWithBreakfast();
   - You have *huge* numbers of similar objects (characters, trees, tiles) and memory use is a concern.
 - **Structure**:
   - Diagrams:
-    - ![Flyweight Diagram 1](Flyweight/Flyweight_uml_structure.jpeg)  
+    - ![Flyweight Diagram 1](Structural/Flyweight/Flyweight_uml_structure.jpeg)  
       *Shows the Flyweight interface, ConcreteFlyweight, FlyweightFactory, and Client that supplies extrinsic state.*
-    - ![Flyweight Diagram 2](Flyweight/Flyweight_example_uml.jpeg)  
+    - ![Flyweight Diagram 2](Structural/Flyweight/Flyweight_example_uml.jpeg)  
       *Shows the Forest example with Tree holding position (extrinsic) and TreeType as the shared flyweight for intrinsic state.*
   - Roles:
     - **Flyweight** / **ConcreteFlyweight**: store intrinsic state (shared).
@@ -825,7 +825,7 @@ forest.plantTree(10, 20, "Oak", Color.GREEN); // shares same TreeType
   - **Singleton**: Singleton has exactly one global instance; Flyweight has one instance *per intrinsic configuration* (e.g., per tree type or character).
   - **Caching / Pools**: Pools reuse heavy objects over time; Flyweight shares immutable intrinsic state among many logical objects at the same time.
 
-- **Further reading**: [Flyweight README](Flyweight/README.md), demos: [FlyweightForestDemo](Flyweight/FlyweightForestDemo.java), [FlyweightTextEditorDemo](Flyweight/FlyweightTextEditorDemo.java)
+- **Further reading**: [Flyweight README](Structural/Flyweight/README.md), demos: [FlyweightForestDemo](Structural/Flyweight/FlyweightForestDemo.java), [FlyweightTextEditorDemo](Structural/Flyweight/FlyweightTextEditorDemo.java)
 
 ---
 
@@ -836,7 +836,7 @@ forest.plantTree(10, 20, "Oak", Color.GREEN); // shares same TreeType
   - You want lazy loading, access control, logging, caching, or remote access while keeping the same interface.
 - **Structure**:
   - Diagram:
-    - ![Proxy Diagram](Proxy/diagram.png)  
+    - ![Proxy Diagram](Structural/Proxy/diagram.png)  
       *Shows the Subject interface, RealSubject, and Proxy which forwards calls while adding access control or other logic.*
   - Roles:
     - **Subject**: common interface for RealSubject and Proxy.
@@ -852,7 +852,7 @@ service.request();
   - **Decorator**: both wrap another object with same interface; Decorator emphasizes adding features, Proxy emphasizes controlling access/lifecycle.
   - **Facade**: Facade simplifies a subsystem; Proxy stands in for a single object.
 
-- **Further reading**: [Proxy README](Proxy/README.md), demos: [LoggingProxyDemo](Proxy/LoggingProxyDemo.java), [ProtectionProxyDemo](Proxy/ProtectionProxyDemo.java), [VirtualProxyDemo](Proxy/VirtualProxyDemo.java)
+- **Further reading**: [Proxy README](Structural/Proxy/README.md), demos: [LoggingProxyDemo](Structural/Proxy/LoggingProxyDemo.java), [ProtectionProxyDemo](Structural/Proxy/ProtectionProxyDemo.java), [VirtualProxyDemo](Structural/Proxy/VirtualProxyDemo.java)
 
 ---
 

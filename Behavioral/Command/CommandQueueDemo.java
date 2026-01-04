@@ -13,10 +13,9 @@ import java.util.Queue;
 
 /**
  * QUEUE COMMAND INTERFACE
- * This is the basic Command interface for this example.
  * 
- * Key Concept: Commands can be stored in a queue and executed later.
- * This enables batch processing, scheduling, and asynchronous execution.
+ * Key Concept: Commands can be stored in a queue and executed later,
+ * enabling batch processing, scheduling, and asynchronous execution.
  */
 interface QueueCommand {
     void execute();
@@ -25,7 +24,6 @@ interface QueueCommand {
 /**
  * RECEIVER: Printer
  * A printer device that can print documents and cancel print jobs.
- * This represents a real-world device that might take time to process requests.
  */
 class Printer {
     private String name; // Name/identifier of the printer
@@ -46,7 +44,6 @@ class Printer {
 /**
  * RECEIVER: EmailService
  * An email service that can send emails.
- * This represents a service that might need to queue requests.
  */
 class EmailService {
     private String name; // Name/identifier of the email service
@@ -108,7 +105,6 @@ class SendEmailCommand implements QueueCommand {
 
 /**
  * COMMAND QUEUE: CommandQueue
- * This class stores commands in a queue and processes them in order.
  * 
  * Key Concepts:
  * 1. Commands are added to the queue using addCommand()
@@ -147,12 +143,7 @@ class CommandQueue {
     public void processCommands() {
         System.out.println("\n--- Processing Command Queue ---");
         while (!queue.isEmpty()) {
-            // Retrieve and remove the next command from the front of the queue (FIFO
-            // order).
-            // The poll() method returns the element at the head of the queue, or null if
-            // the queue is empty.
-            // In this context, since we checked !queue.isEmpty(), poll() will always return
-            // a valid command.
+            // Retrieve and remove the next command from the front of the queue (FIFO order)
             QueueCommand command = queue.poll();
             command.execute();
         }

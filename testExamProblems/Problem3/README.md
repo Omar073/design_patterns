@@ -56,4 +56,4 @@ Abstract Factory would be appropriate if:
 
 ## Reference
 
-For more details on the Simple Factory pattern, see: [../../Factory/README.md](../../Factory/README.md)
+For more details on the Simple Factory pattern, see: [../../Creational/Factory/README.md](../../Creational/Factory/README.md)

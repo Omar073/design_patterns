@@ -120,5 +120,5 @@ IceCream order = new CaramelDecorator(
 
 ## Reference
 
-For more details on the Decorator pattern, see: [../../Decorator/README.md](../../Decorator/README.md)
+For more details on the Decorator pattern, see: [../../Structural/Decorator/README.md](../../Structural/Decorator/README.md)
 

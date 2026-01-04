@@ -92,5 +92,5 @@ The adapter translates NumPy array operations (`getShape()`, `getElement()`) to 
 
 ## Reference
 
-For more details on the Adapter pattern, see: [../../Adapter/README.md](../../Adapter/README.md)
+For more details on the Adapter pattern, see: [../../Structural/Adapter/README.md](../../Structural/Adapter/README.md)
 

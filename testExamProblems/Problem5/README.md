@@ -89,5 +89,5 @@ The proxy checks each request against a restricted sites list before allowing ac
 
 ## Reference
 
-For more details on the Proxy pattern, see: [../../Proxy/README.md](../../Proxy/README.md)
+For more details on the Proxy pattern, see: [../../Structural/Proxy/README.md](../../Structural/Proxy/README.md)
 

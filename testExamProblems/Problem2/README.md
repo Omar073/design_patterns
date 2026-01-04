@@ -102,5 +102,5 @@ All components use `Logger.getInstance()` to get the same logger instance, ensur
 
 ## Reference
 
-For more details on the Singleton pattern, see: [../../Singleton/README.md](../../Singleton/README.md)
+For more details on the Singleton pattern, see: [../../Creational/Singleton/README.md](../../Creational/Singleton/README.md)
 

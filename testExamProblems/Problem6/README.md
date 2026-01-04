@@ -109,5 +109,5 @@ Computer gamingPC = new Computer.Builder("Intel i7", 32)
 
 ## Reference
 
-For more details on the Builder pattern, see: [../../Builder/README.md](../../Builder/README.md)
+For more details on the Builder pattern, see: [../../Creational/Builder/README.md](../../Creational/Builder/README.md)
 

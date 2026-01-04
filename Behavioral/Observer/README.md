@@ -47,6 +47,56 @@ The Observer pattern consists of the following components:
 
 ---
 
+## Diagrams
+
+The following diagrams illustrate the Observer pattern structure:
+
+### Diagram 1: Observer Pattern Flow Representation
+
+![Observer Pattern Flow Representation](diagram1.png)
+
+This diagram shows the interaction flow of the Observer pattern within an application:
+- **Clients** (Client A, B, C) interact with the **Subject**
+- When the Subject's state changes (indicated by "change!"), it triggers notification
+- The Subject sends `notify()` messages to all registered **Observers** (Observer 1, Observer 2, Observer 3)
+- Observers receive updates and react accordingly
+- The dotted arrow from Observer back to Subject represents observers holding a reference to the Subject for registration/deregistration
+
+This diagram effectively visualizes the one-to-many dependency where a change in one object (Subject) results in all its dependents (Observers) being notified and updated automatically.
+
+### Diagram 2: Observer Pattern Class Diagram
+
+![Observer Pattern Class Diagram](diagram2.png)
+
+This UML class diagram shows the complete structure of the Observer pattern with a Weather Station example:
+
+**Components:**
+
+1. **Subject Interface** (`<<interface>> Subject`)
+   - Methods: `addObserver()`, `removeObserver()`, `notifyObservers()`
+   - Defines the contract for objects that can be observed
+   - Has a one-to-many relationship with Observer (1 Subject to * Observers)
+
+2. **Observer Interface** (`<<interface>> Observer`)
+   - Method: `update(weather)` - Called by Subject to notify of state changes
+   - Defines the contract for objects that want to be notified
+
+3. **Concrete Subject** (`WeatherStation`)
+   - Implements `Subject` interface
+   - Attributes: `observers: List`, `weather: String`
+   - Methods: `addObserver()`, `removeObserver()`, `notifyObservers()`, `setWeather()`
+   - Maintains a collection of Observer objects and notifies them when weather changes
+
+4. **Concrete Observers** (`PhoneDisplay`, `TVDisplay`)
+   - Both implement `Observer` interface
+   - Attributes: `weather: String` - Stores received weather data
+   - Methods: `update(weather)` - Receives and processes new weather data
+   - Methods: `display()` - Shows the current weather to the user
+
+**See the complete implementation**: [ObserverWeatherDemo.java](ObserverWeatherDemo.java)
+
+---
+
 ## Observer Pattern Examples
 
 ### Example 1: Weather Station & Display Devices
@@ -574,6 +624,7 @@ public void cleanup() {
 
 ---
 
-**Further reading**: See the demo for a complete working example:
-- [ObserverPatternDemo.java](ObserverPatternDemo.java)
+**Further reading**: See the demos for complete working examples:
+- [ObserverPatternDemo.java](ObserverPatternDemo.java) - Weather Station with multiple weather parameters
+- [ObserverWeatherDemo.java](ObserverWeatherDemo.java) - Weather Station example matching the class diagram (diagram2.png)
 

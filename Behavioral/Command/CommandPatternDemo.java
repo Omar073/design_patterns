@@ -18,18 +18,13 @@
  * command it's executing - it just calls execute() on whatever command is set.
  */
 interface Command {
-    /**
-     * Executes the command. Each concrete command will implement this method
-     * to perform its specific action on its receiver.
-     */
     void execute();
 }
 
 /**
  * RECEIVER INTERFACE
  * Defines the common interface for all devices that can receive commands.
- * Receivers are the objects that actually perform the work when a command
- * executes.
+ * Receivers are the objects that actually perform the work when a command executes.
  * 
  * In this example, all devices can be turned on and off, which is why we
  * have a common Device interface. However, some devices have additional
@@ -44,7 +39,6 @@ interface Device {
 
 /**
  * CONCRETE RECEIVER: TV
- * This is a concrete implementation of the Device interface.
  * It represents a TV that can be turned on/off and can change channels.
  * 
  * The receiver doesn't know about commands - it just performs operations
@@ -119,7 +113,6 @@ class TurnOnCommand implements Command {
     }
 
     /**
-     * Executes the command by calling turnOn() on the receiver.
      * This is where the command pattern's magic happens:
      * - The invoker calls execute() without knowing what device it's operating on
      * - The command knows which device to operate on and what operation to perform
@@ -127,7 +120,7 @@ class TurnOnCommand implements Command {
      */
     @Override
     public void execute() {
-        device.turnOn(); // Delegate to the receiver to perform the actual operation
+        device.turnOn();
     }
 }
 
@@ -194,7 +187,6 @@ class AdjustVolumeCommand implements Command {
 
 /**
  * INVOKER: RemoteControl
- * This is the object that holds and invokes commands.
  * 
  * Key Points:
  * 1. It doesn't know what specific command it's holding
@@ -209,20 +201,11 @@ class AdjustVolumeCommand implements Command {
 class RemoteControl {
     private Command command; // The command currently set in the remote
 
-    /**
-     * Sets the command that should be executed when pressButton() is called.
-     * This method allows us to change what the remote does without
-     * modifying the RemoteControl class itself.
-     * 
-     * @param command The command to execute (can be any Command implementation)
-     */
     public void setCommand(Command command) {
         this.command = command;
     }
 
     /**
-     * Executes the currently set command.
-     * 
      * This method demonstrates the power of the Command pattern:
      * - The remote doesn't need to know what the command does
      * - It just calls execute() and lets the command handle the details
@@ -241,7 +224,6 @@ class RemoteControl {
 
 /**
  * CLIENT: CommandPatternDemo
- * This is the main class that demonstrates the Command pattern in action.
  * 
  * The client's role is to:
  * 1. Create receivers (devices)

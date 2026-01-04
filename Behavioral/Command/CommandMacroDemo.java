@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * MACRO COMMAND INTERFACE
- * This is the basic Command interface for this example.
  * 
  * Key Concept: A macro command is itself a command, but it contains
  * multiple other commands. When executed, it executes all of them.
@@ -21,8 +20,7 @@ import java.util.List;
  */
 interface MacroCommand {
     /**
-     * Executes the command. For macro commands, this will execute
-     * multiple commands in sequence.
+     * For macro commands, this will execute multiple commands in sequence.
      */
     void execute();
 }
@@ -30,7 +28,6 @@ interface MacroCommand {
 /**
  * RECEIVER: MacroTV
  * A TV device that can be turned on and off.
- * This is a concrete receiver that performs actual operations.
  */
 class MacroTV {
     private String name;
@@ -187,7 +184,6 @@ class MacroLightOffCommand implements MacroCommand {
 
 /**
  * COMPOSITE MACRO COMMAND: CompositeMacroCommand
- * This is the key class that demonstrates macro commands.
  * 
  * Key Concept: A macro command is a command that contains other commands.
  * When executed, it executes all of its contained commands in sequence.
@@ -205,27 +201,13 @@ class MacroLightOffCommand implements MacroCommand {
 class CompositeMacroCommand implements MacroCommand {
     private List<MacroCommand> commands; // List of commands to execute
 
-    /**
-     * Constructor: Creates a macro command from a list of commands.
-     * 
-     * @param commands The list of commands to execute when this macro is executed
-     */
     public CompositeMacroCommand(List<MacroCommand> commands) {
         // Create a copy of the list to avoid external modifications
         this.commands = new ArrayList<>(commands);
     }
 
     /**
-     * Executes the macro command by executing all contained commands in order.
-     * 
-     * Process:
-     * 1. Print a message indicating macro execution started
-     * 2. Iterate through all commands in the list
-     * 3. Execute each command in sequence
-     * 4. Print a message indicating macro execution completed
-     * 
      * Key Point: The order matters - commands execute in the order they were added.
-     * This allows us to control the sequence of operations.
      */
     @Override
     public void execute() {

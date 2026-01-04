@@ -38,6 +38,48 @@ The Memento pattern consists of the following components:
 
 ---
 
+## Diagrams
+
+The following diagrams illustrate the Memento pattern structure:
+
+### Diagram 1: Document Example Class Diagram
+
+![Class Diagram of Memento Design Pattern (Document Example)](diagram3.png)
+
+This diagram shows the Memento pattern implementation with a Document example, matching the code in `MementoPatternDemo.java`. It illustrates:
+- **Document** (Originator): Creates and restores mementos
+- **DocumentMemento** (Memento): Stores the document's content state
+- **History** (Caretaker): Manages a list of mementos using `addMemento()` and `getMemento(index)`
+- **Client**: Orchestrates the interactions between Document and History
+
+### Diagram 2: General Memento Pattern Class Diagram
+
+![Class Diagram of Memento Design Pattern](diagram2.png)
+
+This diagram shows the general structure of the Memento pattern with:
+- **Originator**: Creates mementos via `createMemento()` and restores state via `setMemento(Memento)`
+- **Memento**: Stores the Originator's state with `getState()` method
+- **Caretaker**: Manages mementos using `addMemento(Memento)` and `getMemento()`
+- **Client**: Depends on both Originator and Caretaker to manage state
+
+### Diagram 3: Sequence Diagram - Communication Flow
+
+![Communication between components in Memento Pattern](diagram1.png)
+
+This sequence diagram illustrates the communication flow between components in two phases:
+
+**Phase 1: Saving State**
+- Caretaker requests Originator to create a memento via `CreateMemento()`
+- Originator creates a new Memento object and sets its state
+- Originator returns the memento to Caretaker
+
+**Phase 2: Restoring State**
+- Caretaker sends a memento to Originator via `restore(memento)`
+- Originator retrieves state from the memento via `getState()`
+- Originator restores its internal state from the memento
+
+---
+
 ## Memento Pattern Example
 
 ### Scenario: Text Editor with Undo/Redo

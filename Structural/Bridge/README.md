@@ -5,6 +5,20 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Bridge Pattern – Transport / Engine Example](#bridge-pattern--transport--engine-example)
+- [Why Use the Bridge Pattern?](#why-use-the-bridge-pattern)
+- [With Bridge Pattern – Conceptual Example](#with-bridge-pattern--conceptual-example)
+- [Without Bridge Pattern](#without-bridge-pattern)
+- [Pros](#pros)
+- [Cons](#cons)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+
+---
+
 ## Pattern Structure
 
 The following diagrams illustrate the Bridge pattern structure and how it helps avoid class explosion.

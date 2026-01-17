@@ -5,6 +5,23 @@
 
 ---
 
+## Table of Contents
+
+- [Why Use the Singleton Pattern?](#why-use-the-singleton-pattern)
+- [With Singleton Pattern](#with-singleton-pattern)
+- [Without Singleton Pattern](#without-singleton-pattern)
+- [Comparison: Singleton vs Alternatives](#comparison-singleton-vs-alternatives)
+- [Pros](#pros)
+- [Cons](#cons)
+- [Variants](#variants)
+- [When to Use Singleton Pattern](#when-to-use-singleton-pattern)
+- [Best Practices](#best-practices)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Why Use the Singleton Pattern?
 
 ### The Problem: Multiple Instances Cause Inconsistency

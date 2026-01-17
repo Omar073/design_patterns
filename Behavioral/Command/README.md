@@ -6,6 +6,24 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Command Pattern Example](#command-pattern-example)
+- [Implementation](#implementation)
+- [Why Use the Command Pattern?](#why-use-the-command-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Command Pattern](#when-to-use-command-pattern)
+- [Advanced Features](#advanced-features)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagrams illustrate the Command pattern structure:

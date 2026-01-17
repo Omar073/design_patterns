@@ -5,6 +5,21 @@
 
 ---
 
+## Table of Contents
+
+- [Intrinsic and Extrinsic State](#intrinsic-and-extrinsic-state)
+- [Pattern Structure](#pattern-structure)
+- [Forest / Tree Example](#forest--tree-example)
+- [Why Use the Flyweight Pattern?](#why-use-the-flyweight-pattern)
+- [With Flyweight Pattern – Generic Example](#with-flyweight-pattern--generic-example)
+- [Forest Example Code Overview](#forest-example-code-overview)
+- [Pros](#pros)
+- [Cons](#cons)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+
+---
+
 ## Intrinsic and Extrinsic State
 
 Suppose in a text editor when we enter a character, an object of `Character` class is created.  

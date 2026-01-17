@@ -6,6 +6,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Diagrams](#diagrams)
+- [Observer Pattern Examples](#observer-pattern-examples)
+- [Implementation](#implementation)
+- [Why Use the Observer Pattern?](#why-use-the-observer-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Observer Pattern](#when-to-use-observer-pattern)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Implementation Notes](#implementation-notes)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The Observer pattern consists of the following components:

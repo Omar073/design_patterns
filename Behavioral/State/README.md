@@ -6,6 +6,24 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [State Pattern Examples](#state-pattern-examples)
+- [Implementation](#implementation)
+- [Why Use the State Pattern?](#why-use-the-state-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use State Pattern](#when-to-use-state-pattern)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Implementation Notes](#implementation-notes)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The State pattern consists of the following components:

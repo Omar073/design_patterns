@@ -5,6 +5,24 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Proxy Pattern?](#why-use-the-proxy-pattern)
+- [With Proxy Pattern](#with-proxy-pattern)
+- [Without Proxy Pattern](#without-proxy-pattern)
+- [Comparison: Proxy vs Alternatives](#comparison-proxy-vs-alternatives)
+- [Proxy Types](#proxy-types)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Proxy Pattern](#when-to-use-proxy-pattern)
+- [Best Practices](#best-practices)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagram illustrates the Proxy pattern structure:

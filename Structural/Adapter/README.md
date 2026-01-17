@@ -5,6 +5,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Adapter Pattern?](#why-use-the-adapter-pattern)
+- [With Adapter Pattern](#with-adapter-pattern)
+- [Without Adapter Pattern](#without-adapter-pattern)
+- [Comparison: Adapter vs Alternatives](#comparison-adapter-vs-alternatives)
+- [Adapter Types](#adapter-types)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Adapter Pattern](#when-to-use-adapter-pattern)
+- [Best Practices](#best-practices)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagrams illustrate the Adapter pattern structure, showing two different implementations: a charger adapter and a movable adapter.

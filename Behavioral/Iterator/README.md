@@ -5,6 +5,24 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Iterator Pattern Example](#iterator-pattern-example)
+- [Implementation](#implementation)
+- [Why Use the Iterator Pattern?](#why-use-the-iterator-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Iterator Pattern](#when-to-use-iterator-pattern)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Implementation Notes](#implementation-notes)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The Iterator pattern consists of the following components:

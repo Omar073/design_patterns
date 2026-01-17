@@ -5,6 +5,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Facade Pattern?](#why-use-the-facade-pattern)
+- [With Facade Pattern](#with-facade-pattern)
+- [Without Facade Pattern](#without-facade-pattern)
+- [Comparison: Facade vs Alternatives](#comparison-facade-vs-alternatives)
+- [Facade Characteristics](#facade-characteristics)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Facade Pattern](#when-to-use-facade-pattern)
+- [Best Practices](#best-practices)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagram illustrates the Facade pattern structure, showing a layered facade approach:

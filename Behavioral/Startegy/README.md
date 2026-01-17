@@ -6,6 +6,19 @@
 
 ---
 
+## Table of Contents
+
+- [When to Use](#when-to-use)
+- [Structure (Roles)](#structure-roles)
+- [Pattern Structure – Diagram Walkthrough](#pattern-structure--diagram-walkthrough)
+- [Examples in this folder](#examples-in-this-folder)
+- [Benefits & Trade-offs](#benefits--trade-offs)
+- [Related Patterns](#related-patterns)
+- [Common Use Cases](#common-use-cases)
+- [Implementation Notes](#implementation-notes)
+
+---
+
 ## When to Use
 - You have several interchangeable algorithms (sorting, compression, encryption, pricing rules).
 - Behavior must switch at runtime based on context or configuration.

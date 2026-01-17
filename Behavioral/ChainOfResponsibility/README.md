@@ -5,6 +5,21 @@
 
 ---
 
+## Table of Contents
+
+- [When to Use](#when-to-use)
+- [Structure (Roles)](#structure-roles)
+- [Pattern Structure – Diagram Walkthrough](#pattern-structure--diagram-walkthrough)
+- [Examples in this folder](#examples-in-this-folder)
+- [Example 1 – Email handling system](#example-1--email-handling-system)
+- [Example 2 – Purchase approval chain](#example-2--purchase-approval-chain)
+- [Benefits & Trade-offs](#benefits--trade-offs)
+- [Related Patterns](#related-patterns)
+- [Common Use Cases](#common-use-cases)
+- [Implementation Notes](#implementation-notes)
+
+---
+
 ## When to Use
 
 - Multiple objects can handle a request, and the handler isn't known a priori.

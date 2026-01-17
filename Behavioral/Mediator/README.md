@@ -11,6 +11,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Real-Life Analogy](#real-life-analogy)
+- [Mediator Pattern Examples](#mediator-pattern-examples)
+- [Implementation](#implementation)
+- [Why Use the Mediator Pattern?](#why-use-the-mediator-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Mediator Pattern](#when-to-use-mediator-pattern)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Implementation Notes](#implementation-notes)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The Mediator pattern consists of the following components:

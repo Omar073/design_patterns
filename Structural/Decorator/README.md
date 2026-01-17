@@ -5,6 +5,24 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Decorator Pattern?](#why-use-the-decorator-pattern)
+- [With Decorator Pattern](#with-decorator-pattern)
+- [Without Decorator Pattern](#without-decorator-pattern)
+- [Comparison: Decorator vs Alternatives](#comparison-decorator-vs-alternatives)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Decorator Pattern](#when-to-use-decorator-pattern)
+- [Best Practices](#best-practices)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagram illustrates the Decorator pattern structure:

@@ -5,6 +5,22 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Builder Pattern?](#why-use-the-builder-pattern)
+- [With Builder Pattern](#with-builder-pattern)
+- [Without Builder Pattern](#without-builder-pattern)
+- [Comparison: Builder vs Alternatives](#comparison-builder-vs-alternatives)
+- [Pros](#pros)
+- [Cons](#cons)
+- [Variants](#variants)
+- [When to Use Builder Pattern](#when-to-use-builder-pattern)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+
+---
+
 ## Pattern Structure
 
 The following diagrams illustrate the Builder pattern structure, showing two different implementations: a Director-based builder for drinks and a Director-based builder for documents.

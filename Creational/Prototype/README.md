@@ -5,6 +5,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Why Use the Prototype Pattern?](#why-use-the-prototype-pattern)
+- [With Prototype Pattern](#with-prototype-pattern)
+- [Without Prototype Pattern](#without-prototype-pattern)
+- [Comparison: Prototype vs Alternatives](#comparison-prototype-vs-alternatives)
+- [Shallow vs Deep Clone](#shallow-vs-deep-clone)
+- [Pros](#pros)
+- [Cons](#cons)
+- [Variants](#variants)
+- [When to Use Prototype Pattern](#when-to-use-prototype-pattern)
+- [Best Practices](#best-practices)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [File Examples](#file-examples)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The following diagram illustrates the Prototype pattern structure, highlighting the concepts of shallow cloning and deep cloning:
@@ -358,12 +377,12 @@ deep.center.x = 10;  // Only affects deep clone, not original
 ### 1. Direct Cloning
 - Clone prototype directly
 - Simple and straightforward
-- Example: `ShapeCloningDemo.java`
+- Example: `PrototypeDirectDemo.java`
 
 ### 2. Registry-Based
 - Centralized prototype storage
 - Runtime type management
-- Example: `ShapeRegistryDemo.java`
+- Example: `PrototypeRegistryDemo.java`
 
 ### 3. Shallow Clone
 - Default `clone()` behavior
@@ -374,12 +393,50 @@ deep.center.x = 10;  // Only affects deep clone, not original
 - Clones nested objects too
 - Truly independent copies
 - Use for mutable nested objects
-- Example: `CircleShallowDeepCloneDemo.java`
+- Example: `PrototypeShallowDeepDemo.java`
 
 ### 5. Copy Constructor
 - Alternative to `clone()`
 - More explicit and type-safe
-- Example: `new Circle(original)`
+- No need to implement `Cloneable` interface
+- Example: `PrototypeCopyConstructorDemo.java`
+
+```java
+class Circle implements Shape {
+    private int radius;
+    private String color;
+    
+    // Regular constructor
+    Circle(int radius, String color) {
+        this.radius = radius;
+        this.color = color;
+        System.out.println("Expensive initialization for Circle...");
+    }
+    
+    // Copy constructor - creates a copy of another Circle
+    Circle(Circle other) {
+        this.radius = other.radius;
+        this.color = other.color;
+        // No expensive initialization - just copying values
+    }
+    
+    @Override
+    public Shape copy() {
+        return new Circle(this);  // Use copy constructor
+    }
+}
+
+// Usage - expensive init runs only once
+Circle circleProto = new Circle(10, "red");  // Expensive init runs once
+Circle c1 = (Circle) circleProto.copy();     // Fast copy using copy constructor
+Circle c2 = (Circle) circleProto.copy();     // Fast copy using copy constructor
+```
+
+**Benefits:**
+- ✅ **Type-safe**: No casting needed, compiler checks types
+- ✅ **Explicit**: Clear intent - creating a copy
+- ✅ **No Cloneable**: Don't need to implement `Cloneable` interface
+- ✅ **IDE support**: Better autocomplete and refactoring support
 
 ---
 
@@ -423,9 +480,10 @@ deep.center.x = 10;  // Only affects deep clone, not original
 
 ## File Examples
 
-- **`ShapeCloningDemo.java`**: Direct cloning example
-- **`ShapeRegistryDemo.java`**: Registry-based prototype management
-- **`CircleShallowDeepCloneDemo.java`**: Shallow vs deep clone comparison
+- **`PrototypeDirectDemo.java`**: Direct cloning example using `clone()` method
+- **`PrototypeRegistryDemo.java`**: Registry-based prototype management
+- **`PrototypeShallowDeepDemo.java`**: Shallow vs deep clone comparison
+- **`PrototypeCopyConstructorDemo.java`**: Copy constructor alternative to `clone()` method
 
 ---
 

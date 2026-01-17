@@ -4,6 +4,20 @@ This folder contains examples of three related creational design patterns: **Sim
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [File Overview](#file-overview)
+- [Simple Factory](#simple-factory)
+- [Factory Method](#factory-method)
+- [Abstract Factory](#abstract-factory)
+- [Pattern Comparison](#pattern-comparison)
+- [When to Use Which Pattern](#when-to-use-which-pattern)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Code Examples Summary](#code-examples-summary)
+
+---
+
 ## Pattern Structure
 
 The following diagram illustrates the Simple Factory pattern structure:

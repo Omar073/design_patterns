@@ -5,6 +5,25 @@
 
 ---
 
+## Table of Contents
+
+- [Pattern Structure](#pattern-structure)
+- [Diagrams](#diagrams)
+- [Memento Pattern Example](#memento-pattern-example)
+- [Implementation](#implementation)
+- [Why Use the Memento Pattern?](#why-use-the-memento-pattern)
+- [Pattern Participants](#pattern-participants)
+- [Pros](#pros)
+- [Cons](#cons)
+- [When to Use Memento Pattern](#when-to-use-memento-pattern)
+- [Real-World Examples](#real-world-examples)
+- [Compare with Other Patterns](#compare-with-other-patterns)
+- [Best Practices](#best-practices)
+- [Implementation Notes](#implementation-notes)
+- [Notes](#notes)
+
+---
+
 ## Pattern Structure
 
 The Memento pattern consists of the following components:

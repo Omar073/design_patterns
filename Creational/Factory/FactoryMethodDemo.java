@@ -91,7 +91,7 @@ class DirectDialog {
 
 public class FactoryMethodDemo {
     public static void main(String[] args) {
-        boolean isMac = System.getProperty("os.name").toLowerCase().contains("mac");
+        boolean isMac = false;
 
         System.out.println("== With Factory Method ==");
         Dialog dialog = isMac ? new MacDialog() : new WindowsDialog();

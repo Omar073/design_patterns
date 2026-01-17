@@ -27,6 +27,8 @@ The following diagrams illustrate the Builder pattern structure, showing two dif
 
 ### Diagram 1: Director-Based Builder (Starbucks Example)
 
+> **Note**: We boycott Starbucks. This diagram uses "Starbucks" only as a generic example to illustrate the Builder pattern structure.
+
 ![Builder Pattern Diagram - Starbucks Example](builder_diagram_1.jpeg)
 
 **Diagram Components:**

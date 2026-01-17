@@ -1,5 +1,7 @@
 # Design Patterns in Java
 
+**GitHub Repository**: [https://github.com/Omar073/design_patterns](https://github.com/Omar073/design_patterns)
+
 A comprehensive collection of  essential design patterns implemented in Java, with detailed examples, explanations, and comparisons.
 
 ## Overview
@@ -172,7 +174,7 @@ Each demo includes a `main` method that demonstrates the pattern in action, show
 ## Key Features
 
 - **Multiple Implementations**: Each pattern includes various implementation approaches
-- **Real-World Examples**: Practical scenarios like college internet proxy, Starbucks drinks, home theater systems
+- **Real-World Examples**: Practical scenarios like college internet proxy, coffee shop ordering systems, home theater systems
 - **Comprehensive Documentation**: Each pattern has detailed README explaining concepts, use cases, pros/cons
 - **Code Comparisons**: Side-by-side examples showing code with and without the pattern
 - **Pattern Relationships**: Discussions on similarities and differences between related patterns

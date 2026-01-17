@@ -37,19 +37,6 @@ class RoundPeg implements RoundPegTarget {
     }
 }
 
-// Adaptee with different interface
-class SquarePeg {
-    private final double width;
-
-    SquarePeg(double width) {
-        this.width = width;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-}
-
 // Object Adapter – wrap SquarePeg and present RoundPegTarget
 class SquarePegAdapter implements RoundPegTarget {
     private final SquarePeg squarePeg;
@@ -61,6 +48,19 @@ class SquarePegAdapter implements RoundPegTarget {
     public double getRadius() {
         // compute minimal circle radius that fits the square
         return (squarePeg.getWidth() * Math.sqrt(2) / 2.0);
+    }
+}
+
+// Adaptee with different interface
+class SquarePeg {
+    private final double width;
+
+    SquarePeg(double width) {
+        this.width = width;
+    }
+
+    public double getWidth() {
+        return width;
     }
 }
 

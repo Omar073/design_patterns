@@ -8,6 +8,7 @@
 ## Table of Contents
 
 - [Pattern Structure](#pattern-structure)
+- [How to Identify Builder Pattern Components from Problem Descriptions](#how-to-identify-builder-pattern-components-from-problem-descriptions)
 - [Why Use the Builder Pattern?](#why-use-the-builder-pattern)
 - [With Builder Pattern](#with-builder-pattern)
 - [Without Builder Pattern](#without-builder-pattern)
@@ -29,7 +30,7 @@ The following diagrams illustrate the Builder pattern structure, showing two dif
 
 > **Note**: We boycott Starbucks. This diagram uses "Starbucks" only as a generic example to illustrate the Builder pattern structure.
 
-![Builder Pattern Diagram - Starbucks Example](builder_diagram_1.jpeg)
+![Builder Pattern Diagram - Starbucks Example](Diagrams/builder_diagram_1.jpeg)
 
 **Diagram Components:**
 
@@ -91,7 +92,7 @@ The following diagrams illustrate the Builder pattern structure, showing two dif
 
 ### Diagram 2: Director-Based Builder (Document Example)
 
-![Builder Pattern Diagram - Document Example](builder_diagram_2.jpeg)
+![Builder Pattern Diagram - Document Example](Diagrams/builder_diagram_2.jpeg)
 
 **Diagram Components:**
 
@@ -158,6 +159,130 @@ The following diagrams illustrate the Builder pattern structure, showing two dif
 - **Concrete Products**: `PDFDocument`, `XMLDocument` (Diagram 2) - Specific product types
 
 Both diagrams demonstrate how the Builder pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations through different concrete builders.
+
+---
+
+## How to Identify Builder Pattern Components from Problem Descriptions
+
+When given an application description or problem statement, use these guidelines to identify which objects correspond to each Builder pattern role:
+
+### 1. **Product** (The Object Being Constructed)
+**Look for:**
+- The **final object** that needs to be created
+- An object with **many parts/components** that need to be assembled
+- An object with **optional parameters** or **multiple configuration options**
+- The **end result** that the client wants to use
+
+**Keywords in descriptions:**
+- "Create a [complex object]"
+- "Build a [object] with [parts/components]"
+- "Assemble a [object]"
+- "Construct a [object] with optional [features]"
+
+**Examples:**
+- "Create a car with engine, wheels, color, sunroof, GPS"
+- "Build a document with text, images, formatting"
+- "Assemble a meal with appetizer, main course, dessert, drink"
+
+### 2. **Abstract Builder** (The Builder Interface)
+**Look for:**
+- The **interface or abstract class** that defines construction steps
+- Methods that represent **steps in the construction process**
+- The **contract** that all builders must follow
+- Usually named with "Builder" suffix (e.g., `CarBuilder`, `DocumentBuilder`)
+
+**Keywords in descriptions:**
+- "Steps to build [product]"
+- "Construction process"
+- "Building interface"
+- "Builder for [product type]"
+
+**Examples:**
+- "Define steps to build a car: add engine, add wheels, set color, add features"
+- "Builder interface for creating documents"
+- "Abstract builder for constructing meals"
+
+### 3. **Concrete Builder** (Specific Builder Implementations)
+**Look for:**
+- **Different ways** to build the same product type
+- **Variations** in how the product is constructed
+- **Specific implementations** of the building process
+- Usually multiple concrete builders (one per variation)
+
+**Keywords in descriptions:**
+- "Different types of [product]"
+- "Variations of [product]"
+- "Build [product type A] vs [product type B]"
+- "Specific builder for [product variant]"
+
+**Examples:**
+- "Build a sports car vs luxury car"
+- "Create PDF document vs XML document"
+- "Build coffee drink vs tea drink"
+- "Construct vegetarian meal vs non-vegetarian meal"
+
+### 4. **Director** (Optional - Orchestrates Construction)
+**Look for:**
+- A class that **controls the order** of construction steps
+- An object that **knows the sequence** of building operations
+- A **coordinator** that uses the builder to create products
+- May be **optional** in fluent builder variants
+
+**Keywords in descriptions:**
+- "Orchestrates the building process"
+- "Controls construction sequence"
+- "Directs the builder"
+- "Manages the building steps"
+- "Waiter", "Manager", "Engine", "Director" (role names)
+
+**Examples:**
+- "Waiter directs the drink builder"
+- "Document creation engine manages document building"
+- "Construction manager coordinates building steps"
+
+**Note:** In **fluent builder** variants (like `Car.Builder`), there is **no Director** - the client directly calls builder methods in sequence.
+
+### 5. **Client** (The Code Using the Builder)
+**Look for:**
+- The **code that needs** the final product
+- The **caller** that initiates construction
+- Usually the `main()` method or application code
+- The **user** of the built product
+
+**Keywords in descriptions:**
+- "Client code"
+- "Application that uses [product]"
+- "Code that creates [product]"
+- "User of [product]"
+
+### **Example: Identifying Components from a Problem Description**
+
+**Problem Statement:**
+> "A restaurant system needs to create meal orders. Meals can be vegetarian or non-vegetarian. Each meal has an appetizer, main course, dessert, and drink. The construction process should allow flexible ordering where customers can customize their meals."
+
+**Component Identification:**
+
+1. **Product**: `Meal` - The final object being constructed with multiple parts (appetizer, main course, dessert, drink)
+
+2. **Abstract Builder**: `MealBuilder` - Interface defining construction steps (`addAppetizer()`, `addMainCourse()`, `addDessert()`, `addDrink()`, `getMeal()`)
+
+3. **Concrete Builders**: 
+   - `VegetarianMealBuilder` - Builds vegetarian meals
+   - `NonVegetarianMealBuilder` - Builds non-vegetarian meals
+
+4. **Director**: `Waiter` or `OrderManager` - Controls the sequence of adding meal components
+
+5. **Client**: `Customer` or `RestaurantApp` - Code that creates meals using the builder
+
+### **Quick Identification Checklist**
+
+When analyzing a problem description, ask:
+
+- ✅ **What is the complex object being built?** → **Product**
+- ✅ **What are the steps to build it?** → **Abstract Builder methods**
+- ✅ **Are there different ways/variations to build it?** → **Concrete Builders**
+- ✅ **Is there a class that controls the building sequence?** → **Director** (may be optional)
+- ✅ **Who initiates the building?** → **Client**
 
 ---
 

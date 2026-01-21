@@ -28,7 +28,7 @@
 
 The following diagram illustrates the Facade pattern structure, showing a layered facade approach:
 
-![Facade Pattern Diagram](facade_diagram.jpeg)
+![Facade Pattern Diagram](Diagrams/facade_diagram.jpeg)
 
 **Diagram Components:**
 

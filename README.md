@@ -64,59 +64,92 @@ design_patterns/
 │   │   ├── PrototypeDirectDemo.java         # Direct cloning example
 │   │   ├── PrototypeRegistryDemo.java       # Registry-based cloning
 │   │   ├── PrototypeShallowDeepDemo.java    # Shallow vs deep clone
+│   │   ├── Diagrams/                        # Prototype pattern diagrams
+│   │   │   └── prototype_diagram.jpeg
 │   │   └── README.md
 │   ├── Factory/
 │   │   ├── SimpleFactoryDemo.java      # Simple Factory - Notification system
 │   │   ├── ShapeFactoryDemo.java       # Simple Factory - Shape creation
 │   │   ├── FactoryMethodDemo.java      # Factory Method - Dialog system
 │   │   ├── AbstractFactoryDemo.java    # Abstract Factory - GUI widgets
+│   │   ├── Diagrams/                   # Factory pattern diagrams
+│   │   │   └── factory_diagram.jpeg
 │   │   └── README.md
 │   └── Builder/
 │       ├── CarBuilderDemo.java           # Fluent builder pattern
 │       ├── DirectorBuilderDemo.java        # Director-based builder
 │       ├── TelescopingConstructorDemo.java # Telescoping constructors (contrast)
+│       ├── Diagrams/                      # Builder pattern diagrams
+│       │   ├── builder_diagram_1.jpeg
+│       │   └── builder_diagram_2.jpeg
 │       └── README.md
 ├── Structural/                 # Structural Design Patterns
 │   ├── Adapter/
 │   │   ├── AdapterDemo.java            # Object adapter (SquarePeg → RoundHole)
+│   │   ├── Diagrams/                   # Adapter pattern diagrams
+│   │   │   ├── adapter_diagram_1.jpeg
+│   │   │   └── adapter_diagram_2.jpeg
 │   │   └── README.md
 │   ├── Bridge/
 │   │   ├── BridgeTransportDemo.java    # Transport example (abstraction/implementation split)
 │   │   ├── BridgeGuiApiDemo.java       # GUI/API bridge example
+│   │   ├── Diagrams/                    # Bridge pattern diagrams
+│   │   │   ├── bridge_example_uml.jpeg
+│   │   │   ├── bridge_structure_1.jpeg
+│   │   │   ├── bridge_structure_2.jpeg
+│   │   │   └── bridge_structure_uml.jpeg
 │   │   └── README.md
 │   ├── Composite/              # Composite pattern (if exists)
 │   ├── Decorator/
 │   │   ├── DecoratorDemo.java          # Beverage condiments + Java I/O analogy
+│   │   ├── Diagrams/                   # Decorator pattern diagrams
+│   │   │   └── decorator_diagram.jpeg
 │   │   └── README.md
 │   ├── Facade/
 │   │   ├── WithFacadeDemo.java         # Home theater with facade
 │   │   ├── WithoutFacadeDemo.java      # Home theater without facade
+│   │   ├── Diagrams/                   # Facade pattern diagrams
+│   │   │   └── facade_diagram.jpeg
 │   │   └── README.md
 │   ├── Flyweight/
 │   │   ├── FlyweightForestDemo.java    # Forest (shared tree types) example
 │   │   ├── FlyweightTextEditorDemo.java# Text editor (shared glyphs) example
+│   │   ├── Diagrams/                   # Flyweight pattern diagrams
+│   │   │   ├── Flyweight_example_uml.jpeg
+│   │   │   └── Flyweight_uml_structure.jpeg
 │   │   └── README.md
 │   └── Proxy/
 │       ├── ProtectionProxyDemo.java    # Protection proxy - Internet access
 │       ├── VirtualProxyDemo.java       # Virtual proxy - Lazy image loading
 │       ├── LoggingProxyDemo.java       # Logging proxy - Dynamic proxy
+│       ├── Diagrams/                   # Proxy pattern diagrams
+│       │   └── diagram.png
 │       └── README.md
 ├── Behavioral/                 # Behavioral Design Patterns
 │   ├── Startegy/
 │   │   ├── StrategyDuckDemo.java       # Duck behaviors using Strategy pattern
 │   │   ├── StrategyEncryptionDemo.java # Encryption algorithms as strategies
+│   │   ├── Diagrams/                   # Strategy pattern diagrams
+│   │   │   ├── diagram1.png through diagram7.png
+│   │   │   └── image.png
 │   │   └── README.md                   # Strategy pattern documentation and diagrams
 │   ├── ChainOfResponsibility/
 │   │   ├── ChainOfResponsibilityEmailDemo.java    # Email processing chain
 │   │   ├── ChainOfResponsibilityApprovalDemo.java # Purchase approval chain
+│   │   ├── Diagrams/                              # Chain of Responsibility diagrams
+│   │   │   ├── diagram 3.png
+│   │   │   ├── diagram1.png
+│   │   │   ├── diagram2.png
+│   │   │   └── diagram4.png
 │   │   └── README.md                              # Chain of Responsibility documentation
 │   ├── Command/
 │   │   ├── CommandPatternDemo.java                # Basic Command pattern - Smart home remote control
 │   │   ├── CommandUndoDemo.java                   # Command with undo/redo support
 │   │   ├── CommandMacroDemo.java                  # Macro commands (composite commands)
 │   │   ├── CommandQueueDemo.java                  # Command queue for batch processing
-│   │   ├── diagram1.png                           # General Command pattern structure
-│   │   ├── diagram2.png                           # Command pattern implementation diagram
+│   │   ├── Diagrams/                              # Command pattern diagrams
+│   │   │   ├── diagram1.png                       # General Command pattern structure
+│   │   │   └── diagram2.png                       # Command pattern implementation diagram
 │   │   └── README.md                              # Command pattern documentation
 │   ├── Iterator/
 │   │   ├── IteratorPatternDemo.java               # Iterator pattern - Book collection traversal
@@ -124,14 +157,22 @@ design_patterns/
 │   ├── Mediator/
 │   │   ├── MediatorPatternDemo.java               # Mediator pattern - Smart home automation system
 │   │   ├── MediatorAirplaneDemo.java              # Mediator pattern - Air traffic control system
-│   │   ├── diagram1.png                           # General Mediator pattern structure
-│   │   ├── diagram2.png                           # Air Traffic Control example diagram
+│   │   ├── Diagrams/                              # Mediator pattern diagrams
+│   │   │   ├── diagram1.png                       # General Mediator pattern structure
+│   │   │   └── diagram2.png                       # Air Traffic Control example diagram
 │   │   └── README.md                              # Mediator pattern documentation
 │   ├── Memento/
 │   │   ├── MementoPatternDemo.java                # Memento pattern - Text editor with undo/redo
+│   │   ├── Diagrams/                              # Memento pattern diagrams
+│   │   │   ├── diagram1.png
+│   │   │   ├── diagram2.png
+│   │   │   └── diagram3.png
 │   │   └── README.md                              # Memento pattern documentation
 │   ├── Observer/
 │   │   ├── ObserverPatternDemo.java               # Observer pattern - Weather station with display devices
+│   │   ├── Diagrams/                              # Observer pattern diagrams
+│   │   │   ├── diagram1.png
+│   │   │   └── diagram2.png
 │   │   └── README.md                              # Observer pattern documentation
 │   └── State/
 │       ├── StatePatternDemo.java                  # State pattern - Vending machine with state transitions

@@ -30,13 +30,13 @@ The following diagrams illustrate the Command pattern structure:
 
 ### Diagram 1: General Command Pattern Structure
 
-![Command Pattern Diagram 1](diagram1.png)
+![Command Pattern Diagram 1](Diagrams/diagram1.png)
 
 This diagram shows the general structure of the Command pattern with multiple concrete commands and receivers.
 
 ### Diagram 2: Command Pattern Implementation
 
-![Command Pattern Diagram 2](diagram2.png)
+![Command Pattern Diagram 2](Diagrams/diagram2.png)
 
 This diagram illustrates the Command pattern structure as implemented in `CommandPatternDemo.java`, showing the specific classes and relationships used in the example.
 

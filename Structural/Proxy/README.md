@@ -27,7 +27,7 @@
 
 The following diagram illustrates the Proxy pattern structure:
 
-![Proxy Pattern Diagram](diagram.png)
+![Proxy Pattern Diagram](Diagrams/diagram.png)
 
 **Diagram Components:**
 

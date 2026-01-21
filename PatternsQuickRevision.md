@@ -83,7 +83,7 @@ The table below summarizes the patterns in this codebase using the classic **GoF
   - You want to vary which concrete classes are instantiated without changing client code.
 - **Structure**:
   - Diagram:
-    - ![Factory Diagram](Creational/Factory/factory_diagram.jpeg)  
+    - ![Factory Diagram](Creational/Factory/Diagrams/factory_diagram.jpeg)  
       *Shows the base product interface, its concrete products, and a factory class responsible for creating them for the client.*
   - Key variants:
     - **Simple Factory**: one class with a method that uses `if/switch` to return different products.
@@ -117,9 +117,9 @@ class ShapeFactory {
 -  - You want readable, step-by-step creation instead of a telescoping constructor.
 - **Structure**:
   - Diagrams:
-    - ![Builder Diagram 1](Creational/Builder/builder_diagram_1.jpeg)  
+    - ![Builder Diagram 1](Creational/Builder/Diagrams/builder_diagram_1.jpeg)  
       *Shows the core Builder pattern class diagram: Product, abstract Builder, ConcreteBuilder, and an optional Director coordinating construction.*
-    - ![Builder Diagram 2](Creational/Builder/builder_diagram_2.jpeg)  
+    - ![Builder Diagram 2](Creational/Builder/Diagrams/builder_diagram_2.jpeg)  
       *Shows a concrete usage example of the Builder pattern, where a client assembles an object step‑by‑step via builder methods and then calls `build()`.*
   - Roles:
     - **Builder**: defines steps to build parts.
@@ -150,7 +150,7 @@ Car car = new CarBuilder()
   - You need many similar objects configured at runtime.
 - **Structure**:
   - Diagram:
-    - ![Prototype Diagram](Creational/Prototype/prototype_diagram.jpeg)  
+    - ![Prototype Diagram](Creational/Prototype/Diagrams/prototype_diagram.jpeg)  
       *Shows the Prototype interface, concrete prototype subclasses, and the client cloning them instead of using `new`.*
   - Roles:
     - **Prototype**: declares clone operation.
@@ -183,9 +183,9 @@ copy.setColor("blue");
   - You want to avoid subclass explosion when **what varies is behavior**, not the data structure of the class.
 - **Structure**:
   - Diagrams:
-    - `Behavioral/Startegy/diagram1.png`–`diagram3.png`: show the **naive Duck inheritance** and the problems of putting `fly()` and `quack()` directly in the superclass (rubber and decoy ducks that shouldn't fly or quack).
-    - `Behavioral/Startegy/diagram4.png`–`diagram5.png`: extract fly/quack into **behavior interfaces** (`FlyBehavior`, `QuackBehavior`) with concrete implementations like `FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`.
-    - `Behavioral/Startegy/diagram6.png`–`diagram7.png`: final design where `Duck` has `FlyBehavior flyBehavior` and `QuackBehavior quackBehavior`, and the client works with ducks while behaviors are encapsulated and swappable.
+    - `Behavioral/Startegy/Diagrams/diagram1.png`–`diagram3.png`: show the **naive Duck inheritance** and the problems of putting `fly()` and `quack()` directly in the superclass (rubber and decoy ducks that shouldn't fly or quack).
+    - `Behavioral/Startegy/Diagrams/diagram4.png`–`diagram5.png`: extract fly/quack into **behavior interfaces** (`FlyBehavior`, `QuackBehavior`) with concrete implementations like `FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`.
+    - `Behavioral/Startegy/Diagrams/diagram6.png`–`diagram7.png`: final design where `Duck` has `FlyBehavior flyBehavior` and `QuackBehavior quackBehavior`, and the client works with ducks while behaviors are encapsulated and swappable.
   - Roles:
     - **Strategy**: interface representing an algorithm (`FlyBehavior`, `QuackBehavior`, `EncryptionStrategy`).
     - **Concrete Strategies**: implementations of the algorithm (`FlyWithWings`, `FlyNoWay`, `Quack`, `Squeak`, `MuteQuack`, `AesEncryption`, `RsaEncryption`, `EccEncryption`).
@@ -230,13 +230,13 @@ messenger.send("Bob", "Confidential meeting");   // Uses RSA now
   - The set of handlers should be specified dynamically.
 - **Structure**:
   - Diagrams:
-    - ![Chain of Responsibility Flow](Behavioral/ChainOfResponsibility/diagram1.png)  
+    - ![Chain of Responsibility Flow](Behavioral/ChainOfResponsibility/Diagrams/diagram1.png)  
       *Shows client sending request through handler chain where each handler either processes or forwards the request.*
-    - ![Chain of Responsibility UML](Behavioral/ChainOfResponsibility/diagram2.png)  
+    - ![Chain of Responsibility UML](Behavioral/ChainOfResponsibility/Diagrams/diagram2.png)  
       *Shows Handler interface with successor reference, and ConcreteHandlerA/B implementing it.*
-    - ![Email Handler Chain](Behavioral/ChainOfResponsibility/diagram 3.png)  
+    - ![Email Handler Chain](Behavioral/ChainOfResponsibility/Diagrams/diagram 3.png)  
       *Shows email processing chain: Spam → Fan → Complaint → NewLoc handlers.*
-    - ![Email Handlers UML](Behavioral/ChainOfResponsibility/diagram4.png)  
+    - ![Email Handlers UML](Behavioral/ChainOfResponsibility/Diagrams/diagram4.png)  
       *Shows Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler subclasses.*
   - Roles:
     - **Handler**: defines interface for handling requests and optionally implements successor link.
@@ -288,9 +288,9 @@ teamLead.handleRequest(req);  // TeamLead forwards to Manager who approves
   - You need to support macro commands (combining multiple commands)
 - **Structure**:
   - Diagrams:
-    - ![Command Diagram 1](Behavioral/Command/diagram1.png)  
+    - ![Command Diagram 1](Behavioral/Command/Diagrams/diagram1.png)  
       *Shows the general Command pattern structure with Command interface, Invoker, Concrete Commands, and Receivers.*
-    - ![Command Diagram 2](Behavioral/Command/diagram2.png)  
+    - ![Command Diagram 2](Behavioral/Command/Diagrams/diagram2.png)  
       *Shows the specific implementation with RemoteControl as Invoker, TurnOnCommand/ChangeChannelCommand as Concrete Commands, and TV/Stereo as Receivers.*
   - Roles:
     - **Command**: Interface defining `execute()` method
@@ -401,9 +401,9 @@ class BookIterator implements Iterator<String> {
   - Centralized control: You need a centralized mechanism to coordinate interactions
 - **Structure**:
   - Diagrams:
-    - ![Mediator Diagram 1](Behavioral/Mediator/diagram1.png)  
+    - ![Mediator Diagram 1](Behavioral/Mediator/Diagrams/diagram1.png)  
       *Shows the general Mediator pattern structure with Mediator interface, Concrete Mediator, Colleague interface, and Concrete Colleague classes.*
-    - ![Mediator Diagram 2](Behavioral/Mediator/diagram2.png)  
+    - ![Mediator Diagram 2](Behavioral/Mediator/Diagrams/diagram2.png)  
       *Shows the Air Traffic Control example with AirTrafficControlTower as Mediator, AirportControlTower as Concrete Mediator, Airplane as Colleague, and CommercialAirplane as Concrete Colleague.*
   - Roles:
     - **Mediator**: Interface defining communication contract (`onEvent()` method or `requestTakeoff()`, `requestLanding()`)
@@ -649,9 +649,9 @@ class HasCoinState implements VendingMachineState {
   - You want to reuse an existing class without modifying it.
 - **Structure**:
   - Diagrams:
-    - ![Adapter Diagram 1](Structural/Adapter/adapter_diagram_1.jpeg)  
+    - ![Adapter Diagram 1](Structural/Adapter/Diagrams/adapter_diagram_1.jpeg)  
       *Shows a client using a Target interface while an Adapter wraps an Adaptee to translate calls.*
-    - ![Adapter Diagram 2](Structural/Adapter/adapter_diagram_2.jpeg)  
+    - ![Adapter Diagram 2](Structural/Adapter/Diagrams/adapter_diagram_2.jpeg)  
       *Shows the Movable speed example converting MPH to KMPH via an object adapter.*
   - Roles:
     - **Target**: interface that the client expects.
@@ -682,9 +682,9 @@ hole.fits(adapter);
   - You want to avoid combinatorial explosion like `GasCar`, `ElectricCar`, `GasPlane`, `ElectricPlane`, etc.
 - **Structure**:
   - Diagrams:
-    - ![Bridge Structure – Generic](Structural/Bridge/bridge_structure_uml.jpeg)  
+    - ![Bridge Structure – Generic](Structural/Bridge/Diagrams/bridge_structure_uml.jpeg)  
       *Shows the general Bridge layout: Abstraction holding an Implementor, with RefinedAbstractions and ConcreteImplementors on each side.*
-    - ![Bridge Example – Transport/Engine](Structural/Bridge/bridge_example_uml.jpeg)  
+    - ![Bridge Example – Transport/Engine](Structural/Bridge/Diagrams/bridge_example_uml.jpeg)  
       *Shows the Transport/Engine example where Car and Plane use GasEngine or ElectricEngine via the Bridge composition.*
   - Roles:
     - **Abstraction** + **Refined Abstractions**: high-level interface and its variations (e.g., `Transport`, `Car`, `Plane`).
@@ -748,7 +748,7 @@ folder.display();  // Displays folder and all contents
   - You want to add/remove behavior at runtime and avoid subclass explosion.
 - **Structure**:
   - Diagram:
-    - ![Decorator Diagram](Structural/Decorator/decorator_diagram.jpeg)  
+    - ![Decorator Diagram](Structural/Decorator/Diagrams/decorator_diagram.jpeg)  
       *Shows the Component hierarchy with Decorator subclasses that wrap components to add responsibilities dynamically.*
   - Roles:
     - **Component**: base interface or abstract class.
@@ -778,7 +778,7 @@ c = new Sugar(c);
   - You want to decouple client code from many subsystem classes.
 - **Structure**:
   - Diagram:
-    - ![Facade Diagram](Structural/Facade/facade_diagram.jpeg)  
+    - ![Facade Diagram](Structural/Facade/Diagrams/facade_diagram.jpeg)  
       *Shows a single Facade class delegating work to multiple complex subsystem classes behind the scenes.*
   - Roles:
     - **Facade**: offers simple high-level operations.
@@ -806,7 +806,7 @@ hotel.bookStayWithBreakfast();
   - You have *huge* numbers of similar objects (characters, trees, tiles) and memory use is a concern.
 - **Structure**:
   - Diagrams:
-    - ![Flyweight Diagram 1](Structural/Flyweight/Flyweight_uml_structure.jpeg)  
+    - ![Flyweight Diagram 1](Structural/Flyweight/Diagrams/Flyweight_uml_structure.jpeg)  
       *Shows the Flyweight interface, ConcreteFlyweight, FlyweightFactory, and Client that supplies extrinsic state.*
     - ![Flyweight Diagram 2](Structural/Flyweight/Flyweight_example_uml.jpeg)  
       *Shows the Forest example with Tree holding position (extrinsic) and TreeType as the shared flyweight for intrinsic state.*
@@ -836,7 +836,7 @@ forest.plantTree(10, 20, "Oak", Color.GREEN); // shares same TreeType
   - You want lazy loading, access control, logging, caching, or remote access while keeping the same interface.
 - **Structure**:
   - Diagram:
-    - ![Proxy Diagram](Structural/Proxy/diagram.png)  
+    - ![Proxy Diagram](Structural/Proxy/Diagrams/diagram.png)  
       *Shows the Subject interface, RealSubject, and Proxy which forwards calls while adding access control or other logic.*
   - Roles:
     - **Subject**: common interface for RealSubject and Proxy.

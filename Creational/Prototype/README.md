@@ -28,7 +28,7 @@
 
 The following diagram illustrates the Prototype pattern structure, highlighting the concepts of shallow cloning and deep cloning:
 
-![Prototype Pattern Diagram](prototype_diagram.jpeg)
+![Prototype Pattern Diagram](Diagrams/prototype_diagram.jpeg)
 
 **Diagram Components:**
 

@@ -10,9 +10,9 @@
 
 - [When to Use](#when-to-use)
 - [Structure (Roles)](#structure-roles)
-- [Pattern Structure – Diagram Walkthrough](#pattern-structure--diagram-walkthrough)
+- [Pattern Structure – Diagram Walkthrough](#duck-example--diagram-walkthrough)
 - [Examples in this folder](#examples-in-this-folder)
-- [Benefits & Trade-offs](#benefits--trade-offs)
+- [Benefits & Trade-offs](#benefits-trade-offs)
 - [Related Patterns](#related-patterns)
 - [Common Use Cases](#common-use-cases)
 - [Implementation Notes](#implementation-notes)
@@ -36,23 +36,23 @@ Key idea: **composition over inheritance**. The context *has a* strategy instead
 
 ---
 
-## Duck Example – Diagram Walkthrough
+## Duck Example – Diagram Walkthrough <a id="duck-example--diagram-walkthrough"></a>
 
 ### 1. Basic inheritance – `Duck` + concrete ducks (`diagram1.png`)
-![Duck superclass and concrete ducks](diagram1.png)
+![Duck superclass and concrete ducks](Diagrams/diagram1.png)
 
 - **Idea**: All ducks `quack()` and `swim()`, so `Duck` implements these once and every subtype (e.g., `MallardDuck`, `RedheadDuck`) inherits that implementation.
 - **`display()`** is **abstract** in `Duck` because each subtype looks different and must implement its own display behavior.
 - Many other duck types can inherit from `Duck` and provide their own `display()`.
 
 ### 2. The problem – adding `fly()` to `Duck`
-![Adding fly() to Duck](diagram2.png)
+![Adding fly() to Duck](Diagrams/diagram2.png)
 
 - When we add `fly()` to the `Duck` superclass, **all** ducks can now fly by inheritance.
 - This is wrong for ducks like rubber or wooden decoys that **should not fly**, but still get `fly()` for free.
 
 ### 3. Patching with overrides – Rubber & Decoy ducks
-![RubberDuck and DecoyDuck overrides](diagram3.png)
+![RubberDuck and DecoyDuck overrides](Diagrams/diagram3.png)
 
 - We try to fix the problem by adding `RubberDuck` and `DecoyDuck` subclasses that override behavior:
   - `RubberDuck.quack()` is overridden to **squeak** instead of a real quack.
@@ -61,7 +61,7 @@ Key idea: **composition over inheritance**. The context *has a* strategy instead
 - This works for a while, but every new non‑flying / non‑quacking duck forces more overrides and duplicated “do nothing” code.
 
 ### 4. Splitting responsibilities – `Flyable` and `Quackable`
-![Extracting Flyable and Quackable](diagram4.png)
+![Extracting Flyable and Quackable](Diagrams/diagram4.png)
 
 - To avoid forcing all ducks to inherit `fly()` and `quack()`, we **extract interfaces**:
   - `Flyable` with `fly()`.
@@ -70,7 +70,7 @@ Key idea: **composition over inheritance**. The context *has a* strategy instead
 - This reduces wrong behavior, but still couples each duck directly to a single hard‑coded implementation of `fly()` / `quack()`.
 
 ### 5. Encapsulating behaviors – `FlyBehavior` and `QuackBehavior`
-![FlyBehavior and QuackBehavior hierarchy](diagram5.png)
+![FlyBehavior and QuackBehavior hierarchy](Diagrams/diagram5.png)
 
 - We move from “can fly” / “can quack” markers to full **behavior interfaces**:
   - `FlyBehavior` with implementations: `FlyWithWings`, `FlyNoWay`, etc.
@@ -81,7 +81,7 @@ Key idea: **composition over inheritance**. The context *has a* strategy instead
   - `Quack.quack()` prints a real quack, `Squeak.quack()` squeaks, `MuteQuack.quack()` is silent.
 
 ### 6. Final `Duck` design – has‑a behavior
-![Duck with behavior fields](diagram6.png)
+![Duck with behavior fields](Diagrams/diagram6.png)
 
 - The `Duck` class no longer hard‑codes `fly()` / `quack()` implementation; instead it **contains** strategy objects:
   - Fields: `FlyBehavior flyBehavior`, `QuackBehavior quackBehavior`.
@@ -90,7 +90,7 @@ Key idea: **composition over inheritance**. The context *has a* strategy instead
 - Concrete ducks (Mallard, Redhead, Rubber, Decoy) are configured by **choosing which behavior objects** they use.
 
 ### 7. Full system – client + encapsulated behaviors
-![Client using encapsulated fly and quack behaviors](diagram7.png)
+![Client using encapsulated fly and quack behaviors](Diagrams/diagram7.png)
 
 - On the right side, we have **families of algorithms** (encapsulated fly and quack behaviors) that are interchangeable.
 - On the left, client code uses the **`Duck` abstraction**:
@@ -127,7 +127,7 @@ java StrategyEncryptionDemo
 
 ---
 
-## Benefits & Trade-offs
+## Benefits & Trade-offs <a id="benefits-trade-offs"></a>
 - ✅ Add/replace algorithms independently of the context.
 - ✅ Test each strategy separately; reduce branching in the context.
 - ✅ Swap behavior at runtime.

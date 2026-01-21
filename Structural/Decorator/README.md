@@ -27,7 +27,7 @@
 
 The following diagram illustrates the Decorator pattern structure:
 
-![Decorator Pattern Diagram](decorator_diagram.jpeg)
+![Decorator Pattern Diagram](Diagrams/decorator_diagram.jpeg)
 
 **Diagram Components:**
 

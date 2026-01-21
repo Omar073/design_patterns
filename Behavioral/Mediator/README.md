@@ -101,8 +101,8 @@ By managing the complex coordination and communication between aircraft and air 
 **See the complete implementation**: [MediatorAirplaneDemo.java](MediatorAirplaneDemo.java)
 
 **Diagrams:**
-- ![Mediator Diagram 1](diagram1.png) - General Mediator pattern structure
-- ![Mediator Diagram 2](diagram2.png) - Air Traffic Control example with AirTrafficControlTower as Mediator
+- ![Mediator Diagram 1](Diagrams/diagram1.png) - General Mediator pattern structure
+- ![Mediator Diagram 2](Diagrams/diagram2.png) - Air Traffic Control example with AirTrafficControlTower as Mediator
 
 ---
 

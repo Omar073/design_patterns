@@ -72,7 +72,7 @@ The following diagrams illustrate the Observer pattern structure:
 
 ### Diagram 1: Observer Pattern Flow Representation
 
-![Observer Pattern Flow Representation](diagram1.png)
+![Observer Pattern Flow Representation](Diagrams/diagram1.png)
 
 This diagram shows the interaction flow of the Observer pattern within an application:
 - **Clients** (Client A, B, C) interact with the **Subject**
@@ -85,7 +85,7 @@ This diagram effectively visualizes the one-to-many dependency where a change in
 
 ### Diagram 2: Observer Pattern Class Diagram
 
-![Observer Pattern Class Diagram](diagram2.png)
+![Observer Pattern Class Diagram](Diagrams/diagram2.png)
 
 This UML class diagram shows the complete structure of the Observer pattern with a Weather Station example:
 
@@ -645,5 +645,5 @@ public void cleanup() {
 
 **Further reading**: See the demos for complete working examples:
 - [ObserverPatternDemo.java](ObserverPatternDemo.java) - Weather Station with multiple weather parameters
-- [ObserverWeatherDemo.java](ObserverWeatherDemo.java) - Weather Station example matching the class diagram (diagram2.png)
+- [ObserverWeatherDemo.java](ObserverWeatherDemo.java) - Weather Station example matching the class diagram (Diagrams/diagram2.png)
 

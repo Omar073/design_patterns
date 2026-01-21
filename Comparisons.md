@@ -984,31 +984,119 @@ redCircle.draw();  // Circle + red border
 
 #### Overview
 
-Both patterns use **composition** to work with another object, but they solve **different problems**:
+Both patterns use **composition** and may seem similar because they both involve objects working together at runtime. However, they serve **fundamentally different purposes**:
 
-- **Bridge** splits a class into **Abstraction** and **Implementor** hierarchies so each can vary independently.
-- **Decorator** wraps a component to **add or layer behavior** dynamically while keeping the same interface.
+#### **Key Differences:**
 
-| Aspect | Bridge | Decorator |
-|--------|--------|-----------|
-| **Intent** | Separate abstraction from implementation | Add behavior dynamically |
-| **Structure** | Two parallel hierarchies (Abstraction ↔ Implementor) | Component plus chainable decorators |
-| **Variation** | Two independent dimensions (e.g., Transport, Engine) | Many optional features around one type |
-| **Interface** | Abstraction usually defines its own API | Decorator preserves Component interface |
+| Aspect | Bridge Pattern | Decorator Pattern |
+|--------|---------------|-------------------|
+| **Purpose** | **Separates** abstraction from implementation | **Adds** new responsibilities/functionality |
+| **Relationship** | Abstraction **uses** implementor (delegation) | Decorator **wraps** component (layering) |
+| **Functionality** | Implementor provides **core operations** | Decorator **extends** existing functionality |
+| **Structure** | Two **independent hierarchies** | **Layered wrapping** (onion-like) |
+| **When Created** | Abstraction and implementor chosen **at construction** | Decorators added **dynamically** at runtime |
+| **Changeability** | Can swap implementor, but structure is fixed | Can add/remove decorators dynamically |
+| **Intent** | Avoid class explosion from **two dimensions** | Avoid subclass explosion from **many features** |
 
-#### Code Intuition
+#### **Bridge Pattern: Separation of Concerns**
 
-- **Bridge**: `new Car(new GasEngine())` vs `new Plane(new ElectricEngine())` – combine any transport with any engine.
-- **Decorator**: `new Milk(new Sugar(new SimpleCoffee()))` – wrap a coffee with extra responsibilities.
+**Bridge focuses on separating "what" from "how":**
+- The **Abstraction** (e.g., `Shape`) defines **what** operations are available
+- The **Implementor** (e.g., `Color`) provides **how** those operations are implemented
+- The implementor doesn't **add** functionality—it **provides** the implementation of core operations
 
-#### When to Use Which
+**Example:**
+```java
+// Bridge: Shape uses Color to draw
+abstract class Shape {
+    protected Color color;  // Shape uses Color
+    
+    public Shape(Color color) {
+        this.color = color;  // Set at construction
+    }
+    
+    public abstract void draw();  // Delegates to color
+}
 
-- Use **Bridge** when:
-  - You have **two dimensions** that can grow independently (e.g., `Shape` vs `Color`, `Transport` vs `Engine`).
-  - You want to avoid a class explosion like `RedCircle`, `BlueCircle`, `RedSquare`, `BlueSquare`, etc.
-- Use **Decorator** when:
-  - You want to **add responsibilities** to individual objects at runtime.
-  - You have many optional features and want to avoid subclass explosion.
+class Circle extends Shape {
+    public void draw() {
+        System.out.println("Drawing Circle in " + color.applyColor());
+        // Color doesn't ADD functionality - it PROVIDES the color implementation
+    }
+}
+```
+
+**Key Point:** `Color` doesn't add new functionality to `Shape`—it provides the color implementation that `Shape` needs. The relationship is **delegation**, not **extension**.
+
+#### **Decorator Pattern: Adding Responsibilities**
+
+**Decorator focuses on adding new behavior:**
+- The **Component** (e.g., `Coffee`) has base functionality
+- **Decorators** (e.g., `Milk`, `Sugar`) **wrap** the component and **add** new behavior
+- Each decorator **extends** functionality by adding its own behavior on top
+
+**Example:**
+```java
+// Decorator: Coffee wrapped with Milk adds milk functionality
+Coffee coffee = new SimpleCoffee();
+coffee = new Milk(coffee);  // Wraps and ADDS milk cost/description
+coffee = new Sugar(coffee); // Wraps and ADDS sugar cost/description
+
+// Milk decorator ADDS functionality:
+class Milk extends CoffeeDecorator {
+    public double cost() {
+        return delegate.cost() + 0.5;  // ADDS milk cost
+    }
+    
+    public String description() {
+        return delegate.description() + ", milk";  // ADDS milk to description
+    }
+}
+```
+
+**Key Point:** `Milk` **adds** new functionality (cost and description) to `Coffee`. The relationship is **wrapping/extension**, not **delegation**.
+
+#### **Visual Comparison:**
+
+**Bridge Structure:**
+```
+Shape (Abstraction)
+  ├── Circle ──uses──> Color (Implementor)
+  │                      ├── Red
+  └── Square ──uses──>  └── Blue
+```
+- Shape **delegates** to Color
+- Color provides **core implementation**, not additional features
+
+**Decorator Structure:**
+```
+Coffee (Component)
+  └── Milk (Decorator) ──wraps──> Coffee
+       └── Sugar (Decorator) ──wraps──> Milk ──wraps──> Coffee
+```
+- Decorators **wrap** and **add** functionality
+- Each layer adds new behavior on top
+
+#### **When to Use Each:**
+
+**Use Bridge when:**
+- You have **two independent dimensions** that vary independently
+- You want to avoid **class explosion** (m × n classes)
+- The implementor provides **core operations**, not additional features
+- Example: `Shape` × `Color`, `Transport` × `Engine`, `GUI` × `OS API`
+
+**Use Decorator when:**
+- You need to **add behavior** to objects dynamically
+- You have **many optional features** that can be combined
+- You want to **extend functionality** without modifying the base class
+- Example: `Coffee` with `Milk`, `Sugar`, `WhippedCream` (adds features)
+
+#### **Summary:**
+
+- **Bridge**: Composition for **separation** (what vs how) — implementor provides core operations
+- **Decorator**: Composition for **extension** (adding features) — decorator adds new behavior
+
+**Remember:** Bridge separates concerns; Decorator adds responsibilities. If you're **adding new features** (like milk, sugar, encryption, compression), use **Decorator**. If you're **separating two dimensions** (like shape and color, transport and engine), use **Bridge**.
 
 ---
 

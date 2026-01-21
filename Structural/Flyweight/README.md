@@ -9,9 +9,9 @@
 
 - [Intrinsic and Extrinsic State](#intrinsic-and-extrinsic-state)
 - [Pattern Structure](#pattern-structure)
-- [Forest / Tree Example](#forest--tree-example)
+- [Forest / Tree Example](#forest-tree-example)
 - [Why Use the Flyweight Pattern?](#why-use-the-flyweight-pattern)
-- [With Flyweight Pattern – Generic Example](#with-flyweight-pattern--generic-example)
+- [With Flyweight Pattern – Generic Example](#with-flyweight-pattern-generic-example)
 - [Forest Example Code Overview](#forest-example-code-overview)
 - [Pros](#pros)
 - [Cons](#cons)
@@ -44,7 +44,7 @@ The Flyweight pattern stores **intrinsic** state in **shared flyweight objects**
 
 The following diagram illustrates the **generic UML structure** of the Flyweight pattern:
 
-![Flyweight Pattern UML Structure](Flyweight_uml_structure.jpeg)
+![Flyweight Pattern UML Structure](Diagrams/Flyweight_uml_structure.jpeg)
 
 **Diagram Components:**
 
@@ -74,7 +74,7 @@ The following diagram illustrates the **generic UML structure** of the Flyweight
 
 ---
 
-## Forest / Tree Example
+## Forest / Tree Example <a id="forest-tree-example"></a>
 
 In this example we simulate drawing many trees in a forest.
 
@@ -89,7 +89,7 @@ We separate these into two classes:
 
 The following diagram shows the **specific UML structure** for our forest demo:
 
-![Flyweight Forest UML Example](Flyweight_example_uml.jpeg)
+![Flyweight Forest UML Example](Diagrams/Flyweight_example_uml.jpeg)
 
 **Diagram Components:**
 
@@ -156,7 +156,7 @@ The Flyweight pattern solves these problems by:
 
 ---
 
-## With Flyweight Pattern – Generic Example
+## With Flyweight Pattern – Generic Example <a id="with-flyweight-pattern-generic-example"></a>
 
 ```java
 import java.util.HashMap;

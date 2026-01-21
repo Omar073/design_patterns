@@ -63,7 +63,7 @@ The following diagrams illustrate the Memento pattern structure:
 
 ### Diagram 1: Document Example Class Diagram
 
-![Class Diagram of Memento Design Pattern (Document Example)](diagram3.png)
+![Class Diagram of Memento Design Pattern (Document Example)](Diagrams/diagram3.png)
 
 This diagram shows the Memento pattern implementation with a Document example, matching the code in `MementoPatternDemo.java`. It illustrates:
 - **Document** (Originator): Creates and restores mementos
@@ -73,7 +73,7 @@ This diagram shows the Memento pattern implementation with a Document example, m
 
 ### Diagram 2: General Memento Pattern Class Diagram
 
-![Class Diagram of Memento Design Pattern](diagram2.png)
+![Class Diagram of Memento Design Pattern](Diagrams/diagram2.png)
 
 This diagram shows the general structure of the Memento pattern with:
 - **Originator**: Creates mementos via `createMemento()` and restores state via `setMemento(Memento)`
@@ -83,7 +83,7 @@ This diagram shows the general structure of the Memento pattern with:
 
 ### Diagram 3: Sequence Diagram - Communication Flow
 
-![Communication between components in Memento Pattern](diagram1.png)
+![Communication between components in Memento Pattern](Diagrams/diagram1.png)
 
 This sequence diagram illustrates the communication flow between components in two phases:
 

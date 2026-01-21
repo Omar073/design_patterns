@@ -22,7 +22,7 @@ This folder contains examples of three related creational design patterns: **Sim
 
 The following diagram illustrates the Simple Factory pattern structure:
 
-![Simple Factory Pattern Diagram](factory_diagram.jpeg)
+![Simple Factory Pattern Diagram](Diagrams/factory_diagram.jpeg)
 
 **Diagram Components:**
 

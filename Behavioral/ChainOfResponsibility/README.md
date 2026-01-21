@@ -9,11 +9,11 @@
 
 - [When to Use](#when-to-use)
 - [Structure (Roles)](#structure-roles)
-- [Pattern Structure – Diagram Walkthrough](#pattern-structure--diagram-walkthrough)
+- [Pattern Structure – Diagram Walkthrough](#pattern-structure-diagram-walkthrough)
 - [Examples in this folder](#examples-in-this-folder)
-- [Example 1 – Email handling system](#example-1--email-handling-system)
-- [Example 2 – Purchase approval chain](#example-2--purchase-approval-chain)
-- [Benefits & Trade-offs](#benefits--trade-offs)
+- [Example 1 – Email handling system](#example-1-email-handling-system)
+- [Example 2 – Purchase approval chain](#example-2-purchase-approval-chain)
+- [Benefits & Trade-offs](#benefits-trade-offs)
 - [Related Patterns](#related-patterns)
 - [Common Use Cases](#common-use-cases)
 - [Implementation Notes](#implementation-notes)
@@ -39,31 +39,31 @@
 
 ---
 
-## Pattern Structure – Diagram Walkthrough
+## Pattern Structure – Diagram Walkthrough <a id="pattern-structure-diagram-walkthrough"></a>
 
 ### 1. Basic flow – Client sends request through chain (`diagram1.png`)
-![Client sending request through handler chain](diagram1.png)
+![Client sending request through handler chain](Diagrams/diagram1.png)
 
 - **Client** sends a request to the first handler in the chain.
 - Each handler either **handles the request** or **passes it on** to the next handler.
 - The request flows: Client → Handler 1 → Handler 2 → ... → Handler N.
 
 ### 2. UML structure – Handler interface with concrete handlers (`diagram2.png`)
-![Handler interface with ConcreteHandlerA and B](diagram2.png)
+![Handler interface with ConcreteHandlerA and B](Diagrams/diagram2.png)
 
 - **`Handler`** interface defines `handleRequest()` method and a `successor` reference (self-referential association).
 - **`ConcreteHandlerA`** and **`ConcreteHandlerB`** implement the `Handler` interface.
 - Each concrete handler can forward requests to its successor if it cannot handle them.
 
 ### 3. Email handling example – Sequential processing (`diagram 3.png`)
-![Email handlers: Spam, Fan, Complaint, NewLoc](diagram 3.png)
+![Email handlers: Spam, Fan, Complaint, NewLoc](Diagrams/diagram 3.png)
 
 - **Email processing chain**: Spam Handler → Fan Handler → Complaint Handler → NewLoc Handler.
 - Each email is passed to the first handler and propagates through the chain until handled.
 - If an email falls off the end of the chain, it's not handled (unless a catch-all handler is implemented).
 
 ### 4. Email handlers UML – Concrete implementations (`diagram4.png`)
-![UML showing Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler](diagram4.png)
+![UML showing Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler](Diagrams/diagram4.png)
 
 - **`Handler`** abstract class with `handleRequest()` method and `successor` field.
 - **Concrete handlers**: `SpamHandler`, `FanHandler`, `ComplaintHandler`, `NewLocHandler`.
@@ -85,7 +85,7 @@ java ChainOfResponsibilityApprovalDemo
 
 ---
 
-## Example 1 – Email handling system
+## Example 1 – Email handling system <a id="example-1-email-handling-system"></a>
 
 **Request**: `Email` object with type (SPAM, FAN, COMPLAINT, NEW_LOC).
 
@@ -104,7 +104,7 @@ java ChainOfResponsibilityApprovalDemo
 
 ---
 
-## Example 2 – Purchase approval chain
+## Example 2 – Purchase approval chain <a id="example-2-purchase-approval-chain"></a>
 
 **Request**: `PurchaseRequest` with amount, item, and requester.
 
@@ -123,7 +123,7 @@ java ChainOfResponsibilityApprovalDemo
 
 ---
 
-## Benefits & Trade-offs
+## Benefits & Trade-offs <a id="benefits-trade-offs"></a>
 
 ### Benefits
 

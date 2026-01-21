@@ -30,7 +30,7 @@ The following diagrams illustrate the Adapter pattern structure, showing two dif
 
 ### Diagram 1: Charger Adapter Example
 
-![Adapter Pattern Diagram - Charger Example](adapter_diagram_1.jpeg)
+![Adapter Pattern Diagram - Charger Example](Diagrams/adapter_diagram_1.jpeg)
 
 **Diagram Components:**
 
@@ -84,7 +84,7 @@ The following diagrams illustrate the Adapter pattern structure, showing two dif
 
 ### Diagram 2: Movable Adapter Example (Object Adapter)
 
-![Adapter Pattern Diagram - Movable Example](adapter_diagram_2.jpeg)
+![Adapter Pattern Diagram - Movable Example](Diagrams/adapter_diagram_2.jpeg)
 
 **Diagram Components:**
 

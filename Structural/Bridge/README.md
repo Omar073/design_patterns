@@ -25,7 +25,7 @@ The following diagrams illustrate the Bridge pattern structure and how it helps 
 
 ### Diagram 1 – Naive Inheritance: One Class per Combination
 
-![Bridge Structure – Naive Shape/Color Hierarchy](bridge_structure_1.jpeg)
+![Bridge Structure – Naive Shape/Color Hierarchy](Diagrams/bridge_structure_1.jpeg)
 
 This diagram shows that if we have a `Shape` with two concrete shapes (`Circle`, `Square`) and two colors (`Red`, `Blue`), a naive design might create four separate subclasses:
 
@@ -35,7 +35,7 @@ Every time you add a new shape or a new color, you need to add more combined sub
 
 ### Diagram 2 – Separating Shape and Color Hierarchies (Bridge Idea)
 
-![Bridge Structure – Shape Contains Color](bridge_structure_2.jpeg)
+![Bridge Structure – Shape Contains Color](Diagrams/bridge_structure_2.jpeg)
 
 This diagram shows the proper Bridge-style solution:
 
@@ -47,34 +47,19 @@ Now you can mix any shape with any color at runtime by composition, instead of c
 
 ### Diagram 3 – Generic Bridge UML Structure
 
-![Bridge Structure UML](bridge_structure_uml.jpeg)
+![Bridge Structure UML](Diagrams/bridge_structure_uml.jpeg)
 
 This UML diagram shows the classic Bridge structure:
 
 **Diagram Components:**
 
-1. **`Abstraction`** (Interface / Abstract Class)
-   - Defines the high-level interface for clients.
-   - Holds a reference to an `Implementor`.
-   - Delegates work to the `Implementor` to perform low-level operations.
-
-2. **Refined Abstractions** (Concrete Abstractions)
-   - Concrete classes that extend `Abstraction`.
-   - May add extra operations or refine existing ones.
-   - Still delegate implementation details to the `Implementor`.
-
-3. **`Implementor`** (Interface / Abstract Class)
-   - Defines the low-level operations that concrete implementors must provide.
-   - Typically more primitive operations that the `Abstraction` composes to provide higher-level behavior.
-
-4. **Concrete Implementors**
-   - Concrete classes that implement the `Implementor` interface.
-   - Provide platform- / technology-specific behavior.
-   - Example: `WindowsAPI`, `LinuxAPI`, `GasEngine`, `ElectricEngine`.
-
-5. **Client**
-   - Works with the `Abstraction` interface only.
-   - Is not coupled to any specific `Implementor` or concrete implementation classes.
+| Generic Component | Shape-Color Example | Description |
+|------------------|---------------------|-------------|
+| **1. `Abstraction`**<br/>(Interface / Abstract Class) | **`Shape`**<br/>(abstract class) | Defines the high-level interface for clients. Holds a reference to an `Implementor` (`Color`). Delegates work to the `Implementor` to perform low-level operations. |
+| **2. Refined Abstractions**<br/>(Concrete Abstractions) | **`Circle`, `Square`**<br/>(concrete classes) | Concrete classes that extend `Abstraction` (`Shape`). May add extra operations or refine existing ones. Still delegate implementation details to the `Implementor` (`Color`). |
+| **3. `Implementor`**<br/>(Interface / Abstract Class) | **`Color`**<br/>(interface) | Defines the low-level operations that concrete implementors must provide. Typically more primitive operations that the `Abstraction` composes to provide higher-level behavior. |
+| **4. Concrete Implementors** | **`Red`, `Blue`**<br/>(concrete classes) | Concrete classes that implement the `Implementor` interface (`Color`). Provide platform- / technology-specific behavior. Other examples: `WindowsAPI`, `LinuxAPI`, `GasEngine`, `ElectricEngine`. |
+| **5. Client** | **Code using `Shape`** | Works with the `Abstraction` interface (`Shape`) only. Is not coupled to any specific `Implementor` (`Color`) or concrete implementation classes (`Red`, `Blue`). |
 
 **Key Relationships:**
 
@@ -90,9 +75,78 @@ This UML diagram shows the classic Bridge structure:
 3. When the client calls a method on the abstraction, the abstraction delegates part (or all) of the work to the implementor.
 4. Abstraction and implementor can evolve independently (new abstractions or new implementors) without changing each other.
 
+**Example Code Structure:**
+
+```java
+// Implementor
+interface Color {
+    String applyColor();
+}
+
+// Concrete Implementors
+class Red implements Color {
+    public String applyColor() { return "red"; }
+}
+
+class Blue implements Color {
+    public String applyColor() { return "blue"; }
+}
+
+// Abstraction
+abstract class Shape {
+    protected Color color;  // Reference to Implementor
+    
+    protected Shape(Color color) {
+        this.color = color;
+    }
+    
+    public abstract void draw();
+}
+
+// Refined Abstractions
+class Circle extends Shape {
+    public Circle(Color color) {
+        super(color);
+    }
+    
+    public void draw() {
+        System.out.println("Drawing Circle in " + color.applyColor());
+    }
+}
+
+class Square extends Shape {
+    public Square(Color color) {
+        super(color);
+    }
+    
+    public void draw() {
+        System.out.println("Drawing Square in " + color.applyColor());
+    }
+}
+
+// Client
+class Client {
+    public static void main(String[] args) {
+        // Combine any shape with any color at runtime
+        Shape redCircle = new Circle(new Red());
+        Shape blueSquare = new Square(new Blue());
+        
+        redCircle.draw();   // "Drawing Circle in red"
+        blueSquare.draw();   // "Drawing Square in blue"
+    }
+}
+```
+
+**Key Insight:**
+
+- **Abstraction (`Shape`)**: Represents the "what" - the high-level concept (shapes)
+- **Implementor (`Color`)**: Represents the "how" - the low-level implementation detail (colors)
+- **Separation**: Shape hierarchy and Color hierarchy are completely independent
+- **Runtime Composition**: Any shape can be combined with any color without creating new classes
+
 ---
 
-## Bridge Pattern – Transport / Engine Example
+## Bridge Pattern – Transport / Engine Example <a id="bridge-pattern--transport--engine-example"></a>
 
 In this example, the `Transport` hierarchy is the **Abstraction**, and the `Engine` hierarchy is the **Implementor**.
 
@@ -111,7 +165,7 @@ we separate the two dimensions:
 
 This structure is illustrated in the following diagram for our example:
 
-![Bridge Pattern Transport Example UML](bridge_example_uml.jpeg)
+![Bridge Pattern Transport Example UML](Diagrams/bridge_example_uml.jpeg)
 
 **Diagram Components:**
 
@@ -207,7 +261,7 @@ The Bridge pattern solves these problems by:
 
 ---
 
-## With Bridge Pattern – Conceptual Example
+## With Bridge Pattern – Conceptual Example <a id="with-bridge-pattern--conceptual-example"></a>
 
 ```java
 // Implementor
@@ -350,9 +404,26 @@ class RadioRemote {
 ## Compare with Other Patterns
 
 - **vs Adapter**: Adapter changes an existing interface to another; Bridge separates abstraction from implementation from the start.
-- **vs Decorator**: Decorator adds responsibilities to objects; Bridge separates two dimensions (e.g., type and platform).
+- **vs Decorator**: See detailed comparison below.
 - **vs Facade**: Facade provides a simplified interface to a subsystem; Bridge splits abstraction and implementation hierarchies.
 - **vs Strategy**: Strategy focuses on swapping algorithms; Bridge focuses on separating abstraction and implementation classes.
+
+### Bridge vs Decorator
+
+Both patterns use **composition**, but serve different purposes:
+
+- **Bridge**: **Separates** abstraction from implementation (delegation). The implementor provides **core operations**, not additional features. Example: `Shape` uses `Color` to draw—color provides the implementation, not new functionality.
+- **Decorator**: **Adds** new responsibilities/functionality (wrapping/extension). Decorators wrap components and **extend** functionality. Example: `Milk` decorator adds cost and description to `Coffee`.
+
+**Key Difference:**
+- **Bridge** = Composition for **separation** (what vs how) — avoids class explosion from two dimensions
+- **Decorator** = Composition for **extension** (adding features) — avoids subclass explosion from many features
+
+**When to Use:**
+- Use **Bridge** when separating two independent dimensions (e.g., `Shape` × `Color`, `Transport` × `Engine`)
+- Use **Decorator** when adding behavior dynamically (e.g., `Coffee` with `Milk`, `Sugar`, `WhippedCream`)
+
+> **For detailed comparison**, see [Bridge vs Decorator in Comparisons.md](../Comparisons.md#bridge-vs-decorator)
 
 ---
 

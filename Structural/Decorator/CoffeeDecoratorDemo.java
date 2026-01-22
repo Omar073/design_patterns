@@ -23,6 +23,16 @@ class SimpleCoffee implements Coffee {
     }
 }
 
+class ComplexCoffee implements Coffee {
+    public double cost() {
+        return 4.5;
+    }
+
+    public String description() {
+        return "Complex coffee";
+    }
+}
+
 abstract class CoffeeDecorator implements Coffee {
     protected final Coffee delegate;
 
@@ -59,7 +69,7 @@ class Sugar extends CoffeeDecorator {
     }
 }
 
-public class DecoratorDemo {
+public class CoffeeDecoratorDemo {
     public static void main(String[] args) {
         System.out.println("== Decorator ==");
         Coffee coffee = new SimpleCoffee();

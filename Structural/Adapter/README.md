@@ -482,6 +482,81 @@ class ThirdPartyLoggerAdapter implements Logger {
 - **vs Proxy**: Proxy controls access; Adapter converts interface
 - **vs Bridge**: Bridge separates abstraction from implementation; Adapter converts interface
 
+### Adapter vs Proxy - Detailed Comparison
+
+**Similarities:**
+- Both use **composition/delegation** to wrap another object
+- Both implement an interface and delegate calls to another object
+- Both add an **indirection layer** between client and target
+
+**Key Differences:**
+
+| Aspect | Adapter | Proxy |
+|--------|---------|-------|
+| **Primary Purpose** | Convert incompatible interfaces | Control access to an object |
+| **Interface Relationship** | Adapter implements **different** interface than adaptee | Proxy implements **same** interface as subject |
+| **When to Use** | When interfaces are incompatible | When you need access control, lazy loading, caching, or remote access |
+| **Problem Solved** | Interface mismatch | Access management |
+| **Object Existence** | Adaptee already exists and works | Subject may not exist yet (lazy loading) or may be remote |
+| **Transformation** | Transforms method calls/parameters | May add behavior (caching, logging) but doesn't change interface |
+
+**Example Comparison:**
+
+```java
+// ADAPTER: Converts incompatible interface
+interface RoundPeg {
+    double getRadius();
+}
+
+class SquarePeg {
+    double getWidth() { return 5.0; }
+}
+
+class SquarePegAdapter implements RoundPeg {  // Different interface!
+    private SquarePeg squarePeg;
+    
+    public double getRadius() {
+        return squarePeg.getWidth() * Math.sqrt(2) / 2.0;  // Converts!
+    }
+}
+
+// PROXY: Controls access, same interface
+interface Image {
+    void display();
+}
+
+class RealImage implements Image {
+    public void display() { /* load and show */ }
+}
+
+class ImageProxy implements Image {  // Same interface!
+    private RealImage realImage;
+    
+    public void display() {
+        if (realImage == null) {
+            realImage = new RealImage();  // Lazy loading
+        }
+        realImage.display();  // Delegates, no conversion
+    }
+}
+```
+
+**When to Choose:**
+
+- **Use Adapter** when:
+  - You have an existing class with incompatible interface
+  - You need to integrate third-party or legacy code
+  - The adaptee's interface doesn't match what the client expects
+
+- **Use Proxy** when:
+  - You need to control access to an object (security, permissions)
+  - You want lazy initialization (create object only when needed)
+  - You need caching or performance optimization
+  - You're accessing remote objects (remote proxy)
+  - The object is expensive to create
+
+**Summary:** Adapter changes the interface to make incompatible classes work together, while Proxy maintains the same interface but adds control/management functionality.
+
 ---
 
 ## File Examples

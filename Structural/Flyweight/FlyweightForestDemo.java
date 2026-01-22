@@ -1,6 +1,5 @@
 package Flyweight;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +17,9 @@ import java.util.Map;
 // Flyweight: shared tree type (intrinsic state)
 class TreeType {
     private final String name;
-    private final Color color;
+    private final String color;
 
-    public TreeType(String name, Color color) {
+    public TreeType(String name, String color) {
         this.name = name;
         this.color = color;
     }
@@ -49,12 +48,13 @@ class Tree {
 }
 
 // Flyweight Factory
+// This is like a tree registry that stores the tree types and returns the tree type if it already exists.
 class TreeFactory {
     // key is the name_color of the tree type
     private static final Map<String, TreeType> treeTypes = new HashMap<>();
 
-    public static TreeType getTreeType(String name, Color color) {
-        String key = name + "_" + color.getRGB();
+    public static TreeType getTreeType(String name, String color) {
+        String key = name + "_" + color;
         TreeType result = treeTypes.get(key);
         if (result == null) {
             result = new TreeType(name, color);
@@ -68,7 +68,7 @@ class TreeFactory {
 class Forest {
     private final List<Tree> trees = new ArrayList<>();
 
-    public void plantTree(int x, int y, String name, Color color) {
+    public void plantTree(int x, int y, String name, String color) {
         TreeType type = TreeFactory.getTreeType(name, color);
         Tree tree = new Tree(x, y, type);
         trees.add(tree);
@@ -82,7 +82,6 @@ class Forest {
 }
 
 public class FlyweightForestDemo {
-    private static final int CANVAS_SIZE = 500;
     private static final int TREES_TO_DRAW = 10;
     private static final int TREE_TYPES = 2;
 
@@ -90,19 +89,16 @@ public class FlyweightForestDemo {
         Forest forest = new Forest();
 
         for (int i = 0; i < Math.floor((double) TREES_TO_DRAW / TREE_TYPES); i++) {
-            int x1 = random(0, CANVAS_SIZE);
-            int y1 = random(0, CANVAS_SIZE);
-            forest.plantTree(x1, y1, "Summer Oak", Color.GREEN);
+            // Set coordinates to change for each iteration, ensuring no two trees are planted in the same spot
+            int x1 = 100 + i * 150;
+            int y1 = 150 + i * 150;
+            forest.plantTree(x1, y1, "Summer Oak", "green");
 
-            int x2 = random(0, CANVAS_SIZE);
-            int y2 = random(0, CANVAS_SIZE);
-            forest.plantTree(x2, y2, "Autumn Oak", Color.ORANGE);
+            int x2 = 200 + i * 150;
+            int y2 = 250 + i * 150;
+            forest.plantTree(x2, y2, "Autumn Oak", "orange");
         }
 
         forest.draw();
-    }
-
-    private static int random(int min, int max) {
-        return min + (int) (Math.random() * (max - min));
     }
 }

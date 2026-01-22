@@ -89,7 +89,8 @@ public class WithFacadeDemo {
     public static void main(String[] args) {
         System.out.println("== With Facade ==");
         HomeTheaterFacade facade = new HomeTheaterFacade(new Amplifier(),
-            new Tuner(), new Screen(), new DvdPlayer());
+                new Tuner(), new Screen(), new DvdPlayer());
+
         facade.watchMovie("Movie");
         facade.endMovie();
     }

@@ -3,6 +3,8 @@
 - **Intent**: Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later. Use the Memento Pattern when you need to be able to return an object to one of its previous states; for instance, if your user requests an "undo."
 - **When to use**: When you need to save and restore an object's state, implement undo/redo functionality, or provide checkpoints for rollback operations.
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents

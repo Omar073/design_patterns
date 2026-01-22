@@ -22,7 +22,7 @@
 
 ## When to Use
 
-- Multiple objects can handle a request, and the handler isn't known a priori.
+- Multiple objects can handle a request, and the handler isn't known in advance (at compile time).
 - You want to issue a request to one of several objects without specifying the receiver explicitly.
 - The set of handlers that can handle a request should be specified dynamically.
 - You want to avoid coupling the sender to specific receivers.

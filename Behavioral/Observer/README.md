@@ -4,6 +4,8 @@
 - **Also Known As**: Dependents or Publish-Subscribe
 - **When to use**: When you need to notify multiple objects about changes in another object's state, and you want to maintain loose coupling between the subject and its observers.
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents

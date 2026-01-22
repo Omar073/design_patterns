@@ -9,6 +9,8 @@
   - **Changes in Behavior**: You anticipate changes in the behavior of components, and you want to encapsulate these changes within the mediator, preventing widespread modifications
   - **Enhanced Reusability**: You want to reuse individual components in different contexts without altering their internal logic or communication patterns
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents

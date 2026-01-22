@@ -3,6 +3,8 @@
 - **Intent**: Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
 - **When to use**: When you need to traverse a collection of objects without exposing the collection's internal structure, or when you want to provide multiple ways to traverse the same collection.
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents

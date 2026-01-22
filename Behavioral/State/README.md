@@ -4,6 +4,8 @@
 - **Also Known As**: Objects for States
 - **When to use**: When an object's behavior depends on its state, and it must change its behavior at runtime depending on that state, or when you have many conditional statements that depend on the object's state.
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents

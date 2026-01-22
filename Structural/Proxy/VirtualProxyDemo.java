@@ -28,7 +28,7 @@ class RealImage implements Image {
 
 class ProxyImage implements Image {
     private final String filename;
-    private RealImage real; // lazy
+    private RealImage real; // lazy initialization
 
     ProxyImage(String filename) {
         this.filename = filename;

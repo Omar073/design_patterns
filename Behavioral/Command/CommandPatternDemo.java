@@ -4,7 +4,7 @@
 //   - Command: Interface defining execute() method
 //   - Concrete Commands: TurnOnCommand, TurnOffCommand, ChangeChannelCommand, AdjustVolumeCommand
 //   - Invoker: RemoteControl holds and invokes commands
-//   - Receiver: Device interface and implementations (TV, Stereo) perform actual operations
+//   - Receiver: Device class performs actual operations
 //   - Client: main() creates commands, sets them in invoker, and executes
 
 /**
@@ -22,74 +22,33 @@ interface Command {
 }
 
 /**
- * RECEIVER INTERFACE
- * Defines the common interface for all devices that can receive commands.
- * Receivers are the objects that actually perform the work when a command executes.
- * 
- * In this example, all devices can be turned on and off, which is why we
- * have a common Device interface. However, some devices have additional
- * methods (like changeChannel for TV or adjustVolume for Stereo).
- */
-interface Device {
-
-    void turnOn();
-
-    void turnOff();
-}
-
-/**
- * CONCRETE RECEIVER: TV
- * It represents a TV that can be turned on/off and can change channels.
+ * CONCRETE RECEIVER: Device
+ * Represents a device that can be turned on/off, change channels, and adjust volume.
  * 
  * The receiver doesn't know about commands - it just performs operations
  * when its methods are called. This separation is key to the Command pattern.
  */
-class TV implements Device {
+class Device {
     private String name;
 
-    public TV(String name) {
+    public Device(String name) {
         this.name = name;
     }
 
-    @Override
     public void turnOn() {
-        System.out.println(name + " TV is now on");
+        System.out.println(name + " is now on");
     }
 
-    @Override
     public void turnOff() {
-        System.out.println(name + " TV is now off");
+        System.out.println(name + " is now off");
     }
 
     public void changeChannel() {
-        System.out.println(name + " TV channel changed");
-    }
-}
-
-/**
- * CONCRETE RECEIVER: Stereo
- * Another concrete implementation of the Device interface.
- * It represents a stereo system that can be turned on/off and adjust volume.
- */
-class Stereo implements Device {
-    private String name;
-
-    public Stereo(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void turnOn() {
-        System.out.println(name + " Stereo is now on");
-    }
-
-    @Override
-    public void turnOff() {
-        System.out.println(name + " Stereo is now off");
+        System.out.println(name + " channel changed");
     }
 
     public void adjustVolume() {
-        System.out.println(name + " Stereo volume adjusted");
+        System.out.println(name + " volume adjusted");
     }
 }
 
@@ -147,41 +106,35 @@ class TurnOffCommand implements Command {
 
 /**
  * CONCRETE COMMAND: ChangeChannelCommand
- * This command works specifically with TV objects (not just any Device).
- * 
- * Notice that this command takes a TV object directly, not a Device interface.
- * This is because changeChannel() is specific to TVs and not part of the
- * Device interface. This shows that commands can work with specific receiver
- * types when needed.
+ * This command works with Device objects that support channel changing.
  */
 class ChangeChannelCommand implements Command {
-    private TV tv; // Specific receiver type (TV) rather than generic Device
+    private Device device; // Device receiver
 
-    public ChangeChannelCommand(TV tv) {
-        this.tv = tv;
+    public ChangeChannelCommand(Device device) {
+        this.device = device;
     }
 
     @Override
     public void execute() {
-        tv.changeChannel();
+        device.changeChannel();
     }
 }
 
 /**
  * CONCRETE COMMAND: AdjustVolumeCommand
- * Similar to ChangeChannelCommand, this works specifically with Stereo objects.
- * This demonstrates that commands can be tailored to specific receiver types.
+ * This command works with Device objects that support volume adjustment.
  */
 class AdjustVolumeCommand implements Command {
-    private Stereo stereo; // Specific receiver type (Stereo)
+    private Device device; // Device receiver
 
-    public AdjustVolumeCommand(Stereo stereo) {
-        this.stereo = stereo;
+    public AdjustVolumeCommand(Device device) {
+        this.device = device;
     }
 
     @Override
     public void execute() {
-        stereo.adjustVolume();
+        device.adjustVolume();
     }
 }
 
@@ -242,8 +195,8 @@ public class CommandPatternDemo {
 
         // STEP 1: Create receivers (the objects that will perform actual work)
         // These are the devices we want to control
-        TV livingRoomTV = new TV("Living Room");
-        Stereo musicSystem = new Stereo("Music System");
+        Device livingRoomTV = new Device("Living Room TV");
+        Device musicSystem = new Device("Music System");
 
         // STEP 2: Create commands (encapsulate requests as objects)
         // Each command wraps a receiver and knows what operation to perform
@@ -297,7 +250,7 @@ public class CommandPatternDemo {
         System.out.println("✓ Commands can be queued, logged, or undone");
 
         // KEY TAKEAWAYS:
-        // 1. The RemoteControl (invoker) never directly calls methods on TV or Stereo
+        // 1. The RemoteControl (invoker) never directly calls methods on Device
         // 2. Commands encapsulate the "what" (operation) and "who" (receiver)
         // 3. The same remote can control any device through commands
         // 4. New commands can be added without changing RemoteControl or Device classes

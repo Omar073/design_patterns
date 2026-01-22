@@ -128,6 +128,150 @@ When analyzing a UML diagram to identify the Strategy pattern, look for these ke
 - **Decorator**: Adds behavior, multiple decorators can wrap
 - **Visual difference**: Strategy shows one-to-one relationship; Decorator shows chain/wrapper pattern
 
+**Strategy vs Facade vs Factory: UML Similarity but Different Caller Behavior**
+
+**The Confusion:** All three patterns can have multiple classes implementing a common interface in UML diagrams, making them look structurally similar. The key difference lies in **what the caller class does and returns**.
+
+#### UML Structure Similarity
+
+All three patterns show this structure:
+```
+Interface
+    ↑ implements
+    ├── ConcreteClass1
+    ├── ConcreteClass2
+    └── ConcreteClass3
+
+CallerClass
+    - uses interface
+```
+
+#### The Critical Difference: Caller Class Behavior
+
+**1. Strategy Pattern (`Context` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **generic executor** that runs an algorithm without knowing which one
+- Uses **polymorphism** - doesn't care about the specific implementation
+- Method signature: Generic (e.g., `execute()`, `executeStrategy()`, `executeAlgorithm()`)
+
+**What the Caller Returns:**
+- Returns the **result of the calculation/operation** (e.g., `int`, `String`, `void` with side effects)
+
+**Example:**
+```java
+class Calculator {  // Context
+    private Operation strategy;  // Strategy interface
+    
+    public int execute(int a, int b) {
+        return strategy.execute(a, b);  // Generic execution
+    }
+}
+
+// Context doesn't know if it's Add or Subtract - just executes
+calculator.setStrategy(new Add());
+int result = calculator.execute(5, 3);  // Returns: 8
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Strategy`)**: Defines the algorithm contract
+- **Concrete Classes (`Add`, `Subtract`)**: Different algorithm implementations
+- **Context (`Calculator`)**: Generic executor that runs any strategy
+
+---
+
+**2. Facade Pattern (`Facade` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **"Dashboard" or "Control Panel"** with specific buttons for specific tasks
+- **Knows exactly** what is happening internally
+- Method signature: **Specific** (e.g., `drawCircle()`, `iphoneSale()`, `watchMovie()`)
+- **Orchestrates** multiple subsystem calls internally
+
+**What the Caller Returns:**
+- Usually returns **void** (action is complete) or simple confirmation
+- The facade **does the work for you** - you don't need to handle the result
+
+**Example:**
+```java
+class ShapeMaker {  // Facade
+    private Circle circle;
+    private Square square;
+    
+    public void drawCircle() {  // Specific method
+        circle.draw();  // Facade knows exactly what to do
+    }
+    
+    public void drawSquare() {  // Specific method
+        square.draw();  // Facade knows exactly what to do
+    }
+}
+
+// Facade knows exactly what drawCircle() does internally
+shapeMaker.drawCircle();  // Returns: void (work is done)
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Shape`)**: Common interface for subsystem components
+- **Concrete Classes (`Circle`, `Square`)**: Subsystem components
+- **Facade (`ShapeMaker`)**: Simplified interface that orchestrates subsystem calls
+
+---
+
+**3. Factory Pattern (`Factory` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **creator/manufacturer** that builds objects
+- Takes an order/type and **instantiates** the correct object
+- Method signature: **Creational** (e.g., `getShape("CIRCLE")`, `createButton()`)
+
+**What the Caller Returns:**
+- Returns the **Object itself** (e.g., `Shape`, `Button`)
+- Client receives the object and decides what to do with it
+
+**Example:**
+```java
+class ShapeFactory {  // Factory
+    public Shape getShape(String type) {  // Creational method
+        if (type.equals("CIRCLE")) {
+            return new Circle();  // Creates and returns object
+        }
+        return new Square();
+    }
+}
+
+// Factory creates object, client uses it
+Shape shape = factory.getShape("CIRCLE");  // Returns: Circle object
+shape.draw();  // Client decides what to do with it
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Shape`)**: Product interface
+- **Concrete Classes (`Circle`, `Square`)**: Product implementations
+- **Factory (`ShapeFactory`)**: Object creator that instantiates products
+
+---
+
+#### The "One-Liner" Difference
+
+| Pattern | The Caller Says... | Analogy |
+|---------|-------------------|---------|
+| **Strategy** | "I don't know exactly what `currentStrategy` does, but I'm going to run it now." | **Plug-and-Play:** You plug a USB drive or mouse into your computer. The computer doesn't care which one it is; it just sends power and data. |
+| **Facade** | "I know exactly how to run the `Circle` process, so I'll do it for you when you press this button." | **Universal Remote:** You press "Watch Movie." The remote handles turning on the TV, soundbar, and Blu-ray player for you. |
+| **Factory** | "You asked for a Circle? Here is a brand new `Circle` object. You handle it from here." | **Vending Machine:** You press a button, and it drops a soda. It doesn't drink the soda for you; it just hands it to you. |
+
+#### Summary: Caller Behavior and Return Types
+
+- **Strategy (`Context`)**: Takes input → Runs generic logic → Returns **Value** (result of operation)
+- **Facade (`Facade`)**: Takes specific request → Handles internal wiring → Returns **Nothing (Void)** (action is complete)
+- **Factory (`Factory`)**: Takes type request → Instantiates class → Returns **Object** (client uses it)
+
+#### Key Visual Clues in UML
+
+- **Strategy**: Context has generic method like `execute()`, `perform()`, `algorithm()`
+- **Facade**: Facade has specific methods like `drawCircle()`, `startComputer()`, `watchMovie()`
+- **Factory**: Factory has creational methods like `create()`, `get()`, `make()` that return objects
+
 ### 7. **Example: Recognizing from a Diagram**
 
 If you see a diagram like this:

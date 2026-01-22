@@ -19,6 +19,9 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Proxy vs Decorator](#proxy-vs-decorator)
    - [Bridge vs Decorator](#bridge-vs-decorator)
    - [Adapter vs Proxy](#adapter-vs-proxy)
+   - [Composite vs Decorator](#composite-vs-decorator)
+   - [Composite vs Flyweight](#composite-vs-flyweight)
+   - [Composite vs Iterator](#composite-vs-iterator)
 
 3. [Behavioral Patterns](#behavioral-patterns)
    - [Mediator vs Facade](#mediator-vs-facade)
@@ -30,6 +33,7 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Facade vs Builder/Factory](#facade-vs-builderfactory)
    - [Builder vs Facade](#builder-vs-facade)
    - [Flyweight vs Singleton vs Prototype](#flyweight-vs-singleton-vs-prototype)
+   - [Strategy vs Facade vs Factory: UML Similarity but Different Caller Behavior](#strategy-vs-facade-vs-factory-uml-similarity-but-different-caller-behavior)
 
 ---
 
@@ -1217,6 +1221,215 @@ image.display();  // Same interface, but controls access
 
 ---
 
+### Composite vs Decorator
+
+#### Overview
+
+Both patterns use composition, but Composite builds tree structures while Decorator adds behavior to objects.
+
+| Aspect | Composite | Decorator |
+|--------|-----------|-----------|
+| **Intent** | Build tree structures (part-whole hierarchies) | Add responsibilities dynamically |
+| **Focus** | Structure (containment) | Behavior (enhancement) |
+| **Relationship** | Parent-child (hierarchical) | Wrapper-wrapped (layering) |
+| **Children** | Composite can have multiple children | Decorator wraps one component |
+| **Operations** | Recursive operations on tree | Adds behavior before/after delegation |
+| **Use Case** | File systems, menus, organization charts | Coffee with condiments, text formatting |
+
+#### Code Comparison
+
+**Composite:**
+```java
+// Composite: Builds tree structure
+MenuComponent allMenus = new Menu("ALL MENUS", "All menus");
+MenuComponent dinerMenu = new Menu("DINER MENU", "Lunch");
+MenuComponent dessertMenu = new Menu("DESSERT MENU", "Dessert");
+
+allMenus.add(dinerMenu);  // Menu contains Menu
+dinerMenu.add(dessertMenu);  // Menu contains Menu (nested)
+dinerMenu.add(new MenuItem("Pasta", "...", true, 3.89));  // Menu contains MenuItem
+
+allMenus.print();  // Recursively prints entire tree
+```
+
+**Decorator:**
+```java
+// Decorator: Adds behavior by wrapping
+Coffee coffee = new SimpleCoffee();
+coffee = new Milk(coffee);  // Wraps and adds milk
+coffee = new Sugar(coffee);  // Wraps and adds sugar
+
+coffee.cost();  // Adds costs: coffee + milk + sugar
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Composite**: Builds **tree structures** (part-whole hierarchies)
+   - **Decorator**: Adds **responsibilities** to objects dynamically
+
+2. **Structure**
+   - **Composite**: **Parent-child** relationships (hierarchical)
+   - **Decorator**: **Wrapper-wrapped** relationships (layering)
+
+3. **Children**
+   - **Composite**: Can have **multiple children** (collection)
+   - **Decorator**: Wraps **one component** (single reference)
+
+4. **Operations**
+   - **Composite**: Operations work **recursively** on tree
+   - **Decorator**: Adds behavior **before/after** delegation
+
+5. **Use Cases**
+   - **Composite**: File systems, menus, organization charts, GUI containers
+   - **Decorator**: Coffee with condiments, text formatting, encryption layers
+
+#### When to Use Which
+
+| Use Composite When: | Use Decorator When: |
+|---------------------|---------------------|
+| Need to represent part-whole hierarchies | Need to add behavior dynamically |
+| Need tree-like structures | Need to enhance objects with features |
+| Need recursive operations | Need to combine multiple features |
+| Objects can contain other objects | Objects need to be wrapped with behavior |
+| Example: File system, menu system | Example: Coffee with condiments |
+
+---
+
+### Composite vs Flyweight
+
+#### Overview
+
+Both patterns deal with multiple objects, but Composite represents hierarchies while Flyweight shares state for memory efficiency.
+
+| Aspect | Composite | Flyweight |
+|--------|-----------|-----------|
+| **Intent** | Represent part-whole hierarchies | Share intrinsic state among many objects |
+| **Focus** | Structure and composition | Memory efficiency |
+| **Objects** | Tree structure (parent-child) | Many similar objects sharing state |
+| **State** | Each object has full state | Intrinsic state shared, extrinsic state separate |
+| **Use Case** | File systems, menus, organization charts | Characters in documents, trees in forest |
+
+#### Code Comparison
+
+**Composite:**
+```java
+// Composite: Tree structure
+MenuComponent menu = new Menu("DINER MENU", "Lunch");
+menu.add(new MenuItem("Pasta", "...", true, 3.89));
+menu.add(new MenuItem("Soup", "...", false, 2.99));
+
+MenuComponent submenu = new Menu("DESSERT MENU", "Dessert");
+submenu.add(new MenuItem("Pie", "...", true, 1.59));
+menu.add(submenu);  // Menu contains Menu
+
+menu.print();  // Recursively prints tree
+```
+
+**Flyweight:**
+```java
+// Flyweight: Shares intrinsic state
+TreeType oak = TreeFactory.getTreeType("Oak", "green");  // Shared
+TreeType pine = TreeFactory.getTreeType("Pine", "green");  // Shared
+
+forest.plantTree(10, 20, oak);  // Position (extrinsic) stored separately
+forest.plantTree(30, 40, oak);  // Shares same TreeType
+forest.plantTree(50, 60, pine);  // Different TreeType
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Composite**: Represents **part-whole hierarchies** (tree structures)
+   - **Flyweight**: Shares **intrinsic state** to save memory
+
+2. **Focus**
+   - **Composite**: **Structure** and **composition** relationships
+   - **Flyweight**: **Memory efficiency** with many similar objects
+
+3. **State Management**
+   - **Composite**: Each object has **full state**
+   - **Flyweight**: **Intrinsic state** shared, **extrinsic state** stored separately
+
+4. **Use Cases**
+   - **Composite**: File systems, menus, organization charts, GUI containers
+   - **Flyweight**: Characters in documents, trees in forest, tiles in games
+
+#### When to Use Which
+
+| Use Composite When: | Use Flyweight When: |
+|---------------------|---------------------|
+| Need to represent part-whole hierarchies | Have huge numbers of similar objects |
+| Need tree-like structures | Memory usage is a concern |
+| Need recursive operations | Objects have shared and unique properties |
+| Objects can contain other objects | Want to minimize memory by sharing state |
+| Example: File system, menu system | Example: Characters, trees, tiles |
+
+---
+
+### Composite vs Iterator
+
+#### Overview
+
+Composite builds tree structures while Iterator traverses collections. They often work together.
+
+| Aspect | Composite | Iterator |
+|--------|-----------|----------|
+| **Intent** | Build tree structures | Traverse collections |
+| **Focus** | Structure composition | Element access |
+| **Purpose** | Represent hierarchies | Sequential access |
+| **Use Case** | File systems, menus | Collection traversal |
+
+#### Code Comparison
+
+**Composite:**
+```java
+// Composite: Builds tree structure
+MenuComponent menu = new Menu("DINER MENU", "Lunch");
+menu.add(new MenuItem("Pasta", "...", true, 3.89));
+menu.add(new MenuItem("Soup", "...", false, 2.99));
+
+menu.print();  // Recursively processes tree
+```
+
+**Iterator:**
+```java
+// Iterator: Traverses collection
+Iterator<String> iterator = library.createIterator();
+while (iterator.hasNext()) {
+    String book = iterator.next();
+    System.out.println(book);
+}
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Composite**: **Builds** tree structures (part-whole hierarchies)
+   - **Iterator**: **Traverses** collections (sequential access)
+
+2. **Focus**
+   - **Composite**: **Structure** and **composition**
+   - **Iterator**: **Access** and **traversal**
+
+3. **Relationship**
+   - **Composite**: Creates **parent-child** relationships
+   - **Iterator**: Provides **sequential access** to elements
+
+#### When to Use Which
+
+| Use Composite When: | Use Iterator When: |
+|---------------------|-------------------|
+| Need to represent part-whole hierarchies | Need to traverse collections |
+| Need tree-like structures | Need to hide collection structure |
+| Need recursive operations | Need uniform traversal interface |
+| Objects can contain other objects | Collection structure may change |
+| Example: File system, menu system | Example: Collection traversal |
+
+**They work together**: Iterator can be used to traverse Composite structures.
+
+---
+
 ## Cross-Category Comparisons
 
 ### Facade vs Builder/Factory
@@ -2321,6 +2534,240 @@ while (iterator.hasNext()) {
    - **Composite**: Can use Iterator to traverse its children
 
 **They work together**: Iterator is commonly used to traverse Composite structures.
+
+---
+
+### Strategy vs Facade vs Factory: UML Similarity but Different Caller Behavior
+
+#### Overview
+
+**The Confusion:** All three patterns can have multiple classes implementing a common interface in UML diagrams, making them look structurally similar. The key difference lies in **what the caller class does and returns**.
+
+#### UML Structure Similarity
+
+All three patterns show this structure:
+```
+Interface
+    ↑ implements
+    ├── ConcreteClass1
+    ├── ConcreteClass2
+    └── ConcreteClass3
+
+CallerClass
+    - uses interface
+```
+
+#### The Critical Difference: Caller Class Behavior
+
+**1. Strategy Pattern (`Context` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **generic executor** that runs an algorithm without knowing which one
+- Uses **polymorphism** - doesn't care about the specific implementation
+- Method signature: Generic (e.g., `execute()`, `executeStrategy()`, `executeAlgorithm()`)
+
+**What the Caller Returns:**
+- Returns the **result of the calculation/operation** (e.g., `int`, `String`, `void` with side effects)
+
+**Example:**
+```java
+interface Operation {  // Strategy interface
+    int execute(int a, int b);
+}
+
+class Add implements Operation {
+    public int execute(int a, int b) {
+        return a + b;
+    }
+}
+
+class Subtract implements Operation {
+    public int execute(int a, int b) {
+        return a - b;
+    }
+}
+
+class Calculator {  // Context - generic executor
+    private Operation strategy;
+    
+    public void setStrategy(Operation strategy) {
+        this.strategy = strategy;
+    }
+    
+    public int execute(int a, int b) {  // Generic method
+        return strategy.execute(a, b);  // Doesn't know which strategy
+    }
+}
+
+// Usage: Context doesn't know if it's Add or Subtract - just executes
+Calculator calculator = new Calculator();
+calculator.setStrategy(new Add());
+int result = calculator.execute(5, 3);  // Returns: 8 (value)
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Operation`)**: Defines the algorithm contract
+- **Concrete Classes (`Add`, `Subtract`)**: Different algorithm implementations
+- **Context (`Calculator`)**: Generic executor that runs any strategy
+
+---
+
+**2. Facade Pattern (`Facade` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **"Dashboard" or "Control Panel"** with specific buttons for specific tasks
+- **Knows exactly** what is happening internally
+- Method signature: **Specific** (e.g., `drawCircle()`, `iphoneSale()`, `watchMovie()`)
+- **Orchestrates** multiple subsystem calls internally
+
+**What the Caller Returns:**
+- Usually returns **void** (action is complete) or simple confirmation
+- The facade **does the work for you** - you don't need to handle the result
+
+**Example:**
+```java
+interface Shape {  // Common interface
+    void draw();
+}
+
+class Circle implements Shape {
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+class Square implements Shape {
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
+}
+
+class ShapeMaker {  // Facade - specific control panel
+    private Circle circle;
+    private Square square;
+    
+    public ShapeMaker() {
+        this.circle = new Circle();
+        this.square = new Square();
+    }
+    
+    public void drawCircle() {  // Specific method - knows exactly what to do
+        circle.draw();  // Facade knows it's calling Circle
+    }
+    
+    public void drawSquare() {  // Specific method - knows exactly what to do
+        square.draw();  // Facade knows it's calling Square
+    }
+}
+
+// Usage: Facade knows exactly what drawCircle() does internally
+ShapeMaker shapeMaker = new ShapeMaker();
+shapeMaker.drawCircle();  // Returns: void (work is done)
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Shape`)**: Common interface for subsystem components
+- **Concrete Classes (`Circle`, `Square`)**: Subsystem components
+- **Facade (`ShapeMaker`)**: Simplified interface that orchestrates subsystem calls
+
+---
+
+**3. Factory Pattern (`Factory` as Caller)**
+
+**What the Caller Does:**
+- Acts as a **creator/manufacturer** that builds objects
+- Takes an order/type and **instantiates** the correct object
+- Method signature: **Creational** (e.g., `getShape("CIRCLE")`, `createButton()`)
+
+**What the Caller Returns:**
+- Returns the **Object itself** (e.g., `Shape`, `Button`)
+- Client receives the object and decides what to do with it
+
+**Example:**
+```java
+interface Shape {  // Product interface
+    void draw();
+}
+
+class Circle implements Shape {
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+class Square implements Shape {
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
+}
+
+class ShapeFactory {  // Factory - object creator
+    public Shape getShape(String type) {  // Creational method
+        if (type.equalsIgnoreCase("CIRCLE")) {
+            return new Circle();  // Creates and returns object
+        } else if (type.equalsIgnoreCase("SQUARE")) {
+            return new Square();  // Creates and returns object
+        }
+        return null;
+    }
+}
+
+// Usage: Factory creates object, client uses it
+ShapeFactory factory = new ShapeFactory();
+Shape shape = factory.getShape("CIRCLE");  // Returns: Circle object
+shape.draw();  // Client decides what to do with it
+```
+
+**What Classes/Interfaces Signify:**
+- **Interface (`Shape`)**: Product interface
+- **Concrete Classes (`Circle`, `Square`)**: Product implementations
+- **Factory (`ShapeFactory`)**: Object creator that instantiates products
+
+---
+
+#### The "One-Liner" Difference
+
+| Pattern | The Caller Says... | Analogy |
+|---------|-------------------|---------|
+| **Strategy** | "I don't know exactly what `currentStrategy` does, but I'm going to run it now." | **Plug-and-Play:** You plug a USB drive or mouse into your computer. The computer doesn't care which one it is; it just sends power and data. |
+| **Facade** | "I know exactly how to run the `Circle` process, so I'll do it for you when you press this button." | **Universal Remote:** You press "Watch Movie." The remote handles turning on the TV, soundbar, and Blu-ray player for you. |
+| **Factory** | "You asked for a Circle? Here is a brand new `Circle` object. You handle it from here." | **Vending Machine:** You press a button, and it drops a soda. It doesn't drink the soda for you; it just hands it to you. |
+
+#### Summary: Caller Behavior and Return Types
+
+| Pattern | Caller Type | Method Signature | Returns | What It Does |
+|---------|------------|------------------|---------|--------------|
+| **Strategy** | Generic Executor | `execute()`, `perform()`, `algorithm()` | **Value** (result of operation) | Takes input → Runs generic logic → Returns value |
+| **Facade** | Control Panel | `drawCircle()`, `watchMovie()`, `iphoneSale()` | **Void** (action complete) | Takes specific request → Handles internal wiring → Returns nothing |
+| **Factory** | Object Creator | `getShape()`, `create()`, `make()` | **Object** (product instance) | Takes type request → Instantiates class → Returns object |
+
+#### Key Visual Clues in UML Diagrams
+
+**Strategy Pattern:**
+- Context has **generic method** like `execute()`, `perform()`, `algorithm()`
+- Context doesn't know which concrete strategy it's using
+- Returns result of operation
+
+**Facade Pattern:**
+- Facade has **specific methods** like `drawCircle()`, `startComputer()`, `watchMovie()`
+- Facade knows exactly which subsystem component to call
+- Returns void (or simple confirmation)
+
+**Factory Pattern:**
+- Factory has **creational methods** like `create()`, `get()`, `make()` that return objects
+- Factory instantiates objects based on type/parameter
+- Returns object instance for client to use
+
+#### Decision Matrix
+
+| Scenario | Pattern to Use |
+|----------|---------------|
+| Need to swap different algorithms for same task | **Strategy** |
+| Need to simplify access to complex subsystem | **Facade** |
+| Need to create objects without exposing instantiation logic | **Factory** |
+| Have multiple ways to perform same operation | **Strategy** |
+| Have multiple subsystems that work together | **Facade** |
+| Need to create different types of objects | **Factory** |
 
 ---
 

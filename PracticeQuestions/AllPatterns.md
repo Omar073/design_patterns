@@ -90,11 +90,19 @@
 
 ### 43. You have a legacy payment system that uses a different interface than what your new code expects. You cannot modify the legacy code. Which pattern would help you integrate these systems?
 
-### 44. You need to create objects that are expensive to instantiate. Instead of creating new instances, you want to clone existing instances. What pattern is this?
+### 44. Which pattern allows you to compose objects into tree structures to represent part-whole hierarchies?
 
-### 45. You're working on a game engine where you need to render thousands of enemy units on screen. Each enemy has shared properties (sprite, animation) and unique properties (position, health). You want to minimize memory usage. Which pattern is most suitable?
+### 45. You need to create objects that are expensive to instantiate. Instead of creating new instances, you want to clone existing instances. What pattern is this?
 
-### 46. You're building a word processor that needs to display thousands of letters on screen. Each letter has shared properties (typeface, size, style) and unique properties (position). You want to minimize memory usage. Which pattern should you use?
+### 46. You're working on a game engine where you need to render thousands of enemy units on screen. Each enemy has shared properties (sprite, animation) and unique properties (position, health). You want to minimize memory usage. Which pattern is most suitable?
+
+### 47. You're building a word processor that needs to display thousands of letters on screen. Each letter has shared properties (typeface, size, style) and unique properties (position). You want to minimize memory usage. Which pattern should you use?
+
+### 48. You're building a file system where directories can contain files and other directories. You want to apply operations like "getSize()" uniformly to both files and directories. Which pattern should you use?
+
+### 49. Which pattern lets clients treat individual objects and compositions of objects uniformly?
+
+### 50. You're building a GUI framework where containers can hold widgets and other containers. You want to apply operations like "render()" to both containers and individual widgets uniformly. Which pattern should you use?
 
 ---
 
@@ -148,7 +156,17 @@
 
 ### 24. You want to create a UI factory that produces buttons, checkboxes, and text fields that all match a specific theme (Windows, macOS, or Linux style).
 
-### 25. You have a complex subsystem with many classes and interfaces. Instead of making clients interact with all these classes directly, you want to provide a simple interface that handles all the complexity.
+### 25. You're building a file system where directories can contain files and other directories. You want to apply operations like "getSize()" or "delete()" uniformly to both files and directories without the client needing to distinguish between them.
+
+### 26. You have a complex subsystem with many classes and interfaces. Instead of making clients interact with all these classes directly, you want to provide a simple interface that handles all the complexity.
+
+### 27. Which pattern allows you to compose objects into tree structures to represent part-whole hierarchies?
+
+### 28. You're building a GUI framework where containers can hold widgets and other containers. You want to apply operations like "render()" or "handleEvent()" uniformly to both containers and individual widgets.
+
+### 29. Which pattern lets clients treat individual objects and compositions of objects uniformly?
+
+### 30. You're building an organization chart where departments can contain employees and sub-departments. You want to calculate total salary or print the hierarchy uniformly for both departments and employees.
 
 ---
 
@@ -196,15 +214,23 @@ Put T/F and correct the wrong answer.
 
 ### 20. The Observer pattern requires tight coupling between subject and observers.
 
-### 21. The Factory Method pattern lets subclasses decide which class to instantiate.
+### 21. The Composite pattern allows you to compose objects into tree structures.
 
-### 22. The Singleton pattern ensures only one instance exists throughout the application.
+### 22. The Factory Method pattern lets subclasses decide which class to instantiate.
 
-### 23. The Facade pattern simplifies interactions with complex subsystems.
+### 23. The Singleton pattern ensures only one instance exists throughout the application.
 
-### 24. The Adapter pattern makes incompatible interfaces work together.
+### 24. In the Composite pattern, leaf nodes can have children.
 
-### 25. The Abstract Factory pattern creates families of related objects.
+### 25. The Facade pattern simplifies interactions with complex subsystems.
+
+### 26. The Adapter pattern makes incompatible interfaces work together.
+
+### 27. The Abstract Factory pattern creates families of related objects.
+
+### 28. The Composite pattern lets clients treat individual objects and compositions uniformly.
+
+### 29. In the Composite pattern, the Component class typically provides default implementations that throw UnsupportedOperationException.
 
 ---
 
@@ -342,13 +368,25 @@ Put T/F and correct the wrong answer.
 **Adapter Pattern** - The Adapter pattern helps integrate systems with incompatible interfaces.
 
 ### Answer 44
-**Prototype Pattern** - The Prototype pattern clones existing instances instead of creating new ones.
+**Composite Pattern** - The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies.
 
 ### Answer 45
-**Flyweight Pattern** - The Flyweight pattern minimizes memory by sharing common properties.
+**Prototype Pattern** - The Prototype pattern clones existing instances instead of creating new ones.
 
 ### Answer 46
+**Flyweight Pattern** - The Flyweight pattern minimizes memory by sharing common properties.
+
+### Answer 47
 **Flyweight Pattern** - The Flyweight pattern shares common properties (typeface, size, style) to save memory.
+
+### Answer 48
+**Composite Pattern** - The Composite pattern allows applying operations uniformly to both files (leaves) and directories (composites).
+
+### Answer 49
+**Composite Pattern** - The Composite pattern lets clients treat individual objects and compositions of objects uniformly through a common interface.
+
+### Answer 50
+**Composite Pattern** - The Composite pattern allows containers (composites) and widgets (leaves) to be treated uniformly through a common Component interface.
 
 ---
 
@@ -427,7 +465,22 @@ Put T/F and correct the wrong answer.
 **Abstract Factory Pattern** - The Abstract Factory pattern creates families of related UI components that match a specific theme.
 
 ### Answer 25
+**Composite Pattern** - The Composite pattern allows files (leaves) and directories (composites) to be treated uniformly, applying operations recursively.
+
+### Answer 26
 **Facade Pattern** - The Facade pattern provides a simple interface that hides the complexity of the subsystem.
+
+### Answer 27
+**Composite Pattern** - The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies.
+
+### Answer 28
+**Composite Pattern** - The Composite pattern allows containers (composites) and widgets (leaves) to be treated uniformly through a common Component interface.
+
+### Answer 29
+**Composite Pattern** - The Composite pattern lets clients treat individual objects and compositions of objects uniformly through a common interface.
+
+### Answer 30
+**Composite Pattern** - The Composite pattern allows departments (composites) and employees (leaves) to be treated uniformly, enabling recursive operations on the hierarchy.
 
 ---
 
@@ -494,19 +547,31 @@ Put T/F and correct the wrong answer.
 **False** - The Observer pattern promotes loose coupling between subject and observers, not tight coupling.
 
 ### Answer 21
-**True** - The Factory Method pattern lets subclasses decide which class to instantiate.
+**True** - The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies.
 
 ### Answer 22
-**True** - The Singleton pattern ensures only one instance exists throughout the application.
+**True** - The Factory Method pattern lets subclasses decide which class to instantiate.
 
 ### Answer 23
-**True** - The Facade pattern simplifies interactions with complex subsystems.
+**True** - The Singleton pattern ensures only one instance exists throughout the application.
 
 ### Answer 24
-**True** - The Adapter pattern makes incompatible interfaces work together.
+**False** - In the Composite pattern, leaf nodes cannot have children. Only composite nodes can have children.
 
 ### Answer 25
+**True** - The Facade pattern simplifies interactions with complex subsystems.
+
+### Answer 26
+**True** - The Adapter pattern makes incompatible interfaces work together.
+
+### Answer 27
 **True** - The Abstract Factory pattern creates families of related objects.
+
+### Answer 28
+**True** - The Composite pattern lets clients treat individual objects (leaves) and compositions (composites) uniformly through a common Component interface.
+
+### Answer 29
+**True** - The Component class typically provides default implementations that throw UnsupportedOperationException for methods that don't make sense for all component types.
 
 ---
 
@@ -522,6 +587,7 @@ Put T/F and correct the wrong answer.
 ### Structural Patterns
 - **Adapter**: Make incompatible interfaces work together
 - **Bridge**: Separate abstraction from implementation
+- **Composite**: Compose objects into tree structures
 - **Decorator**: Add responsibilities dynamically
 - **Facade**: Provide simplified interface to subsystem
 - **Flyweight**: Share common state among many objects
@@ -569,5 +635,8 @@ Put T/F and correct the wrong answer.
    - "Traverse collection" → Iterator
    - "Coordinate interactions" → Mediator
    - "Save/restore state" → Memento
+   - "Part-whole hierarchies" → Composite
+   - "Tree structures" → Composite
+   - "Uniform treatment" → Composite
 
 4. **Practice Scenarios**: Think of real-world examples for each pattern to reinforce understanding.

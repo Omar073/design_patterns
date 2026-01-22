@@ -714,29 +714,86 @@ plane.drive();
   - You want to represent part-whole hierarchies of objects
   - You want clients to be able to ignore the difference between compositions of objects and individual objects
   - You want to treat all objects in the composition uniformly
+  - You want to apply the same operations over both composites and individual objects
 - **Structure**:
+  - Diagrams:
+    - ![Composite Menu Hierarchy](Structural/Composite/Diagrams/diagram1.png)  
+      *Shows restaurant menu hierarchy with "All Menus" (root composite), "Pancake House Menu", "Diner Menu", "Cafe Menu" (composites), "Dessert Menu" (nested composite), and individual menu items (leaves).*
+    - ![Composite UML Structure](Structural/Composite/Diagrams/diagram2.png)  
+      *Shows Component interface, Leaf and Composite classes, with Client using Component interface uniformly. Note that Leaf inherits add(), remove(), getChild() which don't make sense for leaves.*
+    - ![Menu System Implementation](Structural/Composite/Diagrams/diagram3.png)  
+      *Shows MenuComponent abstract class, MenuItem (leaf), Menu (composite), and Waitress (client) using MenuComponent interface.*
   - Roles:
-    - **Component**: Declares interface for objects in composition and for accessing/managing child components
-    - **Leaf**: Represents leaf objects in the composition (has no children)
-    - **Composite**: Defines behavior for components having children and stores child components
-    - **Client**: Manipulates objects in the composition through the Component interface
+    - **Component** (Abstract Class): Declares interface for all objects in composition. Provides default implementations that throw `UnsupportedOperationException` for methods that don't apply to all component types.
+    - **Leaf** (Concrete Class): Represents individual objects with no children. Overrides methods that make sense (like `getName()`, `getPrice()`, `print()`). Inherits `add()`, `remove()`, `getChild()` which throw exceptions.
+    - **Composite** (Concrete Class): Defines behavior for components having children. Stores collection of `Component` objects. Implements child management operations (`add()`, `remove()`, `getChild()`). Implements `operation()` to delegate to children recursively.
+    - **Client**: Uses `Component` interface to manipulate objects. Treats individual objects and compositions uniformly.
 - **Code feel**:
 
 ```java
-// Treat individual and composite objects uniformly
-Component file = new File("document.txt");
-Component folder = new Folder("Documents");
-folder.add(file);
-folder.add(new File("readme.txt"));
+// MenuComponent provides default implementations
+public abstract class MenuComponent {
+    public void add(MenuComponent menuComponent) {
+        throw new UnsupportedOperationException();  // Default for leaf
+    }
+    
+    public String getName() {
+        throw new UnsupportedOperationException();  // Default for composite
+    }
+    
+    public void print() {
+        throw new UnsupportedOperationException();
+    }
+}
 
-folder.display();  // Displays folder and all contents
+// MenuItem (Leaf) - overrides methods that make sense
+class MenuItem extends MenuComponent {
+    String name;
+    double price;
+    
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public void print() { /* prints item */ }
+    // Inherits add(), remove(), getChild() - they throw exceptions
+}
+
+// Menu (Composite) - implements child management
+class Menu extends MenuComponent {
+    ArrayList<MenuComponent> menuComponents = new ArrayList<>();
+    String name;
+    
+    public void add(MenuComponent component) {
+        menuComponents.add(component);  // Can add MenuItem or Menu!
+    }
+    
+    public String getName() { return name; }
+    
+    public void print() {
+        System.out.println(name);
+        for (MenuComponent component : menuComponents) {
+            component.print();  // Recursive - works for Menu or MenuItem
+        }
+    }
+}
+
+// Client treats all uniformly
+Waitress waitress = new Waitress(allMenus);
+waitress.printMenu();  // Works on entire hierarchy
 ```
 
+- **Key Design Points**:
+  - Component provides default implementations throwing `UnsupportedOperationException`
+  - Leaf overrides only methods that make sense (getName, getPrice, print)
+  - Composite implements child management (add, remove, getChild) and operations (print)
+  - Composite can contain both Leaf objects and other Composite objects
+  - Operations work recursively on the tree structure
+
 - **Similar to / compared with**:
-  - **vs Decorator**: Composite builds tree structures; Decorator adds behavior to objects
+  - **vs Decorator**: Composite builds tree structures (part-whole); Decorator adds behavior to objects (wrapping)
+  - **vs Flyweight**: Composite represents hierarchies; Flyweight shares intrinsic state among many objects
   - **vs Iterator**: Composite structures can be traversed using Iterator pattern
 
-- **Further reading**: [Composite README](Structural/Composite/README.md), demo: [CompositePatternDemo](Structural/Composite/CompositePatternDemo.java)
+- **Further reading**: [Composite README](Structural/Composite/README.md), demo: [CompositeMenuDemo](Structural/Composite/CompositeMenuDemo.java)
 
 ---
 

@@ -41,9 +41,17 @@
 
 ### 18. You have a legacy payment system that uses a different interface than what your new code expects. You cannot modify the legacy code. Which pattern would help you integrate these systems?
 
-### 19. You're working on a game engine where you need to render thousands of enemy units on screen. Each enemy has shared properties (sprite, animation) and unique properties (position, health). You want to minimize memory usage. Which pattern is most suitable?
+### 19. Which pattern allows you to compose objects into tree structures to represent part-whole hierarchies?
 
-### 20. You're building a word processor that needs to display thousands of letters on screen. Each letter has shared properties (typeface, size, style) and unique properties (position). You want to minimize memory usage. Which pattern should you use?
+### 20. You're working on a game engine where you need to render thousands of enemy units on screen. Each enemy has shared properties (sprite, animation) and unique properties (position, health). You want to minimize memory usage. Which pattern is most suitable?
+
+### 21. You're building a word processor that needs to display thousands of letters on screen. Each letter has shared properties (typeface, size, style) and unique properties (position). You want to minimize memory usage. Which pattern should you use?
+
+### 22. You're building a file system where directories can contain files and other directories. You want to apply operations like "getSize()" uniformly to both files and directories. Which pattern should you use?
+
+### 23. Which pattern lets clients treat individual objects and compositions of objects uniformly?
+
+### 24. You're building a GUI framework where containers can hold widgets and other containers. You want to apply operations like "render()" to both containers and individual widgets uniformly. Which pattern should you use?
 
 ---
 
@@ -65,9 +73,15 @@
 
 ### 8. You need to control access to an object. For example, you want to load a large image only when it's actually needed, or you want to add logging before and after method calls.
 
-### 9. You're building a word processor that needs to display thousands of letters on screen. Each letter has properties like typeface, point size, and style (which are shared), and position (which is unique). You want to minimize memory usage.
+### 9. You're building a file system where directories can contain files and other directories. You want to apply operations like "getSize()" or "delete()" uniformly to both files and directories without the client needing to distinguish between them.
 
-### 10. You have a complex subsystem with many classes and interfaces. Instead of making clients interact with all these classes directly, you want to provide a simple interface that handles all the complexity.
+### 10. You're building a word processor that needs to display thousands of letters on screen. Each letter has properties like typeface, point size, and style (which are shared), and position (which is unique). You want to minimize memory usage.
+
+### 11. You have a complex subsystem with many classes and interfaces. Instead of making clients interact with all these classes directly, you want to provide a simple interface that handles all the complexity.
+
+### 12. You're building a GUI framework where containers can hold widgets and other containers. You want to apply operations like "render()" or "handleEvent()" uniformly to both containers and individual widgets.
+
+### 13. You're building an organization chart where departments can contain employees and sub-departments. You want to calculate total salary or print the hierarchy uniformly for both departments and employees.
 
 ---
 
@@ -83,13 +97,21 @@ Put T/F and correct the wrong answer.
 
 ### 4. The Bridge pattern separates abstraction from implementation.
 
-### 5. The Flyweight pattern is used to reduce memory usage by sharing common state.
+### 5. The Composite pattern allows you to compose objects into tree structures.
 
-### 6. The Proxy pattern can be used for lazy loading.
+### 6. The Flyweight pattern is used to reduce memory usage by sharing common state.
 
-### 7. The Facade pattern simplifies interactions with complex subsystems.
+### 7. The Proxy pattern can be used for lazy loading.
 
-### 8. The Adapter pattern makes incompatible interfaces work together.
+### 8. In the Composite pattern, leaf nodes can have children.
+
+### 9. The Facade pattern simplifies interactions with complex subsystems.
+
+### 10. The Adapter pattern makes incompatible interfaces work together.
+
+### 11. The Composite pattern lets clients treat individual objects and compositions uniformly.
+
+### 12. In the Composite pattern, the Component class typically provides default implementations that throw UnsupportedOperationException.
 
 ---
 
@@ -152,10 +174,22 @@ Put T/F and correct the wrong answer.
 **Adapter Pattern** - The Adapter pattern helps integrate systems with incompatible interfaces.
 
 ### Answer 19
-**Flyweight Pattern** - The Flyweight pattern minimizes memory by sharing common properties.
+**Composite Pattern** - The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies.
 
 ### Answer 20
+**Flyweight Pattern** - The Flyweight pattern minimizes memory by sharing common properties.
+
+### Answer 21
 **Flyweight Pattern** - The Flyweight pattern shares common properties (typeface, size, style) to save memory.
+
+### Answer 22
+**Composite Pattern** - The Composite pattern allows applying operations uniformly to both files (leaves) and directories (composites).
+
+### Answer 23
+**Composite Pattern** - The Composite pattern lets clients treat individual objects and compositions of objects uniformly through a common interface.
+
+### Answer 24
+**Composite Pattern** - The Composite pattern allows containers (composites) and widgets (leaves) to be treated uniformly through a common interface.
 
 ---
 
@@ -186,10 +220,19 @@ Put T/F and correct the wrong answer.
 **Proxy Pattern** - The Proxy pattern controls access, enabling lazy loading and logging functionality.
 
 ### Answer 9
-**Flyweight Pattern** - The Flyweight pattern shares common properties (typeface, size, style) among many letters to minimize memory usage.
+**Composite Pattern** - The Composite pattern allows files (leaves) and directories (composites) to be treated uniformly, applying operations recursively.
 
 ### Answer 10
+**Flyweight Pattern** - The Flyweight pattern shares common properties (typeface, size, style) among many letters to minimize memory usage.
+
+### Answer 11
 **Facade Pattern** - The Facade pattern provides a simple interface that hides the complexity of the subsystem.
+
+### Answer 12
+**Composite Pattern** - The Composite pattern allows containers (composites) and widgets (leaves) to be treated uniformly through a common Component interface.
+
+### Answer 13
+**Composite Pattern** - The Composite pattern allows departments (composites) and employees (leaves) to be treated uniformly, enabling recursive operations on the hierarchy.
 
 ---
 
@@ -208,16 +251,28 @@ Put T/F and correct the wrong answer.
 **True** - The Bridge pattern separates abstraction from implementation.
 
 ### Answer 5
-**True** - The Flyweight pattern reduces memory usage by sharing common state among objects.
+**True** - The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies.
 
 ### Answer 6
-**True** - The Proxy pattern can be used for lazy loading (virtual proxy).
+**True** - The Flyweight pattern reduces memory usage by sharing common state among objects.
 
 ### Answer 7
-**True** - The Facade pattern simplifies interactions with complex subsystems.
+**True** - The Proxy pattern can be used for lazy loading (virtual proxy).
 
 ### Answer 8
+**False** - In the Composite pattern, leaf nodes cannot have children. Only composite nodes can have children.
+
+### Answer 9
+**True** - The Facade pattern simplifies interactions with complex subsystems.
+
+### Answer 10
 **True** - The Adapter pattern makes incompatible interfaces work together.
+
+### Answer 11
+**True** - The Composite pattern lets clients treat individual objects (leaves) and compositions (composites) uniformly through a common Component interface.
+
+### Answer 12
+**True** - The Component class typically provides default implementations that throw UnsupportedOperationException for methods that don't make sense for all component types.
 
 ---
 
@@ -226,6 +281,7 @@ Put T/F and correct the wrong answer.
 ### Structural Patterns
 - **Adapter**: Make incompatible interfaces work together
 - **Bridge**: Separate abstraction from implementation
+- **Composite**: Compose objects into tree structures
 - **Decorator**: Add responsibilities dynamically
 - **Facade**: Provide simplified interface to subsystem
 - **Flyweight**: Share common state among many objects

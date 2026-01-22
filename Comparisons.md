@@ -24,6 +24,7 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Mediator vs Facade](#mediator-vs-facade)
    - [Mediator vs Observer](#mediator-vs-observer)
    - [Mediator vs Command](#mediator-vs-command)
+   - [Strategy vs Facade](#strategy-vs-facade)
 
 4. [Cross-Category Comparisons](#cross-category-comparisons)
    - [Facade vs Builder/Factory](#facade-vs-builderfactory)
@@ -1918,6 +1919,153 @@ class MergeSort implements SortStrategy { ... }
 **Key Difference:**
 - State = behavior changes with **internal state** (stateful, transitions)
 - Strategy = behavior changes by **choosing algorithm** (stateless, no transitions)
+
+---
+
+### Strategy vs Facade
+
+#### Overview
+
+Both patterns simplify complexity, but Strategy swaps algorithms while Facade simplifies subsystem access.
+
+| Aspect | Strategy | Facade |
+|--------|----------|--------|
+| **Intent** | Swap algorithms/behaviors | Simplify subsystem interface |
+| **Pattern Type** | Behavioral | Structural |
+| **Focus** | Algorithm selection | Interface simplification |
+| **Composition** | Context has-a strategy | Facade wraps multiple subsystems |
+| **Behavior** | Replaces core behavior | Orchestrates subsystem calls |
+| **Flexibility** | Runtime algorithm swapping | Simplified access to subsystem |
+| **Objects** | One strategy at a time | Multiple subsystem components |
+
+#### Code Comparison
+
+**Strategy:**
+```java
+// Strategy: Swaps algorithms
+interface PaymentStrategy {
+    void pay(double amount);
+}
+
+class CreditCardPayment implements PaymentStrategy {
+    public void pay(double amount) {
+        System.out.println("Paying " + amount + " with Credit Card");
+    }
+}
+
+class PayPalPayment implements PaymentStrategy {
+    public void pay(double amount) {
+        System.out.println("Paying " + amount + " with PayPal");
+    }
+}
+
+class ShoppingCart {
+    private PaymentStrategy paymentStrategy;
+    
+    public void setPaymentStrategy(PaymentStrategy strategy) {
+        this.paymentStrategy = strategy;  // Swap strategy
+    }
+    
+    public void checkout(double amount) {
+        paymentStrategy.pay(amount);  // Uses current strategy
+    }
+}
+
+// Usage: Swap strategies at runtime
+ShoppingCart cart = new ShoppingCart();
+cart.setPaymentStrategy(new CreditCardPayment());
+cart.checkout(100.0);  // Uses Credit Card
+
+cart.setPaymentStrategy(new PayPalPayment());
+cart.checkout(100.0);  // Swaps to PayPal
+```
+
+**Facade:**
+```java
+// Facade: Simplifies subsystem
+class CPU {
+    void freeze() { System.out.println("CPU freeze"); }
+    void jump(long position) { System.out.println("CPU jump"); }
+    void execute() { System.out.println("CPU execute"); }
+}
+
+class Memory {
+    void load(long position, byte[] data) { System.out.println("Memory load"); }
+}
+
+class HardDrive {
+    byte[] read(long lba, int size) { return new byte[0]; }
+}
+
+class ComputerFacade {
+    private CPU cpu;
+    private Memory memory;
+    private HardDrive hardDrive;
+    
+    public ComputerFacade() {
+        this.cpu = new CPU();
+        this.memory = new Memory();
+        this.hardDrive = new HardDrive();
+    }
+    
+    public void startComputer() {
+        // Simplifies complex sequence
+        cpu.freeze();
+        memory.load(0, hardDrive.read(0, 1024));
+        cpu.jump(0);
+        cpu.execute();
+    }
+}
+
+// Usage: Simple interface to complex subsystem
+ComputerFacade computer = new ComputerFacade();
+computer.startComputer();  // Hides subsystem complexity
+```
+
+#### Key Differences
+
+1. **Purpose**
+   - **Strategy**: **Swaps algorithms** for performing the same task
+   - **Facade**: **Simplifies interface** to a complex subsystem
+
+2. **Pattern Type**
+   - **Strategy**: **Behavioral** pattern (focuses on behavior/algorithm)
+   - **Facade**: **Structural** pattern (focuses on structure/interface)
+
+3. **Composition**
+   - **Strategy**: Context has-a **single strategy** (one at a time)
+   - **Facade**: Facade wraps **multiple subsystems** (orchestrates them)
+
+4. **Behavior**
+   - **Strategy**: **Replaces** core behavior with different algorithms
+   - **Facade**: **Orchestrates** multiple subsystem calls to perform a task
+
+5. **Flexibility**
+   - **Strategy**: Allows **runtime swapping** of algorithms
+   - **Facade**: Provides **simplified access** to subsystem (doesn't swap)
+
+6. **Problem Solved**
+   - **Strategy**: "Which algorithm should I use for this task?"
+   - **Facade**: "How do I simplify access to this complex subsystem?"
+
+#### When to Use Which
+
+| Use Strategy When: | Use Facade When: |
+|-------------------|------------------|
+| Need to swap different algorithms for same task | Need to simplify complex subsystem interface |
+| Have multiple ways to perform same operation | Have multiple subsystems/components |
+| Want runtime algorithm selection | Want to hide subsystem complexity |
+| Algorithms are independent and interchangeable | Subsystem components work together |
+| Example: Payment methods, sorting algorithms | Example: Home theater system, computer startup |
+
+#### Summary
+
+- **Strategy**: Encapsulates **algorithms** that can be swapped at runtime. The context uses one strategy at a time to perform a task.
+- **Facade**: Provides a **simplified interface** to a complex subsystem. It orchestrates multiple subsystem components to perform a task.
+
+**Key Difference:**
+- Strategy = "which algorithm to use" (behavioral, swaps algorithms)
+- Facade = "how to simplify subsystem access" (structural, simplifies interface)
 
 ---
 

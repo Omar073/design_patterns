@@ -2,7 +2,6 @@
 
 - **Intent**: Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime without changing the client.
 - **Why**: Avoid giant `if/else` blocks and subclass explosions when behavior must vary dynamically (e.g., ducks that fly differently, multiple encryption schemes).  
-  *Slides reference*: See the lecture handout for the classic duck example and the encryption table of AES / RSA / ECC options.
 
 ---
 
@@ -10,9 +9,9 @@
 
 - [When to Use](#when-to-use)
 - [Structure (Roles)](#structure-roles)
+- [Examples in this folder](#examples-in-this-folder)
 - [How to Recognize Strategy Pattern in UML Diagrams](#how-to-recognize-strategy-pattern-in-uml-diagrams)
 - [Pattern Structure – Diagram Walkthrough](#duck-example--diagram-walkthrough)
-- [Examples in this folder](#examples-in-this-folder)
 - [Benefits & Trade-offs](#benefits-trade-offs)
 - [Related Patterns](#related-patterns)
 - [Common Use Cases](#common-use-cases)
@@ -190,9 +189,9 @@ ShoppingCart (Context)
 ![FlyBehavior and QuackBehavior hierarchy](Diagrams/diagram5.png)
 
 - We move from “can fly” / “can quack” markers to full **behavior interfaces**:
-  - `FlyBehavior` with implementations: `FlyWithWings`, `FlyNoWay`, etc.
-  - `QuackBehavior` with implementations: `Quack`, `Squeak`, `MuteQuack`.
-- Each behavior class encapsulates one algorithm:
+  - `FlyBehavior` (interface) with concrete implementations: `FlyWithWings`, `FlyNoWay`, etc.
+  - `QuackBehavior` (interface) with concrete implementations: `Quack`, `Squeak`, `MuteQuack`.
+- Each concrete behavior class encapsulates one algorithm:
   - `FlyWithWings.fly()` implements real flying.
   - `FlyNoWay.fly()` does nothing (for ducks that cannot fly).
   - `Quack.quack()` prints a real quack, `Squeak.quack()` squeaks, `MuteQuack.quack()` is silent.
@@ -277,7 +276,7 @@ java StrategyEncryptionDemo
 3. **Context**: Uses a strategy reference and delegates to it
 4. **Client**: Selects and uses strategies
 
-**📋 UML Diagram Recognition**: See [How to Recognize Strategy Pattern in UML Diagrams](#how-to-recognize-strategy-pattern-in-uml-diagrams) section above for detailed guidance on identifying Strategy pattern from UML diagrams.
+**📋 UML Diagram Recognition**: See [How to Recognize Strategy Pattern in UML Diagrams](#how-to-recognize-strategy-pattern-in-uml-diagrams) section for detailed guidance on identifying Strategy pattern from UML diagrams.
 
 ### Common Exam Scenarios
 
@@ -324,6 +323,28 @@ java StrategyEncryptionDemo
 | **Example** | Different sorting algorithms | Algorithm with steps (prepare, execute, cleanup) |
 
 **Key Difference**: Strategy = "which algorithm", Template Method = "how to structure algorithm"
+
+### Strategy vs Facade Pattern
+
+| Aspect | Strategy | Facade |
+|--------|----------|--------|
+| **Purpose** | Swap algorithms/behaviors | Simplify subsystem interface |
+| **Focus** | Algorithm selection | Interface simplification |
+| **Pattern Type** | Behavioral | Structural |
+| **Composition** | Context has-a strategy | Facade wraps multiple subsystems |
+| **Behavior** | Replaces core behavior | Orchestrates subsystem calls |
+| **Flexibility** | Runtime algorithm swapping | Simplified access to subsystem |
+| **Example** | Payment methods (Credit Card, PayPal) | Home theater system (TV, speakers, DVD) |
+
+**Key Differences:**
+- **Strategy**: Encapsulates **algorithms** that can be swapped at runtime. The context uses one strategy at a time to perform a task.
+- **Facade**: Provides a **simplified interface** to a complex subsystem. It orchestrates multiple subsystem components to perform a task.
+
+**When to Use Which:**
+- **Use Strategy** when you need to swap different algorithms/behaviors for the same task (e.g., different payment methods, sorting algorithms).
+- **Use Facade** when you need to simplify access to a complex subsystem with many components (e.g., home theater system, computer startup sequence).
+
+**Key Difference**: Strategy = "which algorithm to use", Facade = "how to simplify subsystem access"
 
 ### Exam Keywords
 

@@ -3,6 +3,8 @@
 - **Intent**: Pass a request along a chain of handlers. Each handler decides whether to process the request or pass it to the next handler in the chain.
 - **Why**: Decouples the sender of a request from its receivers, allowing multiple objects to handle the request without the sender knowing which object will handle it.
 
+**Note**: 📝 **ASU University Course**: In the ASU university course lecture, no code example was given for this pattern.
+
 ---
 
 ## Table of Contents
@@ -41,28 +43,28 @@
 
 ## Pattern Structure – Diagram Walkthrough <a id="pattern-structure-diagram-walkthrough"></a>
 
-### 1. Basic flow – Client sends request through chain (`diagram1.png`)
+### 1. Basic flow – Client sends request through chain
 ![Client sending request through handler chain](Diagrams/diagram1.png)
 
 - **Client** sends a request to the first handler in the chain.
 - Each handler either **handles the request** or **passes it on** to the next handler.
 - The request flows: Client → Handler 1 → Handler 2 → ... → Handler N.
 
-### 2. UML structure – Handler interface with concrete handlers (`diagram2.png`)
+### 2. UML structure – Handler interface with concrete handlers
 ![Handler interface with ConcreteHandlerA and B](Diagrams/diagram2.png)
 
 - **`Handler`** interface defines `handleRequest()` method and a `successor` reference (self-referential association).
 - **`ConcreteHandlerA`** and **`ConcreteHandlerB`** implement the `Handler` interface.
 - Each concrete handler can forward requests to its successor if it cannot handle them.
 
-### 3. Email handling example – Sequential processing (`diagram 3.png`)
-![Email handlers: Spam, Fan, Complaint, NewLoc](Diagrams/diagram 3.png)
+### 3. Email handling example – Sequential processing
+![Email handlers: Spam, Fan, Complaint, NewLoc](Diagrams/diagram3.png)
 
 - **Email processing chain**: Spam Handler → Fan Handler → Complaint Handler → NewLoc Handler.
 - Each email is passed to the first handler and propagates through the chain until handled.
 - If an email falls off the end of the chain, it's not handled (unless a catch-all handler is implemented).
 
-### 4. Email handlers UML – Concrete implementations (`diagram4.png`)
+### 4. Email handlers UML – Concrete implementations
 ![UML showing Handler with SpamHandler, FanHandler, ComplaintHandler, NewLocHandler](Diagrams/diagram4.png)
 
 - **`Handler`** abstract class with `handleRequest()` method and `successor` field.

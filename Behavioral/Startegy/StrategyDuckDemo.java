@@ -74,7 +74,7 @@ abstract class Duck {
 
     public void setQuackBehavior(QuackBehavior quackBehavior) {
         this.quackBehavior = quackBehavior;
-    }`
+    }
 
     public abstract void display();
 }
@@ -138,4 +138,3 @@ public class StrategyDuckDemo {
         decoy.performFly();
     }
 }
-

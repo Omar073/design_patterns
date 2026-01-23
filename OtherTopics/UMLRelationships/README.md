@@ -664,3 +664,9 @@ Understanding UML relationships and OOP concepts is crucial for:
 - [SOLID Principles](../SOLID/README.md) - Principles that guide good OOP design
 - [Anti-Patterns](../AntiPatterns/README.md) - What to avoid in design
 - [Design Patterns](../../README.md) - Patterns that utilize these relationships
+
+---
+
+## Acknowledgments
+
+Special thanks to [Trimbex](https://github.com/Trimbex) for their contributions to this documentation.

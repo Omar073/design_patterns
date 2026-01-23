@@ -61,6 +61,12 @@ design_patterns/
 ├── Comparisons.md              # Cross-pattern comparisons
 ├── PatternsQuickRevision.md    # Quick revision summary
 ├── Prompt.md                   # Original prompt and context
+├── DesignPatternsAndSOLID.md   # Analysis of patterns and SOLID principles
+├── FinalExams/                 # Final exam questions by year
+│   └── 2024/
+│       ├── README.md           # Exam archive overview
+│       ├── Exam1.md            # 2024 Final Exam 1 questions and answers
+│       └── Exam1_Solutions.java # Java solution for implementation question
 ├── OtherTopics/                # Additional topics
 │   ├── AntiPatterns/          # Anti-Patterns (what NOT to do)
 │   │   ├── README.md          # Anti-patterns documentation
@@ -243,6 +249,18 @@ Each demo includes a `main` method that demonstrates the pattern in action, show
 - **Code Comparisons**: Side-by-side examples showing code with and without the pattern
 - **Pattern Relationships**: Discussions on similarities and differences between related patterns
 - **Test Exam Problems**: 8 real-world problems with pattern solutions for practice and exam preparation
+
+## Final Exams
+
+The **[FinalExams](FinalExams/)** directory contains actual final exam questions organized by year. Each exam includes:
+- Complete exam questions with multiple choice, scenario-based, UML recognition, and implementation questions
+- Detailed answers and explanations
+- Java code solutions for implementation questions
+
+### Available Exams
+- **[2024 Exam 1](FinalExams/2024/Exam1.md)** - 70 marks exam covering Creational, Structural, and Behavioral patterns
+
+---
 
 ## Test Exam Problems
 

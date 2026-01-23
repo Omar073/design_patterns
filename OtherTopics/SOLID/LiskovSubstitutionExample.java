@@ -1,3 +1,5 @@
+package SOLID;
+
 // SOLID Principle: Liskov Substitution Principle (LSP)
 // Subclasses should be substitutable for their base classes
 

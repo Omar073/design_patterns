@@ -19,9 +19,11 @@ This repository contains practical implementations of design patterns from the G
 
 ## Design Patterns Covered
 
-### Anti-Patterns
+### Other Topics
 
-- **[Anti-Patterns](AntiPatterns/)** - Common but ineffective solutions that lead to poor design. Learn what NOT to do and why it fails.
+- **[Anti-Patterns](OtherTopics/AntiPatterns/)** - Common but ineffective solutions that lead to poor design. Learn what NOT to do and why it fails.
+- **[SOLID Principles](OtherTopics/SOLID/)** - Five fundamental object-oriented design principles for writing maintainable code.
+- **[UML Relationships](OtherTopics/UMLRelationships/)** - Comprehensive guide to UML relationships (Generalization, Association, Aggregation, Composition) and OOP concepts.
 
 ### Creational Patterns
 
@@ -59,12 +61,23 @@ design_patterns/
 ├── Comparisons.md              # Cross-pattern comparisons
 ├── PatternsQuickRevision.md    # Quick revision summary
 ├── Prompt.md                   # Original prompt and context
-├── AntiPatterns/               # Anti-Patterns (what NOT to do)
-│   ├── README.md              # Anti-patterns documentation
-│   ├── GodObjectExample.java  # God Object anti-pattern example
-│   ├── SpaghettiCodeExample.java  # Spaghetti Code example
-│   ├── HardCodingExample.java # Hard Coding example
-│   └── MagicNumbersExample.java  # Magic Numbers example
+├── OtherTopics/                # Additional topics
+│   ├── AntiPatterns/          # Anti-Patterns (what NOT to do)
+│   │   ├── README.md          # Anti-patterns documentation
+│   │   ├── GodObjectExample.java  # God Object anti-pattern example
+│   │   ├── SpaghettiCodeExample.java  # Spaghetti Code example
+│   │   ├── HardCodingExample.java # Hard Coding example
+│   │   └── MagicNumbersExample.java  # Magic Numbers example
+│   ├── SOLID/                 # SOLID Principles
+│   │   ├── README.md          # SOLID principles documentation
+│   │   ├── SingleResponsibilityExample.java
+│   │   ├── OpenClosedExample.java
+│   │   ├── LiskovSubstitutionExample.java
+│   │   ├── InterfaceSegregationExample.java
+│   │   └── DependencyInversionExample.java
+│   └── UMLRelationships/      # UML Relationships and OOP Concepts
+│       ├── README.md          # UML relationships documentation
+│       └── RelationshipExamples.java  # Code examples for all relationships
 ├── Creational/                 # Creational Design Patterns
 │   ├── Singleton/
 │   │   ├── EagerSingletonDemo.java    # Eager initialization singleton
@@ -261,9 +274,13 @@ See [Comparisons.md](Comparisons.md) for detailed comparisons between:
 - Factory vs Builder
 - And more...
 
-## Anti-Patterns
+## Other Topics
 
-See [AntiPatterns/](AntiPatterns/) for common anti-patterns to avoid:
+### Other Topics
+
+### Anti-Patterns
+
+See [OtherTopics/AntiPatterns/](OtherTopics/AntiPatterns/) for common anti-patterns to avoid:
 - God Object
 - Spaghetti Code
 - Golden Hammer
@@ -272,6 +289,22 @@ See [AntiPatterns/](AntiPatterns/) for common anti-patterns to avoid:
 - Hard Coding
 - Magic Numbers
 - And more...
+
+### SOLID Principles
+
+See [OtherTopics/SOLID/](OtherTopics/SOLID/) for the five fundamental object-oriented design principles:
+- Single Responsibility Principle (SRP)
+- Open/Closed Principle (OCP)
+- Liskov Substitution Principle (LSP)
+- Interface Segregation Principle (ISP)
+- Dependency Inversion Principle (DIP)
+
+### UML Relationships
+
+See [OtherTopics/UMLRelationships/](OtherTopics/UMLRelationships/) for comprehensive explanations of:
+- **UML Relationships**: Generalization, Association, Aggregation, Composition
+- **OOP Concepts**: Encapsulation, Inheritance, Polymorphism (compile-time and run-time), Abstraction
+- Code examples demonstrating each relationship type
 
 ## Contributing
 

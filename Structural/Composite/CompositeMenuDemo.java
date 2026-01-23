@@ -11,12 +11,14 @@ import java.util.Iterator;
 
 /**
  * COMPONENT (Abstract Class)
- * Defines the interface for all objects in the composition (both composite and leaf nodes).
+ * Defines the interface for all objects in the composition (both composite and
+ * leaf nodes).
  * Provides default implementations that throw UnsupportedOperationException.
  * 
  * Key Point: Some methods only make sense for MenuItems (like getPrice()),
  * and some only make sense for Menus (like add()). The default implementation
- * throws an exception, allowing each subclass to override only what makes sense.
+ * throws an exception, allowing each subclass to override only what makes
+ * sense.
  */
 abstract class MenuComponent {
     // Composite methods - for managing children
@@ -60,8 +62,10 @@ abstract class MenuComponent {
  * Represents individual menu items that have no children.
  * 
  * Key Points:
- * 1. Overrides methods that make sense (getName, getDescription, getPrice, isVegetarian, print)
- * 2. Inherits add(), remove(), getChild() which don't make sense - they'll throw exceptions
+ * 1. Overrides methods that make sense (getName, getDescription, getPrice,
+ * isVegetarian, print)
+ * 2. Inherits add(), remove(), getChild() which don't make sense - they'll
+ * throw exceptions
  * 3. This is a leaf node - it cannot have children
  */
 class MenuItem extends MenuComponent {
@@ -77,22 +81,27 @@ class MenuItem extends MenuComponent {
         this.price = price;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public double getPrice() {
         return price;
     }
 
+    @Override
     public boolean isVegetarian() {
         return vegetarian;
     }
 
+    @Override
     public void print() {
         System.out.print("  " + getName());
         if (isVegetarian()) {
@@ -112,7 +121,8 @@ class MenuItem extends MenuComponent {
  * 2. Implements add(), remove(), getChild() to manage children
  * 3. Implements getName(), getDescription() for menu information
  * 4. Implements print() which recursively calls print() on all children
- * 5. Does NOT override getPrice() or isVegetarian() - they don't make sense for menus
+ * 5. Does NOT override getPrice() or isVegetarian() - they don't make sense for
+ * menus
  */
 class Menu extends MenuComponent {
     ArrayList<MenuComponent> menuComponents = new ArrayList<>();
@@ -124,26 +134,32 @@ class Menu extends MenuComponent {
         this.description = description;
     }
 
+    @Override
     public void add(MenuComponent menuComponent) {
         menuComponents.add(menuComponent);
     }
 
+    @Override
     public void remove(MenuComponent menuComponent) {
         menuComponents.remove(menuComponent);
     }
 
+    @Override
     public MenuComponent getChild(int i) {
         return menuComponents.get(i);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void print() {
         System.out.print("\n" + getName());
         System.out.println(", " + getDescription());
@@ -152,7 +168,7 @@ class Menu extends MenuComponent {
         Iterator<MenuComponent> iterator = menuComponents.iterator();
         while (iterator.hasNext()) {
             MenuComponent menuComponent = iterator.next();
-            menuComponent.print();  // Recursive call - works for Menu or MenuItem
+            menuComponent.print(); // Recursive call - works for Menu or MenuItem
         }
     }
 }
@@ -174,7 +190,7 @@ class Waitress {
     }
 
     public void printMenu() {
-        allMenus.print();  // Works for entire menu hierarchy
+        allMenus.print(); // Works for entire menu hierarchy
     }
 }
 
@@ -207,88 +223,88 @@ public class CompositeMenuDemo {
 
         // Add menu items to Pancake House Menu
         pancakeHouseMenu.add(new MenuItem(
-            "K&B's Pancake Breakfast",
-            "Pancakes with scrambled eggs, and toast",
-            true,
-            2.99));
+                "K&B's Pancake Breakfast",
+                "Pancakes with scrambled eggs, and toast",
+                true,
+                2.99));
 
         pancakeHouseMenu.add(new MenuItem(
-            "Regular Pancake Breakfast",
-            "Pancakes with fried eggs, sausage",
-            false,
-            2.99));
+                "Regular Pancake Breakfast",
+                "Pancakes with fried eggs, sausage",
+                false,
+                2.99));
 
         pancakeHouseMenu.add(new MenuItem(
-            "Blueberry Pancakes",
-            "Pancakes made with fresh blueberries",
-            true,
-            3.49));
+                "Blueberry Pancakes",
+                "Pancakes made with fresh blueberries",
+                true,
+                3.49));
 
         // Add menu items to Diner Menu
         dinerMenu.add(new MenuItem(
-            "Vegetarian BLT",
-            "(Fakin') Bacon with lettuce & tomato on whole wheat",
-            true,
-            2.99));
+                "Vegetarian BLT",
+                "(Fakin') Bacon with lettuce & tomato on whole wheat",
+                true,
+                2.99));
 
         dinerMenu.add(new MenuItem(
-            "BLT",
-            "Bacon with lettuce & tomato on whole wheat",
-            false,
-            2.99));
+                "BLT",
+                "Bacon with lettuce & tomato on whole wheat",
+                false,
+                2.99));
 
         dinerMenu.add(new MenuItem(
-            "Soup of the day",
-            "Soup of the day, with a side of potato salad",
-            false,
-            3.29));
+                "Soup of the day",
+                "Soup of the day, with a side of potato salad",
+                false,
+                3.29));
 
         dinerMenu.add(new MenuItem(
-            "Hotdog",
-            "A hot dog, with saurkraut, relish, onions, topped with cheese",
-            false,
-            3.05));
+                "Hotdog",
+                "A hot dog, with saurkraut, relish, onions, topped with cheese",
+                false,
+                3.05));
 
         // Add dessert menu to diner menu (menu containing menu!)
         dinerMenu.add(dessertMenu);
 
         // Add items to dessert menu
         dessertMenu.add(new MenuItem(
-            "Apple Pie",
-            "Apple pie with a flakey crust, topped with vanilla icecream",
-            true,
-            1.59));
+                "Apple Pie",
+                "Apple pie with a flakey crust, topped with vanilla icecream",
+                true,
+                1.59));
 
         dessertMenu.add(new MenuItem(
-            "Cheesecake",
-            "Creamy New York cheesecake, with a chocolate graham crust",
-            true,
-            1.99));
+                "Cheesecake",
+                "Creamy New York cheesecake, with a chocolate graham crust",
+                true,
+                1.99));
 
         dessertMenu.add(new MenuItem(
-            "Sorbet",
-            "A scoop of raspberry and a scoop of lime",
-            true,
-            1.89));
+                "Sorbet",
+                "A scoop of raspberry and a scoop of lime",
+                true,
+                1.89));
 
         // Add menu items to Cafe Menu
         cafeMenu.add(new MenuItem(
-            "Veggie Burger and Air Fries",
-            "Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
-            true,
-            3.99));
+                "Veggie Burger and Air Fries",
+                "Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
+                true,
+                3.99));
 
         cafeMenu.add(new MenuItem(
-            "Soup of the day",
-            "A cup of the soup of the day, with a side salad",
-            false,
-            3.69));
+                "Soup of the day",
+                "A cup of the soup of the day, with a side salad",
+                false,
+                3.69));
 
         cafeMenu.add(new MenuItem(
-            "Burrito",
-            "A large burrito, with whole pinto beans, salsa, guacamole",
-            true,
-            4.29));
+                "Burrito",
+                "A large burrito, with whole pinto beans, salsa, guacamole",
+                true,
+                4.29));
 
         // Create waitress and print entire menu hierarchy
         Waitress waitress = new Waitress(allMenus);

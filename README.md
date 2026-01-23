@@ -19,6 +19,10 @@ This repository contains practical implementations of design patterns from the G
 
 ## Design Patterns Covered
 
+### Anti-Patterns
+
+- **[Anti-Patterns](AntiPatterns/)** - Common but ineffective solutions that lead to poor design. Learn what NOT to do and why it fails.
+
 ### Creational Patterns
 
 1. **[Singleton](Creational/Singleton/)** - Ensures a class has only one instance and provides global access to it
@@ -55,6 +59,12 @@ design_patterns/
 ├── Comparisons.md              # Cross-pattern comparisons
 ├── PatternsQuickRevision.md    # Quick revision summary
 ├── Prompt.md                   # Original prompt and context
+├── AntiPatterns/               # Anti-Patterns (what NOT to do)
+│   ├── README.md              # Anti-patterns documentation
+│   ├── GodObjectExample.java  # God Object anti-pattern example
+│   ├── SpaghettiCodeExample.java  # Spaghetti Code example
+│   ├── HardCodingExample.java # Hard Coding example
+│   └── MagicNumbersExample.java  # Magic Numbers example
 ├── Creational/                 # Creational Design Patterns
 │   ├── Singleton/
 │   │   ├── EagerSingletonDemo.java    # Eager initialization singleton
@@ -249,6 +259,18 @@ See [Comparisons.md](Comparisons.md) for detailed comparisons between:
 - Facade vs Builder/Factory
 - Facade vs Proxy
 - Factory vs Builder
+- And more...
+
+## Anti-Patterns
+
+See [AntiPatterns/](AntiPatterns/) for common anti-patterns to avoid:
+- God Object
+- Spaghetti Code
+- Golden Hammer
+- Copy-Paste Programming
+- Premature Optimization
+- Hard Coding
+- Magic Numbers
 - And more...
 
 ## Contributing

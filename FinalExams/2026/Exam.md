@@ -255,10 +255,18 @@ Bridge Pattern
 ### Question (5): UML → Pattern + Implementation Answer
 Adapter Pattern
 
-Implementation idea:
-- Target: `Shape.display(x1, y1, x2, y2)`
-- Adaptee: `LegacyRectangle.display(x1, y1, w, h)`
-- Adapter: `RectangleAdapter implements Shape`, wraps a `LegacyRectangle`, converts \((x2, y2)\) into \((w, h)\) where \(w = x2 - x1\), \(h = y2 - y1\).
+**Implementation:**
+- **Target interface:** `Shape.display(x1, y1, x2, y2)` - what the Client expects
+- **Adaptee:** `LegacyRectangle.display(x1, y1, w, h)` - existing incompatible class
+- **Adapter:** `RectangleAdapter implements Shape`, wraps a `LegacyRectangle`
+- **Conversion:** Converts \((x2, y2)\) coordinates into \((w, h)\) where \(w = x2 - x1\), \(h = y2 - y1\)
+
+**Key Points:**
+- The adapter implements the **target interface** (`Shape`) so the client can use it
+- The adapter **wraps** the adaptee (`LegacyRectangle`) internally
+- The adapter **converts** the method call from `display(x1, y1, x2, y2)` to `display(x1, y1, w, h)` by calculating width and height
+
+Implementation reference: `FinalExams/2026/Question5.java`
 
 ---
 

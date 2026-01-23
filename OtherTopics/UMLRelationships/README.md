@@ -9,10 +9,12 @@ This folder explains the fundamental UML relationships and Object-Oriented Progr
 ## Table of Contents
 
 - [UML Relationships](#uml-relationships)
-  - [1. Generalization (Inheritance)](#1-generalization-inheritance)
-  - [2. Association](#2-association)
-  - [3. Aggregation](#3-aggregation)
-  - [4. Composition](#4-composition)
+  - [1. Dependency](#1-dependency)
+  - [2. Generalization (Inheritance)](#2-generalization-inheritance)
+  - [3. Realization](#3-realization)
+  - [4. Association](#4-association)
+  - [5. Aggregation](#5-aggregation)
+  - [6. Composition](#6-composition)
 - [Object-Oriented Programming Concepts](#object-oriented-programming-concepts)
   - [1. Encapsulation](#1-encapsulation)
   - [2. Inheritance (Generalization)](#2-inheritance-generalization)
@@ -20,6 +22,7 @@ This folder explains the fundamental UML relationships and Object-Oriented Progr
     - [Compile-Time Polymorphism (Static Polymorphism)](#compile-time-polymorphism-static-polymorphism)
     - [Run-Time Polymorphism (Dynamic Polymorphism)](#run-time-polymorphism-dynamic-polymorphism)
   - [4. Abstraction](#4-abstraction)
+- [Visual Comparison of UML Relationships](#visual-comparison-of-uml-relationships)
 - [Quick Reference Table](#quick-reference-table)
 - [Relationship Strength Comparison](#relationship-strength-comparison)
 
@@ -27,7 +30,49 @@ This folder explains the fundamental UML relationships and Object-Oriented Progr
 
 ## UML Relationships
 
-### 1. Generalization (Inheritance)
+### 1. Dependency
+
+**Definition**: A temporary relationship where one class uses another class, but the relationship is not structural. The dependent class requires the other class for a specific operation or method.
+
+**UML Symbol**: Dashed arrow pointing from the dependent class to the class it depends on
+
+**Characteristics**:
+- Represents a "uses-a" relationship (temporary)
+- Weakest form of relationship
+- Typically used for method parameters, local variables, or return types
+- No structural ownership or containment
+- Objects can exist independently
+
+**Java Example**:
+```java
+class Order {
+    public void calculateTotal(Product product) {  // Dependency: Order uses Product
+        double total = product.getPrice();
+        System.out.println("Total: " + total);
+    }
+}
+
+class Product {
+    private double price;
+    
+    public Product(double price) {
+        this.price = price;
+    }
+    
+    public double getPrice() {
+        return price;
+    }
+}
+
+// Order depends on Product, but doesn't own it
+Order order = new Order();
+Product product = new Product(29.99);
+order.calculateTotal(product);  // Temporary dependency
+```
+
+---
+
+### 2. Generalization (Inheritance)
 
 **Definition**: This represents an inheritance relationship between classes.
 
@@ -66,7 +111,70 @@ class Dog extends Animal {
 
 ---
 
-### 2. Association
+### 3. Realization
+
+**Definition**: A relationship where a class implements an interface, providing concrete implementations for the abstract methods defined in the interface.
+
+**UML Symbol**: Dashed arrow with a hollow triangle pointing from the implementing class to the interface
+
+**Characteristics**:
+- Represents a "realizes" or "implements" relationship
+- Similar to inheritance but for interfaces
+- Class must implement all methods defined in the interface
+- Supports multiple interface implementation (multiple realization)
+- Promotes abstraction and polymorphism
+
+**Java Example**:
+```java
+// Interface
+interface Drawable {
+    void draw();
+    double getArea();
+}
+
+// Class realizes (implements) the interface
+class Circle implements Drawable {
+    private double radius;
+    
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle");
+    }
+    
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Another class can also realize the same interface
+class Rectangle implements Drawable {
+    private double width, height;
+    
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle");
+    }
+    
+    @Override
+    public double getArea() {
+        return width * height;
+    }
+}
+```
+
+---
+
+### 4. Association
 
 **Definition**: A general link between two classes, representing a relationship where objects are connected but independent.
 
@@ -106,7 +214,7 @@ class Course {
 
 ---
 
-### 3. Aggregation
+### 5. Aggregation
 
 **Definition**: A strong form of association representing a whole-part relationship where the part can exist independently from the whole.
 
@@ -157,7 +265,7 @@ uni.addDepartment(csDept);
 
 ---
 
-### 4. Composition
+### 6. Composition
 
 **Definition**: A form of aggregation with stricter constraints. A part can belong to at most one assembly (whole) and has a coincident lifetime with the assembly.
 
@@ -461,14 +569,57 @@ class ShapeDrawer {
 
 ---
 
+## Visual Comparison of UML Relationships
+
+The following diagrams provide multiple visual perspectives on UML relationships:
+
+### Comparison 1: Basic Relationship Overview
+
+![UML Relationships Comparison](Diagrams/comparison1.png)
+
+This diagram illustrates the fundamental UML relationships with abstract classes:
+- **Dependency** (uses): Dashed arrow - temporary "uses-a" relationship
+- **Aggregation** (has): Solid line with hollow diamond - "has-a" relationship, part can exist independently
+- **Composition** (owns): Solid line with filled diamond - "owns" relationship, part cannot exist without whole
+- **Inheritance** (is): Solid arrow with triangle - "is-a" relationship, inheritance hierarchy
+- **Realization** (realizes): Dashed arrow with triangle - class implements interface
+
+### Comparison 2: Real-World Examples
+
+![UML Relationships with Real-World Examples](Diagrams/comparison2.png)
+
+This diagram shows practical examples of each relationship type:
+- **Dependency**: Mechanic uses Tool (temporary relationship)
+- **Association**: Employee works in Company (general link)
+- **Aggregation**: Lecture has Students (part can exist independently)
+- **Composition**: Order consists of Order Items (part cannot exist without whole)
+- **Generalization/Inheritance**: Dog is Animal (inheritance hierarchy)
+- **Realization/Implementation**: Bird can Fly (implements Fly interface)
+
+### Comparison 3: Detailed UML Notation
+
+![UML Relationships with Detailed Notation](Diagrams/comparison3.png)
+
+This diagram demonstrates UML relationships with complete notation including multiplicities and attributes:
+- **Association**: Student takes Course (with multiplicity `*` to `1..*`)
+- **Dependency**: Person uses Movie (with attribute `hasSeen: bool`)
+- **Aggregation**: Student has Address (with multiplicity `1`)
+- **Composition**: Circle has CentrePoint (with multiplicity `1`, strong ownership)
+- **Inheritance**: Rectangle and Ellipse inherit from Shape (multiple subclasses)
+- **Realization**: Person and Company implement Owner interface (with interface methods and class attributes)
+
+---
+
 ## Quick Reference Table
 
 | Relationship | UML Symbol | Strength | Lifecycle | Example | Java Keyword |
 |-------------|------------|----------|-----------|---------|--------------|
-| **Generalization** | Solid arrow (→) | Strong | Inherited | Dog is-a Animal | `extends`, `implements` |
+| **Dependency** | Dashed arrow (⇢) | Weakest | Independent | Class A uses Class B | Method parameter, local variable |
 | **Association** | Simple line (—) | Weak | Independent | Student uses Course | Reference variable |
 | **Aggregation** | Hollow diamond (◇) | Medium | Independent | University has Department | Collection/Reference |
 | **Composition** | Filled diamond (◆) | Strong | Dependent | House owns Room | Object creation in constructor |
+| **Generalization** | Solid arrow (→) | Strong | Inherited | Dog is-a Animal | `extends` |
+| **Realization** | Dashed arrow with triangle (⇢) | Strong | Inherited | Class implements Interface | `implements` |
 
 ---
 

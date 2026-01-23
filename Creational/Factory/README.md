@@ -239,6 +239,8 @@ class Application {
 
 ## Pattern Comparison
 
+### Quick Reference Table
+
 | Aspect | Simple Factory | Factory Method | Abstract Factory |
 |--------|---------------|----------------|------------------|
 | **Complexity** | Simplest | Medium | Most complex |
@@ -246,37 +248,393 @@ class Application {
 | **Creation Method** | Parameterized method (if/else) | Abstract method in subclasses | Multiple methods in interface |
 | **Extensibility** | Must modify factory | Add new creator subclass | Add new factory implementation |
 | **OCP Compliance** | ❌ Violates (modify to extend) | ✅ Follows (extend via subclass) | ✅ Follows (extend via implementation) |
+| **DIP Compliance** | ⚠️ Partial (depends on concrete products) | ✅ Follows (depends on abstractions) | ✅ Follows (depends on abstractions) |
+| **Number of Products** | One product type | One product type | Multiple related products |
+| **Product Families** | No | No | Yes (ensures consistency) |
 | **Use Case** | Fixed set of types | One product with variants | Multiple related products |
 | **Example** | Notification (Email/SMS) | Dialog (Windows/Mac buttons) | GUI (Button + Checkbox families) |
 | **When to Use** | Small, fixed product set | One product, multiple creators | Product families requiring consistency |
+| **Code Modification** | Modify factory class | No modification (add subclass) | No modification (add implementation) |
+| **Inheritance Required** | No | Yes (creator hierarchy) | No (interface implementation) |
+| **Conditional Logic** | Yes (if/else or switch) | No | No |
 
 ### Detailed Comparison
 
-**Simple Factory vs Factory Method:**
-- Simple Factory: Uses conditional logic in a single class. Adding new types requires modifying the factory.
-- Factory Method: Uses inheritance. Adding new types requires creating new creator subclasses (no modification needed).
+#### 1. Simple Factory vs Factory Method
 
-**Factory Method vs Abstract Factory:**
-- Factory Method: Creates one product type. Subclasses implement a single factory method.
-- Abstract Factory: Creates families of products. Implementations provide multiple factory methods.
+**Key Differences:**
 
-**Simple Factory vs Abstract Factory:**
-- Simple Factory: One factory class, parameterized creation, single product type.
-- Abstract Factory: Factory interface, multiple implementations, multiple related products.
+| Aspect | Simple Factory | Factory Method |
+|--------|---------------|----------------|
+| **Structure** | One concrete factory class | Abstract creator + concrete creator subclasses |
+| **Creation Logic** | Conditional (if/else or switch) | Polymorphic (each subclass creates its own) |
+| **Adding New Types** | ❌ Modify factory class | ✅ Create new creator subclass |
+| **OCP Compliance** | ❌ Violates | ✅ Follows |
+| **Code Example** | `if (type.equals("A")) return new A();` | `abstract Product createProduct();` |
+
+**Code Comparison:**
+
+```java
+// ❌ Simple Factory - Violates OCP
+class SimpleFactory {
+    Product createProduct(String type) {
+        if (type.equals("A")) return new ProductA();
+        if (type.equals("B")) return new ProductB();
+        // Adding ProductC requires MODIFYING this method!
+        throw new IllegalArgumentException();
+    }
+}
+
+// ✅ Factory Method - Follows OCP
+abstract class Creator {
+    abstract Product createProduct();  // Factory method
+    
+    void operation() {
+        Product p = createProduct();
+        p.use();
+    }
+}
+
+class ConcreteCreatorA extends Creator {
+    Product createProduct() { return new ProductA(); }
+}
+
+class ConcreteCreatorB extends Creator {
+    Product createProduct() { return new ProductB(); }
+}
+
+// Adding ProductC: Just create ConcreteCreatorC - NO MODIFICATION!
+class ConcreteCreatorC extends Creator {
+    Product createProduct() { return new ProductC(); }
+}
+```
+
+**When to Choose:**
+- **Simple Factory**: Use when you have a small, fixed set of types that won't change often
+- **Factory Method**: Use when you need extensibility and want to follow OCP
+
+---
+
+#### 2. Factory Method vs Abstract Factory
+
+**Key Differences:**
+
+| Aspect | Factory Method | Abstract Factory |
+|--------|----------------|------------------|
+| **Products Created** | One product type | Multiple related products (family) |
+| **Factory Method Count** | One method | Multiple methods (one per product type) |
+| **Purpose** | Defer creation to subclasses | Create families of related objects |
+| **Consistency** | Not enforced | Enforced (all products from same family) |
+| **Example** | Button (Windows/Mac variants) | Button + Checkbox (both Windows or both Mac) |
+
+**Code Comparison:**
+
+```java
+// Factory Method - Creates ONE product type
+abstract class Dialog {
+    abstract Button createButton();  // Single factory method
+    
+    void render() {
+        Button btn = createButton();
+        btn.paint();
+    }
+}
+
+class WindowsDialog extends Dialog {
+    Button createButton() { return new WindowsButton(); }
+}
+
+class MacDialog extends Dialog {
+    Button createButton() { return new MacButton(); }
+}
+
+// Abstract Factory - Creates MULTIPLE related products
+interface GUIFactory {
+    Button createButton();      // Method 1
+    Checkbox createCheckbox();  // Method 2
+    // Can have more methods for more product types
+}
+
+class WindowsFactory implements GUIFactory {
+    Button createButton() { return new WindowsButton(); }
+    Checkbox createCheckbox() { return new WindowsCheckbox(); }
+    // Ensures Button and Checkbox are both Windows style
+}
+
+class MacFactory implements GUIFactory {
+    Button createButton() { return new MacButton(); }
+    Checkbox createCheckbox() { return new MacCheckbox(); }
+    // Ensures Button and Checkbox are both Mac style
+}
+
+class Application {
+    Application(GUIFactory factory) {
+        button = factory.createButton();      // From factory
+        checkbox = factory.createCheckbox();   // From same factory
+        // Both guaranteed to be from same family!
+    }
+}
+```
+
+**When to Choose:**
+- **Factory Method**: Use when you need to create one product type with variants
+- **Abstract Factory**: Use when you need multiple related products that must work together
+
+---
+
+#### 3. Simple Factory vs Abstract Factory
+
+**Key Differences:**
+
+| Aspect | Simple Factory | Abstract Factory |
+|--------|---------------|------------------|
+| **Complexity** | Simplest | Most complex |
+| **Products** | One product type | Multiple related products |
+| **Structure** | Single class | Interface + implementations |
+| **Extensibility** | Low (modify to extend) | High (implement interface) |
+| **Consistency** | Not enforced | Enforced across product family |
+
+**Code Comparison:**
+
+```java
+// Simple Factory - One product, parameterized
+class NotificationFactory {
+    Notification createNotification(String type) {
+        if (type.equals("Email")) return new EmailNotification();
+        if (type.equals("SMS")) return new SMSNotification();
+        throw new IllegalArgumentException();
+    }
+}
+
+// Abstract Factory - Multiple products, family consistency
+interface NotificationFactory {
+    EmailService createEmailService();
+    SMSService createSMSService();
+    PushService createPushService();
+}
+
+class EnterpriseFactory implements NotificationFactory {
+    EmailService createEmailService() { return new EnterpriseEmail(); }
+    SMSService createSMSService() { return new EnterpriseSMS(); }
+    PushService createPushService() { return new EnterprisePush(); }
+    // All services from same enterprise provider
+}
+
+class StartupFactory implements NotificationFactory {
+    EmailService createEmailService() { return new StartupEmail(); }
+    SMSService createSMSService() { return new StartupSMS(); }
+    PushService createPushService() { return new StartupPush(); }
+    // All services from same startup provider
+}
+```
+
+**When to Choose:**
+- **Simple Factory**: Use for simple, single-product creation with few types
+- **Abstract Factory**: Use when you need multiple related products with consistency guarantees
+
+---
+
+### Side-by-Side Code Example
+
+Here's the same problem solved with all three patterns:
+
+**Problem**: Create UI components for different operating systems.
+
+```java
+// ========== SIMPLE FACTORY ==========
+class ButtonFactory {
+    Button createButton(String os) {
+        if (os.equals("Windows")) return new WindowsButton();
+        if (os.equals("Mac")) return new MacButton();
+        throw new IllegalArgumentException();
+    }
+}
+
+// Usage
+ButtonFactory factory = new ButtonFactory();
+Button btn = factory.createButton("Windows");
+
+// ❌ Problem: Adding Linux requires modifying factory
+// ❌ Problem: Can't ensure Button and Checkbox match
+
+
+// ========== FACTORY METHOD ==========
+abstract class Dialog {
+    abstract Button createButton();
+    
+    void render() {
+        Button btn = createButton();
+        btn.paint();
+    }
+}
+
+class WindowsDialog extends Dialog {
+    Button createButton() { return new WindowsButton(); }
+}
+
+class MacDialog extends Dialog {
+    Button createButton() { return new MacButton(); }
+}
+
+// Usage
+Dialog dialog = new WindowsDialog();
+dialog.render();
+
+// ✅ Can add LinuxDialog without modification
+// ❌ Still can't ensure Button and Checkbox match
+
+
+// ========== ABSTRACT FACTORY ==========
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+class WindowsFactory implements GUIFactory {
+    Button createButton() { return new WindowsButton(); }
+    Checkbox createCheckbox() { return new WindowsCheckbox(); }
+}
+
+class MacFactory implements GUIFactory {
+    Button createButton() { return new MacButton(); }
+    Checkbox createCheckbox() { return new MacCheckbox(); }
+}
+
+class Application {
+    private Button button;
+    private Checkbox checkbox;
+    
+    Application(GUIFactory factory) {
+        button = factory.createButton();      // Windows
+        checkbox = factory.createCheckbox(); // Windows (guaranteed match!)
+    }
+}
+
+// Usage
+GUIFactory factory = new WindowsFactory();
+Application app = new Application(factory);
+// ✅ Both button and checkbox are Windows style
+// ✅ Can add LinuxFactory without modification
+// ✅ Consistency guaranteed
+```
+
+---
+
+### Decision Tree
+
+```
+Do you need to create products?
+│
+├─ Is it a fixed, small set of types? (2-5 types)
+│  └─ YES → Use Simple Factory
+│
+├─ Do you need ONE product type with variants?
+│  └─ YES → Use Factory Method
+│     │
+│     └─ Do you need extensibility without modification?
+│        └─ YES → Factory Method (follows OCP)
+│
+└─ Do you need MULTIPLE related products?
+   └─ YES → Use Abstract Factory
+      │
+      └─ Do products need to be from the same family?
+         └─ YES → Abstract Factory (ensures consistency)
+```
+
+---
+
+### Summary of Key Differences
+
+1. **Simple Factory**
+   - Simplest pattern
+   - Single factory class with parameterized method
+   - Uses conditional logic (if/else)
+   - ❌ Violates OCP (must modify to extend)
+   - ✅ Good for small, fixed sets
+
+2. **Factory Method**
+   - Medium complexity
+   - Abstract creator with factory method in subclasses
+   - Uses inheritance and polymorphism
+   - ✅ Follows OCP (extend via subclass)
+   - ✅ Good for one product with variants
+
+3. **Abstract Factory**
+   - Most complex pattern
+   - Factory interface with multiple methods
+   - Creates families of related products
+   - ✅ Follows OCP (extend via implementation)
+   - ✅ Ensures consistency across product family
+   - ✅ Good for multiple related products
 
 ### Evolution Path
+
+The three factory patterns represent an evolution from simple to complex, each solving progressively more sophisticated problems:
 
 ```
 Simple Factory → Factory Method → Abstract Factory
      ↓                ↓                  ↓
   Parameter      Inheritance      Interface
   if/else        Subclasses       Implementations
+  Single Class   Creator Hierarchy Factory Interface
 ```
 
 **Progression:**
-1. **Simple Factory**: Start here for basic object creation with a few types.
-2. **Factory Method**: Move here when you need extensibility without modifying existing code.
-3. **Abstract Factory**: Use when you need to create families of related objects that must work together.
+
+1. **Simple Factory** (Start Here)
+   - **When**: You have a small, fixed set of product types
+   - **Approach**: Single factory class with conditional logic
+   - **Trade-off**: Simple but violates OCP
+   - **Next Step**: Move to Factory Method when you need extensibility
+
+2. **Factory Method** (Extensibility)
+   - **When**: You need one product type with variants, and extensibility
+   - **Approach**: Abstract creator with factory method in subclasses
+   - **Trade-off**: More complex but follows OCP
+   - **Next Step**: Move to Abstract Factory when you need product families
+
+3. **Abstract Factory** (Product Families)
+   - **When**: You need multiple related products that must work together
+   - **Approach**: Factory interface with multiple creation methods
+   - **Trade-off**: Most complex but ensures consistency
+   - **Use Case**: Complete systems requiring family consistency
+
+**Migration Example:**
+
+```java
+// Stage 1: Simple Factory
+class ButtonFactory {
+    Button create(String os) {
+        if (os.equals("Windows")) return new WindowsButton();
+        if (os.equals("Mac")) return new MacButton();
+        return null;
+    }
+}
+
+// Stage 2: Factory Method (when you need extensibility)
+abstract class Dialog {
+    abstract Button createButton();
+    void render() {
+        Button btn = createButton();
+        btn.paint();
+    }
+}
+class WindowsDialog extends Dialog {
+    Button createButton() { return new WindowsButton(); }
+}
+
+// Stage 3: Abstract Factory (when you need product families)
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+class WindowsFactory implements GUIFactory {
+    Button createButton() { return new WindowsButton(); }
+    Checkbox createCheckbox() { return new WindowsCheckbox(); }
+}
+```
+
+**Key Insight**: Each pattern builds on the previous one, solving more complex problems while maintaining good design principles.
 
 ---
 

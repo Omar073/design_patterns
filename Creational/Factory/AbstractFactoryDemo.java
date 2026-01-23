@@ -77,7 +77,7 @@ class Application {
     private final Checkbox checkbox;
 
     Application(GUIFactory factory) {
-        this.button = factory.createButton();   // choose family at runtime
+        this.button = factory.createButton(); // choose family at runtime
         this.checkbox = factory.createCheckbox();
     }
 
@@ -111,7 +111,8 @@ class DirectApp {
 
 public class AbstractFactoryDemo {
     public static void main(String[] args) {
-        boolean isMac = System.getProperty("os.name").toLowerCase().contains("mac");
+        boolean isMac = false;
+
         GUIFactory factory = isMac ? new MacFactory() : new WindowsFactory();
         System.out.println("== With Abstract Factory ==");
         new Application(factory).render();
@@ -120,4 +121,3 @@ public class AbstractFactoryDemo {
         new DirectApp(isMac).render();
     }
 }
-

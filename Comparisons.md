@@ -27,6 +27,7 @@ A comprehensive guide to understanding the differences, similarities, and use ca
    - [Mediator vs Facade](#mediator-vs-facade)
    - [Mediator vs Observer](#mediator-vs-observer)
    - [Mediator vs Command](#mediator-vs-command)
+   - [Command vs Memento (for Undo Functionality)](#command-vs-memento-for-undo-functionality)
    - [Strategy vs Facade](#strategy-vs-facade)
 
 4. [Cross-Category Comparisons](#cross-category-comparisons)
@@ -1793,79 +1794,266 @@ remote.pressButton();
 
 ---
 
-### Memento vs Command (for Undo)
+### Command vs Memento (for Undo Functionality)
 
 #### Overview
 
-Both patterns can be used for undo functionality, but they approach it differently: Memento stores state snapshots while Command stores operations.
+Both **Command Pattern** and **Memento Pattern** can be used to implement undo/redo functionality, but they work in fundamentally different ways. Understanding the difference is crucial for choosing the right pattern.
 
-| Aspect | Memento | Command |
-|--------|---------|---------|
-| **Intent** | Save/restore object state | Encapsulate operations as objects |
-| **What's Stored** | State snapshots | Operations (commands) |
-| **Undo Mechanism** | Restore previous state | Execute inverse operation |
-| **Encapsulation** | State hidden in memento | Operation hidden in command |
-| **Use Case** | State-based undo | Operation-based undo |
+| Aspect | Command Pattern | Memento Pattern |
+|--------|----------------|-----------------|
+| **Intent** | Encapsulate operations as objects | Save/restore object state |
+| **What's Stored** | Operations/Commands | State Snapshots |
+| **Undo Mechanism** | Execute inverse operation | Restore previous state |
+| **Storage** | Command history | State history |
+| **Best for** | Operations with clear inverses | Complex state restoration |
+| **Granularity** | Per-operation | Per-state-snapshot |
+| **Memory** | Stores operations (usually smaller) | Stores complete state (can be larger) |
+
+#### How They Work
+
+**Command Pattern for Undo:**
+- Stores **operations/commands** as objects in a history
+- Each command knows how to **execute** and **undo** itself
+- Undo is achieved by calling the command's `undo()` method
+- Commands store the **inverse operation** or **reverse action**
+- Stores **what was done** (the operation)
+
+**Memento Pattern for Undo:**
+- Stores **snapshots of object state** at various points
+- Undo is achieved by **restoring a previous state snapshot**
+- The originator creates mementos (snapshots) before changes
+- Stores **how things were** (the state)
+- Captures complete state at a point in time
 
 #### Code Comparison
 
-**Memento:**
+**Command Pattern:**
+```java
+// Command: Stores operations with inverse actions
+class AddCommand implements Command {
+    private int value;
+    private Calculator calc;
+    
+    void execute() { 
+        calc.add(value); 
+    }
+    
+    void undo() { 
+        calc.subtract(value);  // Inverse operation
+    }
+}
+
+class CommandHistory {
+    private Stack<Command> history = new Stack<>();
+    
+    void execute(Command cmd) {
+        cmd.execute();
+        history.push(cmd);
+    }
+    
+    void undo() {
+        if (!history.isEmpty()) {
+            history.pop().undo();  // Execute inverse operation
+        }
+    }
+}
+
+// Usage: Undo by executing inverse operation
+CommandHistory history = new CommandHistory();
+history.execute(new AddCommand(5, calculator));
+history.execute(new MultiplyCommand(2, calculator));
+history.undo();  // Undoes multiply by calling multiplyCommand.undo()
+```
+
+**Memento Pattern:**
 ```java
 // Memento: Stores state snapshots
-class TextEditor {
-    public Memento save() {
-        return new Memento(this.content, this.cursorPosition);
+class TextMemento {
+    private String text;  // Snapshot of text state
+    
+    TextMemento(String text) {
+        this.text = text;
     }
     
-    public void restore(Memento memento) {
-        this.content = memento.getContent();
-        this.cursorPosition = memento.getCursorPosition();
+    String getText() { return text; }
+}
+
+class TextEditor {
+    private String text;
+    
+    TextMemento save() {
+        return new TextMemento(text);  // Create state snapshot
+    }
+    
+    void restore(TextMemento m) {
+        this.text = m.getText();  // Restore previous state
+    }
+    
+    void append(String s) {
+        this.text += s;
     }
 }
 
-// Undo: Restore previous state
-editor.restore(history.undo());
+class History {
+    private Stack<TextMemento> history = new Stack<>();
+    
+    void saveState(TextEditor editor) {
+        history.push(editor.save());  // Save state snapshot
+    }
+    
+    TextMemento undo() {
+        return history.pop();  // Get previous state
+    }
+}
+
+// Usage: Undo by restoring previous state
+History history = new History();
+history.saveState(editor);  // Save state before change
+editor.append("Hello");
+history.saveState(editor);  // Save state after change
+editor.restore(history.undo());  // Restore to previous state
 ```
 
-**Command:**
+#### When to Use Which?
+
+**Use Command Pattern when:**
+- Operations have clear inverse operations (add/subtract, insert/delete)
+- You need fine-grained control over what gets undone
+- Operations are discrete and well-defined
+- You want to queue, log, or schedule operations
+- Example: Text editor with operations like "insert text", "delete character", "format bold"
+
+**Use Memento Pattern when:**
+- Object state is complex and hard to reverse
+- You need to restore to any previous state (not just sequential undo)
+- State changes don't have simple inverse operations
+- You need checkpoints or save points
+- Example: Game save system, complex document state, configuration settings
+
+#### Combined Approach
+
+In practice, many applications use **both patterns together**:
+- **Command Pattern**: For operation history and undo/redo queue
+- **Memento Pattern**: For saving/restoring complete state snapshots
+
+**Example:**
 ```java
-// Command: Stores operations
-class WriteCommand implements Command {
-    private String text;
+// Command uses Memento internally
+class SaveStateCommand implements Command {
+    private Memento beforeState;
+    private Memento afterState;
     private TextEditor editor;
     
-    public void execute() {
-        editor.write(text);
+    void execute() {
+        beforeState = editor.save();  // Memento: save state before
+        editor.makeChange();
+        afterState = editor.save();   // Memento: save state after
     }
     
-    public void undo() {
-        editor.delete(text.length());  // Inverse operation
+    void undo() {
+        editor.restore(beforeState);  // Memento: restore previous state
     }
 }
 
-// Undo: Execute inverse operation
-command.undo();
+// Command history manages commands
+CommandHistory history = new CommandHistory();
+history.execute(new SaveStateCommand(editor));
+history.undo();  // Restores state via Memento
 ```
 
-#### Key Differences
+#### Key Differences Summary
 
-1. **What's Stored**
-   - **Memento**: **State snapshots** at specific points in time
-   - **Command**: **Operations** (actions) that can be executed/undone
+1. **Storage Approach:**
+   - **Command**: Stores "what was done" (operations)
+   - **Memento**: Stores "how things were" (state)
 
-2. **Undo Mechanism**
-   - **Memento**: **Restore** previous state from snapshot
-   - **Command**: **Execute inverse** operation to undo
+2. **Undo Mechanism:**
+   - **Command**: Executes inverse operation
+   - **Memento**: Restores previous snapshot
 
-3. **Memory Usage**
-   - **Memento**: Stores full state (can be memory-intensive)
-   - **Command**: Stores operation details (usually smaller)
+3. **Complexity:**
+   - **Command**: Requires defining inverse operations
+   - **Memento**: Requires state serialization/deserialization
 
-4. **Use Cases**
-   - **Memento**: Text editors, graphics applications, games (save/load)
-   - **Command**: Menu systems, macro recording, transaction systems
+4. **Memory:**
+   - **Command**: Usually smaller (stores operations, not full state)
+   - **Memento**: Can be larger (stores complete state snapshots)
 
-**They can work together**: Command pattern can use Memento to store state before operations.
+5. **Flexibility:**
+   - **Command**: Better for sequential undo of operations
+   - **Memento**: Better for jumping to any previous state
+
+#### When to Use Which?
+
+**Use Command Pattern when:**
+- Operations have clear inverse operations (add/subtract, insert/delete)
+- You need fine-grained control over what gets undone
+- Operations are discrete and well-defined
+- You want to queue, log, or schedule operations
+- Example: Text editor with operations like "insert text", "delete character", "format bold"
+
+**Use Memento Pattern when:**
+- Object state is complex and hard to reverse
+- You need to restore to any previous state (not just sequential undo)
+- State changes don't have simple inverse operations
+- You need checkpoints or save points
+- Example: Game save system, complex document state, configuration settings
+
+#### Key Differences Summary
+
+1. **Storage Approach:**
+   - **Command**: Stores "what was done" (operations)
+   - **Memento**: Stores "how things were" (state)
+
+2. **Undo Mechanism:**
+   - **Command**: Executes inverse operation
+   - **Memento**: Restores previous snapshot
+
+3. **Complexity:**
+   - **Command**: Requires defining inverse operations
+   - **Memento**: Requires state serialization/deserialization
+
+4. **Memory:**
+   - **Command**: Usually smaller (stores operations, not full state)
+   - **Memento**: Can be larger (stores complete state snapshots)
+
+5. **Flexibility:**
+   - **Command**: Better for sequential undo of operations
+   - **Memento**: Better for jumping to any previous state
+
+6. **Use Cases:**
+   - **Command**: Menu systems, macro recording, transaction systems, remote controls
+   - **Memento**: Text editors, graphics applications, games (save/load), configuration management
+
+#### Combined Approach
+
+**They can work together**: Command Pattern can use Memento internally to store state before operations, combining both approaches for more robust undo functionality.
+
+**Example:**
+```java
+// Command uses Memento internally
+class SaveStateCommand implements Command {
+    private Memento beforeState;
+    private Memento afterState;
+    private TextEditor editor;
+    
+    void execute() {
+        beforeState = editor.save();  // Memento: save state before
+        editor.makeChange();
+        afterState = editor.save();   // Memento: save state after
+    }
+    
+    void undo() {
+        editor.restore(beforeState);  // Memento: restore previous state
+    }
+}
+
+// Command history manages commands
+CommandHistory history = new CommandHistory();
+history.execute(new SaveStateCommand(editor));
+history.undo();  // Restores state via Memento
+```
 
 ---
 

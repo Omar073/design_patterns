@@ -274,6 +274,14 @@ See [Comparisons.md](Comparisons.md) for detailed comparisons between:
 - Factory vs Builder
 - And more...
 
+## Design Patterns and SOLID Principles
+
+See [DesignPatternsAndSOLID.md](DesignPatternsAndSOLID.md) for a comprehensive analysis of:
+- Which patterns follow SOLID principles
+- Which patterns may violate SOLID principles
+- Context-dependent cases (e.g., Factory Pattern and OCP)
+- Summary table of pattern compliance with each SOLID principle
+
 ## Other Topics
 
 ### Other Topics

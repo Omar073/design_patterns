@@ -12,7 +12,7 @@
 
 ### 4. Which of the following patterns dynamically attaches additional responsibilities to an object?
 
-### 5. Which pattern allows an object to alter its behavior when its internal state changes?
+### 5. Which pattern allows an object to alter its behavior when its internal condition changes?
 
 ### 6. In which design pattern does a client interact with multiple incompatible interfaces by converting them into a unified interface?
 
@@ -46,11 +46,11 @@
 
 ### 21. What does the Singleton pattern ensure?
 
-### 22. Which pattern defines how a set of objects interact by encapsulating their communication in a mediator object?
+### 22. Which pattern defines how a set of objects interact by encapsulating their communication in a central object?
 
 ### 23. What does the Bridge pattern decouple?
 
-### 24. Which pattern captures and externalizes an object's internal state so that the object can be restored to this state later?
+### 24. Which pattern captures and externalizes an object's internal condition so that the object can be restored to this condition later?
 
 ### 25. Which pattern provides a way to create objects without exposing the instantiation logic to the client?
 
@@ -103,6 +103,36 @@
 ### 49. Which pattern lets clients treat individual objects and compositions of objects uniformly?
 
 ### 50. You're building a GUI framework where containers can hold widgets and other containers. You want to apply operations like "render()" to both containers and individual widgets uniformly. Which pattern should you use?
+
+### 51. You're building a text editor that needs undo/redo functionality. Users should be able to undo their last action and redo it if needed. Which pattern should you use?
+
+### 52. You're designing a payment processing system where payment requests can be handled by different processors (credit card, PayPal, bank transfer). Each processor should try to handle the request, and if it can't, pass it to the next processor. Which pattern should you use?
+
+### 53. You're building a game where characters can use different attack strategies (melee, ranged, magic). Players should be able to switch between strategies during gameplay. Which pattern should you use?
+
+### 54. You're implementing a smart home system where multiple devices (lights, thermostat, security system) need to communicate with each other. You want to avoid each device knowing about all other devices. Which pattern should you use?
+
+### 55. You're building a weather monitoring system where multiple display devices (phone app, desktop widget, email notification) need to be updated whenever weather data changes. Which pattern should you use?
+
+### 56. You're designing a vending machine where the behavior changes based on its state (idle, has money, dispensing, out of stock). Instead of using many if-else statements, you want a cleaner solution. Which pattern should you use?
+
+### 57. You're building a remote control system where each button press should be treated as an object that can be executed, queued, logged, or undone. Which pattern should you use?
+
+### 58. You're implementing a customer support system where support tickets can be handled at different levels (Level 1, Level 2, Level 3). Each level should try to handle the ticket, and if it can't, escalate to the next level. Which pattern should you use?
+
+### 59. You're designing an encryption system where users can choose between different encryption algorithms (AES, DES, RSA). The system should allow switching algorithms without changing the client code. Which pattern should you use?
+
+### 60. You're building a document editor where you need to save the document's state at various points so users can restore to previous versions. Which pattern should you use?
+
+### 61. You're implementing a stock trading system where multiple traders need to be notified immediately when stock prices change. Which pattern should you use?
+
+### 62. You're designing an air traffic control system where multiple aircraft need to communicate their positions and receive clearance. You want to avoid direct communication between aircraft. Which pattern should you use?
+
+### 63. You're building a calculator application where each operation (add, subtract, multiply) should be treated as an object that can be executed, undone, and redone. Which pattern should you use?
+
+### 64. You're implementing a file processing system where files can be processed by different handlers (text processor, image processor, video processor). Each handler checks if it can process the file, and if not, passes it to the next handler. Which pattern should you use?
+
+### 65. You're designing a media player where playback behavior changes based on state (stopped, playing, paused). You want to avoid complex conditional logic. Which pattern should you use?
 
 ---
 
@@ -168,6 +198,36 @@
 
 ### 30. You're building an organization chart where departments can contain employees and sub-departments. You want to calculate total salary or print the hierarchy uniformly for both departments and employees.
 
+### 31. You're building a text editor that needs undo/redo functionality. Users should be able to undo their last action and redo it if needed.
+
+### 32. You're designing a payment processing system where payment requests can be handled by different processors (credit card, PayPal, bank transfer). Each processor should try to handle the request, and if it can't, pass it to the next processor.
+
+### 33. You're building a game where characters can use different attack strategies (melee, ranged, magic). Players should be able to switch between strategies during gameplay.
+
+### 34. You're implementing a smart home system where multiple devices (lights, thermostat, security system) need to communicate with each other. You want to avoid each device knowing about all other devices.
+
+### 35. You're building a weather monitoring system where multiple display devices (phone app, desktop widget, email notification) need to be updated whenever weather data changes.
+
+### 36. You're designing a vending machine where the behavior changes based on its state (idle, has money, dispensing, out of stock). Instead of using many if-else statements, you want a cleaner solution.
+
+### 37. You're building a remote control system where each button press should be treated as an object that can be executed, queued, logged, or undone.
+
+### 38. You're implementing a customer support system where support tickets can be handled at different levels (Level 1, Level 2, Level 3). Each level should try to handle the ticket, and if it can't, escalate to the next level.
+
+### 39. You're designing an encryption system where users can choose between different encryption algorithms (AES, DES, RSA). The system should allow switching algorithms without changing the client code.
+
+### 40. You're building a document editor where you need to save the document's state at various points so users can restore to previous versions.
+
+### 41. You're implementing a stock trading system where multiple traders need to be notified immediately when stock prices change.
+
+### 42. You're designing an air traffic control system where multiple aircraft need to communicate their positions and receive clearance. You want to avoid direct communication between aircraft.
+
+### 43. You're building a calculator application where each operation (add, subtract, multiply) should be treated as an object that can be executed, undone, and redone.
+
+### 44. You're implementing a file processing system where files can be processed by different handlers (text processor, image processor, video processor). Each handler checks if it can process the file, and if not, passes it to the next handler.
+
+### 45. You're designing a media player where playback behavior changes based on state (stopped, playing, paused). You want to avoid complex conditional logic.
+
 ---
 
 ## Question (3): True/False Questions
@@ -231,6 +291,36 @@ Put T/F and correct the wrong answer.
 ### 28. The Composite pattern lets clients treat individual objects and compositions uniformly.
 
 ### 29. In the Composite pattern, the Component class typically provides default implementations that throw UnsupportedOperationException.
+
+### 30. The Strategy pattern allows you to define a family of algorithms and make them interchangeable at runtime.
+
+### 31. The Command pattern encapsulates a request as an object, allowing you to parameterize clients with different requests.
+
+### 32. The Chain of Responsibility pattern passes a request along a chain of handlers until one handles it.
+
+### 33. The Mediator pattern reduces communication complexity by allowing objects to communicate directly with each other.
+
+### 34. The Memento pattern allows an object to save and restore its previous state.
+
+### 35. The Observer pattern defines a one-to-many dependency between objects.
+
+### 36. The State pattern allows an object to alter its behavior when its internal state changes.
+
+### 37. The Strategy pattern violates the Open/Closed Principle because you must modify code to add new strategies.
+
+### 38. The Command pattern supports undo/redo operations by storing command history.
+
+### 39. The Chain of Responsibility pattern ensures that every request is handled by exactly one handler.
+
+### 40. The Mediator pattern promotes loose coupling between objects by centralizing their communication.
+
+### 41. The Memento pattern exposes the internal structure of an object to allow state restoration.
+
+### 42. The Observer pattern allows multiple observers to be notified when a subject's state changes.
+
+### 43. The State pattern eliminates the need for large conditional statements based on object state.
+
+### 44. The Strategy pattern is useful when you have multiple ways to perform a task and want to choose the algorithm at runtime.
 
 ---
 
@@ -482,6 +572,51 @@ Put T/F and correct the wrong answer.
 ### Answer 30
 **Composite Pattern** - The Composite pattern allows departments (composites) and employees (leaves) to be treated uniformly, enabling recursive operations on the hierarchy.
 
+### Answer 31
+**Command Pattern** - The Command pattern encapsulates operations as objects, allowing them to be stored in a history for undo/redo functionality.
+
+### Answer 32
+**Chain of Responsibility Pattern** - The Chain of Responsibility pattern allows payment processors to try handling requests and pass them along if they cannot process them.
+
+### Answer 33
+**Strategy Pattern** - The Strategy pattern allows different attack strategies to be swapped at runtime during gameplay.
+
+### Answer 34
+**Mediator Pattern** - The Mediator pattern centralizes communication between devices, avoiding tight coupling where each device knows about all others.
+
+### Answer 35
+**Observer Pattern** - The Observer pattern allows multiple display devices to be notified whenever weather data changes.
+
+### Answer 36
+**State Pattern** - The State pattern allows behavior to change based on the vending machine's state, eliminating complex if-else statements.
+
+### Answer 37
+**Command Pattern** - The Command pattern treats button presses as command objects that can be executed, queued, logged, or undone.
+
+### Answer 38
+**Chain of Responsibility Pattern** - The Chain of Responsibility pattern allows support tickets to be handled at different levels, with escalation to the next level if needed.
+
+### Answer 39
+**Strategy Pattern** - The Strategy pattern allows switching between encryption algorithms without changing client code.
+
+### Answer 40
+**Memento Pattern** - The Memento pattern allows saving document state at various points for restoration to previous versions.
+
+### Answer 41
+**Observer Pattern** - The Observer pattern allows multiple traders to be notified immediately when stock prices change.
+
+### Answer 42
+**Mediator Pattern** - The Mediator pattern allows aircraft to communicate through a central air traffic control mediator, avoiding direct communication.
+
+### Answer 43
+**Command Pattern** - The Command pattern treats operations as objects that can be executed, undone, and redone.
+
+### Answer 44
+**Chain of Responsibility Pattern** - The Chain of Responsibility pattern allows file handlers to check if they can process a file and pass it along if they cannot.
+
+### Answer 45
+**State Pattern** - The State pattern allows playback behavior to change based on state (stopped, playing, paused), avoiding complex conditional logic.
+
 ---
 
 ## Question (3): True/False Answers
@@ -573,6 +708,51 @@ Put T/F and correct the wrong answer.
 ### Answer 29
 **True** - The Component class typically provides default implementations that throw UnsupportedOperationException for methods that don't make sense for all component types.
 
+### Answer 30
+**True** - The Strategy pattern allows you to define a family of algorithms and make them interchangeable at runtime.
+
+### Answer 31
+**True** - The Command pattern encapsulates a request as an object, allowing parameterization of clients with different requests.
+
+### Answer 32
+**True** - The Chain of Responsibility pattern passes a request along a chain of handlers until one handles it.
+
+### Answer 33
+**False** - The Mediator pattern reduces communication complexity by centralizing communication through a mediator, NOT by allowing direct communication. Objects communicate via the mediator, not directly with each other.
+
+### Answer 34
+**True** - The Memento pattern allows an object to save and restore its previous state.
+
+### Answer 35
+**True** - The Observer pattern defines a one-to-many dependency between objects.
+
+### Answer 36
+**True** - The State pattern allows an object to alter its behavior when its internal state changes.
+
+### Answer 37
+**False** - The Strategy pattern FOLLOWS the Open/Closed Principle. You can add new strategies by creating new classes without modifying existing code.
+
+### Answer 38
+**True** - The Command pattern supports undo/redo operations by storing command history.
+
+### Answer 39
+**False** - The Chain of Responsibility pattern does NOT ensure every request is handled. A request might pass through the entire chain without being handled if no handler can process it.
+
+### Answer 40
+**True** - The Mediator pattern promotes loose coupling between objects by centralizing their communication.
+
+### Answer 41
+**False** - The Memento pattern does NOT expose the internal structure. It encapsulates the state and only the originator can access it, maintaining encapsulation.
+
+### Answer 42
+**True** - The Observer pattern allows multiple observers to be notified when a subject's state changes.
+
+### Answer 43
+**True** - The State pattern eliminates the need for large conditional statements based on object state.
+
+### Answer 44
+**True** - The Strategy pattern is useful when you have multiple ways to perform a task and want to choose the algorithm at runtime.
+
 ---
 
 ## Pattern Quick Reference
@@ -596,8 +776,8 @@ Put T/F and correct the wrong answer.
 ### Behavioral Patterns
 - **Chain of Responsibility**: Pass requests along a chain of handlers
 - **Command**: Encapsulate requests as objects
-- **Iterator**: Provide sequential access to elements
-- **Mediator**: Define how objects interact
+- **Iterator**: Provide sequential access to elements (Note: Not covered in practice questions)
+- **Mediator**: Define how objects interact (Note: ASU course did not require code structure study)
 - **Memento**: Capture and restore object state
 - **Observer**: Notify dependents of state changes
 - **State**: Allow behavior to change with state
@@ -617,6 +797,7 @@ Put T/F and correct the wrong answer.
    - **Strategy vs State**: Strategy swaps algorithms; State changes behavior based on state
    - **Observer vs Mediator**: Observer notifies multiple objects; Mediator coordinates interactions
    - **Command vs Strategy**: Command encapsulates requests; Strategy encapsulates algorithms
+   - **Command vs Memento (Undo)**: Command stores operations with inverse actions; Memento stores state snapshots
 
 3. **Look for Keywords**:
    - "Only one instance" → Singleton
@@ -640,3 +821,67 @@ Put T/F and correct the wrong answer.
    - "Uniform treatment" → Composite
 
 4. **Practice Scenarios**: Think of real-world examples for each pattern to reinforce understanding.
+
+---
+
+## Differentiating Command and Memento Patterns for Undo Functionality
+
+Both **Command Pattern** and **Memento Pattern** can be used to implement undo/redo functionality, but they work in fundamentally different ways:
+
+### Command Pattern for Undo
+
+**How it works:**
+- Stores **operations/commands** as objects in a history
+- Each command knows how to **execute** and **undo** itself
+- Undo is achieved by calling the command's `undo()` method
+- Commands store the **inverse operation** or **reverse action**
+
+**Key Characteristics:**
+- ✅ Stores **what was done** (the operation)
+- ✅ Each command knows its own undo logic
+- ✅ Can undo specific operations in sequence
+- ✅ Good for operations that have clear inverse operations (add/subtract, insert/delete)
+
+**Example Use Case:** Text editor where operations like "insert text", "delete character", "format bold" can be undone by executing their inverse operations.
+
+### Memento Pattern for Undo
+
+**How it works:**
+- Stores **snapshots of object state** at various points
+- Undo is achieved by **restoring a previous state snapshot**
+- The originator (object) creates mementos (snapshots) before changes
+- To undo, restore the previous memento
+
+**Key Characteristics:**
+- ✅ Stores **how things were** (the state)
+- ✅ Captures complete state at a point in time
+- ✅ Can restore to any previous state snapshot
+- ✅ Good for complex objects where inverse operations are difficult
+
+**Example Use Case:** Game save system, complex document state restoration, configuration settings where you need to restore complete state.
+
+### When to Use Which?
+
+**Use Command Pattern when:**
+- Operations have clear inverse operations (add/subtract, insert/delete)
+- You need fine-grained control over what gets undone
+- Operations are discrete and well-defined
+- Example: Text editor with operations like "insert text", "delete character", "format bold"
+
+**Use Memento Pattern when:**
+- Object state is complex and hard to reverse
+- You need to restore to any previous state (not just sequential undo)
+- State changes don't have simple inverse operations
+- Example: Game save system, complex document state, configuration settings
+
+### Quick Comparison
+
+| Aspect | Command Pattern | Memento Pattern |
+|--------|----------------|-----------------|
+| **What is stored** | Operations/Commands | State Snapshots |
+| **Undo mechanism** | Execute inverse operation | Restore previous state |
+| **Storage** | Command history | State history |
+| **Best for** | Operations with clear inverses | Complex state restoration |
+| **Granularity** | Per-operation | Per-state-snapshot |
+
+**Note:** In practice, many applications use **both patterns together** - Command Pattern for operation history and Memento Pattern for saving/restoring complete state snapshots.

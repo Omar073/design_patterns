@@ -562,10 +562,96 @@ public class CommandQueue {
 
 ## Compare with Other Patterns
 
-- **vs Strategy**: Strategy encapsulates algorithms; Command encapsulates requests/operations
-- **vs Memento**: Memento stores state for undo; Command stores operations for undo
-- **vs Chain of Responsibility**: Chain passes requests along a chain; Command encapsulates requests
-- **vs Observer**: Observer notifies multiple observers; Command encapsulates a single operation
+### Command vs Strategy
+
+**Command:**
+- Encapsulates **requests/operations** as objects
+- Focuses on **what to do** (actions)
+- Supports undo/redo, queuing, logging
+- Example: TurnOnCommand, TurnOffCommand
+
+**Strategy:**
+- Encapsulates **algorithms** as objects
+- Focuses on **how to do** something (methods)
+- Supports swapping algorithms at runtime
+- Example: QuickSortStrategy, MergeSortStrategy
+
+**Key Difference:** Command = what action to perform; Strategy = how to perform a task
+
+---
+
+### Command vs Memento (for Undo Functionality)
+
+Both patterns can implement undo/redo, but they work differently:
+
+**Command Pattern for Undo:**
+- Stores **operations/commands** as objects in a history
+- Each command knows how to **execute** and **undo** itself
+- Undo is achieved by calling the command's `undo()` method
+- Commands store the **inverse operation** or **reverse action**
+- Stores **what was done** (the operation)
+
+**Memento Pattern for Undo:**
+- Stores **snapshots of object state** at various points
+- Undo is achieved by **restoring a previous state snapshot**
+- The originator creates mementos (snapshots) before changes
+- Stores **how things were** (the state)
+
+**When to Use Which:**
+
+**Use Command Pattern when:**
+- Operations have clear inverse operations (add/subtract, insert/delete)
+- You need fine-grained control over what gets undone
+- Operations are discrete and well-defined
+- Example: Text editor with operations like "insert text", "delete character", "format bold"
+
+**Use Memento Pattern when:**
+- Object state is complex and hard to reverse
+- You need to restore to any previous state (not just sequential undo)
+- State changes don't have simple inverse operations
+- Example: Game save system, complex document state, configuration settings
+
+**They can work together:** Command Pattern can use Memento internally to store state before operations, combining both approaches.
+
+| Aspect | Command Pattern | Memento Pattern |
+|--------|----------------|-----------------|
+| **What is stored** | Operations/Commands | State Snapshots |
+| **Undo mechanism** | Execute inverse operation | Restore previous state |
+| **Storage** | Command history | State history |
+| **Best for** | Operations with clear inverses | Complex state restoration |
+| **Granularity** | Per-operation | Per-state-snapshot |
+
+---
+
+### Command vs Chain of Responsibility
+
+**Command:**
+- Encapsulates requests as objects
+- Commands are executed by invoker
+- Commands can be queued, logged, undone
+
+**Chain of Responsibility:**
+- Passes requests along a chain of handlers
+- Each handler decides if it can process the request
+- Request passes through chain until handled
+
+**Key Difference:** Command = encapsulate and execute; Chain = pass along until handled
+
+---
+
+### Command vs Observer
+
+**Command:**
+- Encapsulates a **single operation** as an object
+- Focuses on **action execution**
+- Supports undo/redo, queuing
+
+**Observer:**
+- Notifies **multiple observers** about state changes
+- Focuses on **state change notification**
+- One-to-many dependency
+
+**Key Difference:** Command = single action; Observer = multiple notifications
 
 ---
 

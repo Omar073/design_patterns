@@ -15,10 +15,10 @@ class LegacyRectangle {
 }
 
 // Adapter: Adapts LegacyRectangle to Shape interface
-class RectangleAdapter implements Shape {
+class Rectangle implements Shape {
     private LegacyRectangle legacyRectangle;
 
-    public RectangleAdapter(LegacyRectangle legacyRectangle) {
+    public Rectangle(LegacyRectangle legacyRectangle) {
         this.legacyRectangle = legacyRectangle;
     }
 
@@ -28,7 +28,7 @@ class RectangleAdapter implements Shape {
         int w = x2 - x1; // width = x2 - x1
         int h = y2 - y1; // height = y2 - y1
 
-        System.out.println("Adapter: Converting coordinates (" + x1 + ", " + y1 +
+        System.out.println("Rectangle (Adapter): Converting coordinates (" + x1 + ", " + y1 +
                 ", " + x2 + ", " + y2 + ") to (" + x1 + ", " + y1 +
                 ", w=" + w + ", h=" + h + ")");
 
@@ -37,15 +37,7 @@ class RectangleAdapter implements Shape {
     }
 }
 
-// Client
-class Client {
-    public void drawShape(Shape shape) {
-        // Client uses Shape interface with (x1, y1, x2, y2) coordinates
-        shape.display(10, 20, 50, 80);
-    }
-}
-
-// Demo
+// Client (main method)
 public class Question5 {
     public static void main(String[] args) {
         System.out.println("=== Final Exam 2026 - Question 5: Adapter Pattern ===\n");
@@ -54,13 +46,11 @@ public class Question5 {
         LegacyRectangle legacyRect = new LegacyRectangle();
 
         // Adapt it to Shape interface
-        Shape adapter = new RectangleAdapter(legacyRect);
+        Shape adapter = new Rectangle(legacyRect);
 
-        // Client can now use it
-        Client client = new Client();
-
-        System.out.println("Client calling display() with Shape interface:");
-        client.drawShape(adapter);
+        // Client (main method) uses Shape interface directly
+        System.out.println("Client (main) calling display() with Shape interface:");
+        adapter.display(10, 20, 50, 80);
 
         System.out.println("\n--- Pattern Explanation ---");
         System.out.println("Adapter Pattern converts LegacyRectangle interface to Shape interface:");
